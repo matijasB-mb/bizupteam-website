@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Biz Up Team — Web Rekonstrukcija
 
-## Getting Started
+Rekonstrukcija web stranice za **Biz Up Team d.o.o.** — prodaja i najam printera i uredske opreme, Osijek.
 
-First, run the development server:
+**Produkcija:** [bizupteam.hr](https://bizupteam.hr)  
+**Klijent:** Biz Up Team d.o.o., ul. Ljudevita Posavskog 7, 31000 Osijek  
+**Kontakt:** webshop@bizupteam.hr · 091 636 7775
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Stack
+
+| Tehnologija | Verzija | Razlog |
+|---|---|---|
+| Next.js (App Router) | 15+ | SSR/SSG, routing, Image optimization |
+| TypeScript | latest | Type safety |
+| Tailwind CSS | v4 | Utility-first, brzo razvijanje |
+| Vercel | — | Hosting, deployment |
+| GitHub | — | Version control |
+
+---
+
+## Design System
+
+### Paleta boja
+
+```
+--color-bg:        #FFFFFF   (pozadina)
+--color-bg-alt:    #F8FAFC   (sekcije alternativne)
+--color-text:      #0F172A   (primarni tekst)
+--color-text-muted:#64748B   (muted tekst)
+--color-accent:    #2563EB   (CTA, linkovi, hover)
+--color-accent-dk: #1D4ED8   (hover stanje akcenta)
+--color-border:    #E2E8F0   (borderi, linije)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Tipografija
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Heading:** Plus Jakarta Sans (700, 600)
+- **Body:** Inter (400, 500)
+- Oba fonta: Google Fonts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Princip dizajna
 
-## Learn More
+- Svjetla pozadina, minimalistično
+- Nema emojija u UI-u
+- Apple-like spacing i proporcije
+- B2B profesionalnost — trust, jasnoća, brzina
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Konvencije koje pratimo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Kod
 
-## Deploy on Vercel
+- Sve komponente u `/components`, stranice u `/app`
+- Svi nazivi komponenti PascalCase, datoteke kebab-case
+- Nema `any` u TypeScriptu
+- Tailwind klase — ne pisati inline style osim iznimno
+- Svaka stranica ima `metadata` export (SEO)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Git
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `main` — produkcija (Vercel deploy)
+- `dev` — razvoj
+- `feature/naziv-feature` — feature branch
+- Commit poruke na **engleskom**, opisne: `feat: add hero section`, `fix: mobile nav`
+
+### Komponente
+
+- Atomic design: atoms → molecules → organisms → templates
+- Svaka sekcija homepage-a = zasebna komponenta
+
+---
+
+## Stranice (planirane)
+
+| Stranica | URL | Status |
+|---|---|---|
+| Početna | `/` | Planiranje |
+| Prodaja printera | `/trgovina` | Planiranje |
+| Najam printera | `/najam-printera` | Planiranje |
+| Servis | `/servis` | Planiranje |
+| O nama | `/o-nama` | Planiranje |
+| Kontakt | `/kontakt` | Planiranje |
+
+---
+
+## Highfield Video (Hero)
+
+**1 pokušaj, 10 kredita — plan prije generiranja!**
+
+Koncept: Scroll-triggered hero video — printer u akciji (papir izlazi, printer radi).  
+Ugradnja: `<video autoplay muted loop playsInline>` u hero sekciju index.html.  
+Format: MP4, landscape, min 1920×1080, trajanje ~5-8s loop.
+
+**Prompt za generiranje:**  
+> "Professional office printer printing documents, clean white background, smooth cinematic motion, close-up of paper coming out of printer, modern corporate setting, neutral colors, 4K quality"
+
+**Čekamo** dok hero sekcija nije dizajnirana i dimenzije poznate.
+
+---
+
+## Deploy
+
+```bash
+# Development
+npm run dev
+
+# Build
+npm run build
+
+# Vercel (automatski iz main branch)
+git push origin main
+```
