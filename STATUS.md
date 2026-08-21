@@ -1,6 +1,6 @@
 # Status
 
-**Zadnje ažurirano:** 21.08.2026.
+**Zadnje ažurirano:** 21.08.2026. (polish pass)
 
 ---
 
@@ -27,6 +27,15 @@ portala, nema Supabasea. Jedna stranica, jedan zajednički QR koji vodi na nju.
 - SEO — metadata, OG, LocalBusiness JSON-LD, sitemap, robots
 - Sigurnosna zaglavlja — CSP, HSTS, nosniff, frame-ancestors, Permissions-Policy
 
+### Polish pass
+
+- Smooth scroll (Lenis) — jedan delegirani listener hvata svaki `#` anchor
+- Ambijentalni sloj „protok" — potpis stranice, u heroju, A1 i Canon sekciji
+- **Put dokumenta** — crvena linija koja se puni na scroll, ISPIS → CLOUD
+- Nova sekcija **Naš tim** — 4 kartice, demo podaci
+- Fotografije u 4 od 7 sekcija, clip-path reveal i zoom na hover
+- Natpis „Povezani. Gdje god posao treba." u kadru A1 fotografije
+
 ### Provjereno u pregledniku
 
 | Provjera | Rezultat |
@@ -39,6 +48,11 @@ portala, nema Supabasea. Jedna stranica, jedan zajednički QR koji vodi na nju.
 | Obrazac: valjan unos | 1 poziv, poštena poruka o neaktivnom slanju |
 | API: 422 / 429 / honeypot 200 | ispravno |
 | Konzola | bez grešaka |
+| Fotografije se učitavaju, WebP, 352 kB → 142 kB (1920w) / 33 kB (640w) | da |
+| Anchor linkovi: svi ciljevi postoje, Cmd-klik i vanjski linkovi prolaze | da |
+| Put dokumenta: napredak 0 → 1 kroz vidno polje | da |
+| Kontrast natpisa preko A1 fotografije (uzorkovani pikseli) | 16.6:1 |
+| Tim: 2 stupca na 768, 1 na 320 | da |
 
 Vizualni screenshot nije snimljen — preview pane nije bio prikazan, pa
 preglednik nije kompozitirao sličice. Provjera je rađena kroz izračunate
@@ -50,7 +64,12 @@ stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
 
 ### Hitno
 
-- [ ] **Pogledati stranicu u pregledniku** — jedina neprovjerena stvar
+- [ ] **Pogledati stranicu u pregledniku** — jedina neprovjerena stvar.
+      Posebno: osjećaj smooth scrolla i tempo crvene linije u „Putu dokumenta".
+      Oboje je namješteno naslijepo, kroz brojke, ne okom.
+- [ ] **Zamijeniti demo podatke tima** prije nego stranica ode live —
+      imena, funkcije, brojevi i LinkedIn u `lib/site.ts`
+- [ ] Prave fotografije tima na putanje iz `lib/site.ts` (sad su monogrami)
 - [ ] Potvrditi kod klijenta: točna oznaka Canon uređaja (`1643` iz rukopisa)
 - [ ] Potvrditi telefon — stara stranica ima `0916367770`, ranija bilješka `7775`
 

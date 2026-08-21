@@ -1,6 +1,7 @@
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { contact } from "@/lib/site";
+import Figure from "@/components/ui/Figure";
+import { contact, images } from "@/lib/site";
 
 /* Facts only — each one verifiable from the client's own material. */
 const facts = [
@@ -62,6 +63,16 @@ export default function About() {
             </Reveal>
           </div>
         </div>
+
+        {/* Carries the eye out of the text and into the services */}
+        <Figure
+          className="mt-20 sm:mt-24"
+          src={images.office}
+          alt="Uredski prostor s radnim mjestima i opremom"
+          caption="Ured koji radi — oprema, veze i podrška iza njega"
+          ratio="21 / 9"
+          sizes="(min-width: 1344px) 1216px, 100vw"
+        />
 
         <Reveal delay={120}>
           <dl className="mt-20 grid grid-cols-2 gap-px border-t border-[var(--line)] sm:mt-24 sm:grid-cols-4">

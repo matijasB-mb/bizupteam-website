@@ -30,6 +30,7 @@ export const nav = [
   { label: "O nama", href: "#o-nama" },
   { label: "Usluge", href: "#usluge" },
   { label: "Zašto Biz Up", href: "#zasto" },
+  { label: "Tim", href: "#tim" },
   { label: "Kontakt", href: "#kontakt" },
 ] as const;
 
@@ -87,6 +88,15 @@ export const canon = {
       title: "Cloud i digitalizacija",
       text: "Skeniranje u cloud i arhiviranje dokumenata — papir koji dolazi u ured završava kao datoteka koju možete pronaći.",
     },
+  ],
+  /* The path a single document takes through the service. Drawn as the
+     scroll-linked flow line — the page's one signature detail. */
+  flow: [
+    { step: "01", label: "Ispis", text: "Uređaj radi u vašem uredu." },
+    { step: "02", label: "Skeniranje", text: "Papir postaje datoteka." },
+    { step: "03", label: "Digitalizacija", text: "Prepoznato i složeno." },
+    { step: "04", label: "Cloud", text: "Dostupno s bilo kojeg mjesta." },
+    { step: "05", label: "Poslovanje", text: "Nađete ga kad zatreba." },
   ],
 } as const;
 
@@ -177,6 +187,87 @@ export const prednosti = [
     text: "Predvidivi mjesečni troškovi, automatska dostava tonera i fleksibilni modeli suradnje umjesto dugih obveza.",
   },
 ] as const;
+
+/* ── Tim ───────────────────────────────────────────────────────────────
+   DEMO PODACI. Nijedna osoba ispod nije stvarna i nijedan kontakt ne radi.
+   Zamjena: prepiši polja i stavi fotografiju na navedenu putanju. Struktura
+   ostaje ista, komponenta se ne dira.
+
+   `image` smije biti prazan string — kartica tada renderira monogram u istom
+   vizualnom jeziku umjesto praznog okvira. Namjerno nisu korišteni stock
+   portreti: to su fotografije stvarnih, prepoznatljivih ljudi, a predstaviti
+   ih imenom i brojem kao zaposlenike Biz Upa bilo bi lažno prikazivanje —
+   i protivno Unsplash licenci.                                            */
+
+export type ClanTima = {
+  id: string;
+  name: string;
+  role: string;
+  phone: string;
+  phoneHref: string;
+  email: string;
+  linkedin: string;
+  location: string;
+  image: string;
+};
+
+export const tim: readonly ClanTima[] = [
+  {
+    id: "1",
+    name: "Marko Horvat",
+    role: "Voditelj prodaje",
+    phone: "091 000 0001",
+    phoneHref: "tel:+385910000001",
+    email: "marko.horvat@example.com",
+    linkedin: "#",
+    location: "Osijek",
+    image: "", // stavi na /images/team/marko-horvat.jpg
+  },
+  {
+    id: "2",
+    name: "Ivana Kovač",
+    role: "Poslovna rješenja — A1",
+    phone: "091 000 0002",
+    phoneHref: "tel:+385910000002",
+    email: "ivana.kovac@example.com",
+    linkedin: "#",
+    location: "Osijek",
+    image: "", // stavi na /images/team/ivana-kovac.jpg
+  },
+  {
+    id: "3",
+    name: "Petar Šimić",
+    role: "Tehnička podrška — Canon",
+    phone: "091 000 0003",
+    phoneHref: "tel:+385910000003",
+    email: "petar.simic@example.com",
+    linkedin: "#",
+    location: "Osijek",
+    image: "", // stavi na /images/team/petar-simic.jpg
+  },
+  {
+    id: "4",
+    name: "Ana Novak",
+    role: "Korisnička podrška",
+    phone: "091 000 0004",
+    phoneHref: "tel:+385910000004",
+    email: "ana.novak@example.com",
+    linkedin: "#",
+    location: "Osijek",
+    image: "", // stavi na /images/team/ana-novak.jpg
+  },
+] as const;
+
+/* ── Fotografije ───────────────────────────────────────────────────────
+   Privremeni Unsplash materijal (slobodno za komercijalnu upotrebu).
+   Zamjena: prepiši datoteku na istoj putanji, ništa drugo se ne mijenja. */
+
+export const images = {
+  office: "/images/office-interior.jpg",
+  telecom: "/images/telecom-support.jpg",
+  documents: "/images/documents-workflow.jpg",
+  teamWorking: "/images/team-working.jpg",
+} as const;
 
 /* ── Hero media ────────────────────────────────────────────────────────
    Drop the finished cinematic file at these two paths and the hero picks

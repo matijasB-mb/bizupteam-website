@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
+import AmbientFlow from "@/components/ui/AmbientFlow";
 import { ButtonLink } from "@/components/ui/Button";
-import { a1 } from "@/lib/site";
+import { a1, images } from "@/lib/site";
 
 /**
  * Usluga 01 — A1. Rendered dark so the two services read as two different
@@ -13,15 +15,8 @@ import { a1 } from "@/lib/site";
 export default function ServiceA1() {
   return (
     <section className="section relative overflow-hidden bg-[var(--ink)] text-white">
-      {/* faint red spill, bottom right — echoes the hero, nothing more */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-1/3 -right-[10%] h-[70vh] w-[55vw] opacity-25"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(227,30,36,0.42), transparent 72%)",
-        }}
-      />
+      {/* Carries the hero's ambient through the page's second dark movement */}
+      <AmbientFlow tone="dark" />
 
       <div className="shell relative">
         <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-16">
@@ -50,6 +45,45 @@ export default function ServiceA1() {
             </Reveal>
           </div>
         </div>
+
+        {/* The human side of the service, with the promise set into the frame */}
+        <Reveal variant="media" delay={60}>
+          <div
+            className="group relative mt-16 overflow-hidden bg-[var(--ink-soft)] sm:mt-20"
+            style={{ aspectRatio: "21 / 9" }}
+          >
+            <Image
+              src={images.telecom}
+              alt="Djelatnica u uredu razgovara telefonom za radnim stolom"
+              fill
+              sizes="(min-width: 1344px) 1216px, 100vw"
+              loading="lazy"
+              className="object-cover object-center transition-transform duration-[1200ms] ease-out will-change-transform group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(11,11,12,0.9) 0%, rgba(11,11,12,0.62) 42%, rgba(11,11,12,0.15) 78%, transparent 100%)",
+              }}
+            />
+            <div className="absolute inset-y-0 left-0 flex max-w-[26ch] flex-col justify-end p-6 sm:p-10 lg:p-14">
+              <p
+                className="text-white"
+                style={{
+                  fontFamily: "var(--font-archivo), sans-serif",
+                  fontWeight: 600,
+                  fontSize: "clamp(1.15rem, 2.5vw, 2rem)",
+                  lineHeight: 1.08,
+                  letterSpacing: "-0.03em",
+                }}
+              >
+                Povezani. Gdje god posao treba.
+              </p>
+            </div>
+          </div>
+        </Reveal>
 
         {/* Capability grid — hairlines instead of cards */}
         <div className="mt-16 grid gap-px border-t border-white/12 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">

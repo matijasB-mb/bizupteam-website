@@ -35,11 +35,12 @@ Nema personaliziranih QR kodova, portala, prijave ni baze. Stranica je statična
 | Jezik | TypeScript |
 | Stilovi | Tailwind CSS v4 + CSS varijable |
 | Fontovi | Archivo (naslovi) + Inter (tekst), `next/font` |
+| Scroll | Lenis (~3 kB) |
 | Animacija | IntersectionObserver + CSS — bez animacijske biblioteke |
 | Hosting | Vercel |
 
-Nula runtime ovisnosti izvan Next/React. Sve se poslužuje s vlastite domene,
-pa je CSP tijesan.
+Lenis je jedina runtime ovisnost izvan Next/React. Sve se poslužuje s vlastite
+domene, pa je CSP tijesan.
 
 ---
 
@@ -76,6 +77,59 @@ namjerno na različitim podlogama.
    sastavljena iz varijable (`` `${x}bg-white` ``) nikad se ne generira.
 3. **`group-data-*` ne ide na element koji nosi `group`.** Prevodi se u
    selektor potomka. Element sam sebe stilizira s `data-[...]`.
+
+---
+
+## Pokret
+
+Tri sloja, svaki se sam gasi pod `prefers-reduced-motion`.
+
+**Scroll** — [`SmoothScroll.tsx`](src/components/ui/SmoothScroll.tsx) +
+[`smoothScroll.ts`](src/lib/smoothScroll.ts). Namješten na kontrolu, ne na
+lebdenje: kratko trajanje (0.9 s) i krivulja koja tvrdo sleti, pa stranica prati
+kotačić i stane kad stane unos. `syncTouch` je isključen — trackpad i mobitel
+voze na vlastitom scrollu preglednika, jer bi im Lenis dodao drugi sloj inercije
+povrh onog koji OS već radi. Jedan delegirani listener hvata **svaki** `#`
+anchor na stranici; Cmd/Ctrl-klik i vanjski linkovi prolaze netaknuti.
+
+**Ambijent** — [`AmbientFlow.tsx`](src/components/ui/AmbientFlow.tsx). Potpis
+stranice: svjetlosna polja koja lagano plove, tanke linije kroz koje putuje
+impuls (telekom), i listovi papira koji se polako dižu kroz kadar (ispis →
+digitalizacija). Opacity 0.03–0.12, najsporiji ciklus 46 s. CSS na `transform` i
+`opacity`, bez canvasa. Dekorativno, pa je skriveno od čitača ekrana.
+
+**Put dokumenta** — [`CanonFlow.tsx`](src/components/sections/CanonFlow.tsx).
+Crvena linija koja se puni dok sekcija prelazi zaslon: ISPIS → SKENIRANJE →
+DIGITALIZACIJA → CLOUD → POSLOVANJE. Linija je skalirani element od 1 px, ne SVG
+putanja, pa se sama prelama s layoutom — vodoravno na desktopu, okomito na
+mobitelu, iz istog markupa. Napredak se jednom po kadru upiše u CSS varijablu.
+Bez JS-a linija je nacrtana do kraja: sadržaj nikad ne ovisi o animaciji.
+
+---
+
+## Fotografije
+
+U [`public/images/`](public/images/). Privremeni Unsplash materijal, slobodan za
+komercijalnu upotrebu. Zamjena: prepiši datoteku na istoj putanji.
+
+| Datoteka | Gdje |
+|---|---|
+| `office-interior.jpg` | O nama |
+| `telecom-support.jpg` | A1 — s natpisom u kadru |
+| `documents-workflow.jpg` | Canon — put dokumenta |
+| `team-working.jpg` | Naš tim |
+
+Slike su namjerno u **četiri od sedam** sekcija. Hero, „Zašto Biz Up" i Kontakt
+nose samo tipografiju — da stranica ne postane niz slika s tekstom između.
+
+**Portreti tima nisu stock.** Kartica bez fotografije renderira monogram u istom
+vizualnom jeziku. Stock portreti su fotografije stvarnih, prepoznatljivih ljudi;
+predstaviti ih imenom, funkcijom i brojem telefona kao zaposlenike Biz Upa bilo
+bi lažno prikazivanje — i protivno Unsplash licenci. Stavi prave fotografije na
+putanje navedene u `lib/site.ts` i kartice ih same pokupe.
+
+**Podaci o timu su DEMO.** Nijedna osoba nije stvarna, nijedan kontakt ne radi.
+Zamijeni prije nego stranica ode live.
 
 ---
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
+import AmbientFlow from "@/components/ui/AmbientFlow";
 import { ButtonLink } from "@/components/ui/Button";
 import { a1, canon, heroMedia } from "@/lib/site";
 
@@ -114,6 +115,10 @@ export default function Hero({ hasVideo }: { hasVideo: boolean }) {
           </video>
         </div>
       )}
+
+      {/* The signature ambient layer, over the scene and under the scrim so it
+          reads the same whether or not the film is in place. */}
+      <AmbientFlow tone="dark" className="-z-[8]" />
 
       {/* Legibility scrim — keeps headline contrast well past AA on any frame */}
       <div

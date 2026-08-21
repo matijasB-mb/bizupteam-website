@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Wordmark from "@/components/ui/Wordmark";
+import { pauseScroll, resumeScroll } from "@/lib/smoothScroll";
 import { contact, nav } from "@/lib/site";
 
 /**
@@ -75,12 +76,16 @@ export default function Navbar() {
       if (e.key === "Escape") setOpen(false);
     };
 
+    // Lenis drives the page, so it has to be told to stop as well — an
+    // overflow lock alone leaves the smooth scroller running underneath.
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    pauseScroll();
     window.addEventListener("keydown", onKey);
 
     return () => {
       document.body.style.overflow = previous;
+      resumeScroll();
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);

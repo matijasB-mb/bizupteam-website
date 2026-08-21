@@ -6,6 +6,7 @@ import About from "@/components/sections/About";
 import ServiceA1 from "@/components/sections/ServiceA1";
 import ServiceCanon from "@/components/sections/ServiceCanon";
 import WhyBizUp from "@/components/sections/WhyBizUp";
+import Team from "@/components/sections/Team";
 import Contact from "@/components/sections/Contact";
 import { heroMedia } from "@/lib/site";
 
@@ -26,6 +27,7 @@ export default function Home() {
         <ServiceCanon />
       </div>
       <WhyBizUp />
+      <Team />
       <Contact />
     </>
   );

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import SmoothScroll from "@/components/ui/SmoothScroll";
 import { contact, site } from "@/lib/site";
 import "./globals.css";
 
@@ -96,6 +97,7 @@ export default function RootLayout({
         >
           Preskoči na sadržaj
         </a>
+        <SmoothScroll />
         <Navbar />
         <main>{children}</main>
         <Footer />

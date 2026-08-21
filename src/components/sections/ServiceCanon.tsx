@@ -1,7 +1,10 @@
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
+import Figure from "@/components/ui/Figure";
+import AmbientFlow from "@/components/ui/AmbientFlow";
+import CanonFlow from "@/components/sections/CanonFlow";
 import { ButtonLink } from "@/components/ui/Button";
-import { canon, paketi } from "@/lib/site";
+import { canon, images, paketi } from "@/lib/site";
 
 function Check({ dark }: { dark: boolean }) {
   return (
@@ -28,8 +31,10 @@ function Check({ dark }: { dark: boolean }) {
 /** Usluga 02 — Canon. Light, warm ground; the rented device is the subject. */
 export default function ServiceCanon() {
   return (
-    <section className="section bg-[var(--paper-warm)]">
-      <div className="shell">
+    <section className="section relative overflow-hidden bg-[var(--paper-warm)]">
+      <AmbientFlow tone="light" variant="quiet" />
+
+      <div className="shell relative">
         <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-16">
           <div className="lg:col-span-3">
             <Reveal>
@@ -69,6 +74,37 @@ export default function ServiceCanon() {
               </div>
             </Reveal>
           ))}
+        </div>
+
+        {/* ── Put dokumenta ──────────────────────────────────────────
+            The section's centrepiece: image, then the flow the service
+            actually performs on what that image shows.                  */}
+        <div className="mt-24 grid gap-y-12 sm:mt-32 lg:grid-cols-12 lg:gap-x-16">
+          <Figure
+            className="lg:col-span-5"
+            src={images.documents}
+            alt="Dvije osobe za stolom pregledavaju ispisane dokumente"
+            ratio="4 / 3"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+          />
+
+          <div className="lg:col-span-6 lg:col-start-7 lg:self-center">
+            <Reveal>
+              <SectionLabel>Put dokumenta</SectionLabel>
+              <h3 className="t-h2 mt-6 max-w-[16ch]">
+                Od papira do datoteke koju možete pronaći
+              </h3>
+              <p className="t-body mt-6 max-w-[46ch]">
+                Ista oprema koja ispisuje ujedno i skenira. Uz cloud skeniranje
+                i arhiviranje dokument ne ostaje u ladici — završi na mjestu
+                gdje ga za godinu dana i dalje možete naći.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+
+        <div className="mt-16 border-t border-[var(--line-strong)] pt-14 sm:mt-20">
+          <CanonFlow />
         </div>
 
         {/* ── Paketi ─────────────────────────────────────────────── */}

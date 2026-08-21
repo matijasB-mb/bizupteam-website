@@ -89,8 +89,9 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-  /* clears the fixed header when jumping to an anchor */
+  /* Lenis owns anchor scrolling; native smooth would fight it frame for frame.
+     scroll-padding still covers the fixed header for keyboard focus jumps. */
+  scroll-behavior: auto;
   scroll-padding-top: 6rem;
 }
 
@@ -209,7 +210,10 @@ img, video, svg { display: block; max-width: 100%; }
   font-variant-numeric: tabular-nums;
 }
 
-/* ── Reveal on scroll ──────────────────────────────────────── */
+/* ── Reveal on scroll ──────────────────────────────────────────
+   Two variants. Text lifts; images wipe open from the bottom edge and
+   settle out of a slight scale, which reads as a camera finding focus
+   rather than as a box fading in.                                    */
 
 [data-reveal] {
   opacity: 0;
@@ -224,6 +228,83 @@ img, video, svg { display: block; max-width: 100%; }
 [data-reveal="in"] {
   opacity: 1;
   transform: none;
+}
+
+[data-reveal-media] {
+  opacity: 0;
+  clip-path: inset(14% 0 0 0);
+  transform: scale(1.05);
+  transition:
+    opacity 900ms var(--ease),
+    clip-path 1100ms var(--ease),
+    transform 1400ms var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: clip-path, transform, opacity;
+}
+
+[data-reveal-media="in"] {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transform: none;
+}
+
+/* ── Ambient flow ──────────────────────────────────────────────
+   The signature layer. Long cycles, tiny distances, GPU-only
+   properties. See components/ui/AmbientFlow.tsx.                */
+
+.ambient-drift {
+  animation: ambient-drift 34s var(--ease-in-out) infinite;
+  will-change: transform;
+}
+
+.ambient-drift-slow {
+  animation: ambient-drift-slow 44s var(--ease-in-out) infinite;
+  will-change: transform;
+}
+
+@keyframes ambient-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(34px, -26px, 0) scale(1.07); }
+}
+
+@keyframes ambient-drift-slow {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.04); }
+  50%      { transform: translate3d(-28px, 22px, 0) scale(1); }
+}
+
+/* A short highlight travels the length of a line, then rests. */
+.ambient-pulse {
+  animation-name: ambient-pulse;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes ambient-pulse {
+  0%        { transform: translate3d(-100%, 0, 0); opacity: 0; }
+  12%       { opacity: 1; }
+  62%       { opacity: 1; }
+  74%, 100% { transform: translate3d(760%, 0, 0); opacity: 0; }
+}
+
+/* Sheets travel bottom to top, holding their own size and tilt. */
+.ambient-rise {
+  animation-name: ambient-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes ambient-rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(var(--sheet-scale, 1)) rotate(var(--sheet-tilt, 0deg));
+    opacity: 0;
+  }
+  14%, 82% { opacity: 1; }
+  100% {
+    transform: translate3d(18px, -128vh, 0) scale(var(--sheet-scale, 1)) rotate(calc(var(--sheet-tilt, 0deg) * -1));
+    opacity: 0;
+  }
 }
 
 /* ── Hero load sequence ────────────────────────────────────── */
@@ -250,6 +331,12 @@ img, video, svg { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
+  /* The ambient layer is atmosphere only — it simply stops existing. */
+  .ambient-drift,
+  .ambient-drift-slow,
+  .ambient-pulse,
+  .ambient-rise { display: none !important; }
+
   *,
   *::before,
   *::after {
@@ -259,6 +346,9 @@ img, video, svg { display: block; max-width: 100%; }
     scroll-behavior: auto !important;
   }
 
+  /* Resolved in CSS as well as in JS, so a reduced-motion visitor with
+     scripting off still sees the finished layout rather than a blank one. */
   [data-reveal] { opacity: 1; transform: none; }
+  [data-reveal-media] { opacity: 1; transform: none; clip-path: none; }
   .hero-cue { opacity: 1; animation: none; transform: none; }
 }
