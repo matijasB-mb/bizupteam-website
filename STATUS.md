@@ -1,85 +1,99 @@
-# Biz Up Team — Status Projekta
+# Status
 
-> Uvijek ažuriraj ovu datoteku na kraju svake sesije.
+**Zadnje ažurirano:** 21.08.2026.
 
 ---
 
 ## Gdje smo stali
 
-**Datum:** 2026-08-20  
-**Faza:** Priprema (pre-development)
+Naslovnica je izgrađena i prolazi build, lint i typecheck. Opseg se bitno
+smanjio nakon razgovora s klijentom — nema personaliziranih QR kodova, nema
+portala, nema Supabasea. Jedna stranica, jedan zajednički QR koji vodi na nju.
 
-Završena priprema projekta:
-- Odabran design direction (Clean SaaS, bijela + navy + plava)
-- Odabrani fontovi: Plus Jakarta Sans + Inter
-- Odabran stack: Next.js 15 + TypeScript + Tailwind v4 + Vercel
-- Kreiran README.md s konvencijama
-- Kreiran STATUS.md (ova datoteka)
+### Gotovo
+
+- Design system s tokenima (`globals.css`) — ink/paper/crvena, tri crvene
+  nijanse zbog kontrasta
+- Navbar — proziran nad hero-om, prelazi u svijetli; fullscreen mobilni
+  izbornik s Escape i zaključavanjem scrolla
+- Hero — spreman za video, s komponiranom CSS scenom kao fallbackom;
+  scroll parallax; indeks obiju usluga iznad preloma
+- O nama — uključuje klijentovu vlastitu rečenicu s kartice
+- Usluga 01 — A1, u ulozi savjetnika, ne operatora
+- Usluga 02 — Canon, tri stupa + 4 paketa (Basic / Low / Mid / Premium)
+- Zašto Biz Up — 4 prednosti, isti redoslijed kao na tiskanoj kartici
+- Kontakt — obrazac s validacijom na obje strane, honeypot, rate limit
+- Podnožje
+- SEO — metadata, OG, LocalBusiness JSON-LD, sitemap, robots
+- Sigurnosna zaglavlja — CSP, HSTS, nosniff, frame-ancestors, Permissions-Policy
+
+### Provjereno u pregledniku
+
+| Provjera | Rezultat |
+|---|---|
+| Build / lint / typecheck | prolazi, bez upozorenja |
+| Horizontalni scroll na 320 / 375 / 390 / 768 / 1440 / 1920 | nema |
+| Kontrast teksta (240 čvorova, WCAG AA) | prolazi |
+| Mobilni izbornik: otvaranje, Escape, zaključavanje scrolla | radi |
+| Obrazac: klijentska validacija | blokira, 0 mrežnih poziva |
+| Obrazac: valjan unos | 1 poziv, poštena poruka o neaktivnom slanju |
+| API: 422 / 429 / honeypot 200 | ispravno |
+| Konzola | bez grešaka |
+
+Vizualni screenshot nije snimljen — preview pane nije bio prikazan, pa
+preglednik nije kompozitirao sličice. Provjera je rađena kroz izračunate
+stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
 
 ---
 
-## Zadnje napravljeno
-
-- [2026-08-20] Pregledana trenutna stranica (bizupteam.hr) — vrlo jednostavna, 2 sekcije, WordPress
-- [2026-08-20] Odabran design system i tipografija
-- [2026-08-20] Kreiran projektni plan u README.md
-
----
-
-## Treba napraviti
+## Sljedeće
 
 ### Hitno
-- [ ] Inicijalizirati Next.js 15 projekt (`npx create-next-app@latest`)
-- [ ] Pushati na GitHub (novi repo: `bizupteam-website`)
-- [ ] Spojiti GitHub repo s Vercelom
-- [ ] Postaviti `dev` i `main` brancheve
 
-### Prioritetno
-- [ ] Instalirati fontove (Plus Jakarta Sans + Inter) via next/font
-- [ ] Postaviti design tokene u Tailwind config (boje, spacing)
-- [ ] Napraviti layout komponentu (Navbar + Footer)
-- [ ] Hero sekcija homepage — placeholder dok ne generiramo Highfield video
-- [ ] Planirati Highfield video prompt i pokrenuti generiranje
+- [ ] **Pogledati stranicu u pregledniku** — jedina neprovjerena stvar
+- [ ] Potvrditi kod klijenta: točna oznaka Canon uređaja (`1643` iz rukopisa)
+- [ ] Potvrditi telefon — stara stranica ima `0916367770`, ranija bilješka `7775`
 
-### Normalan prioritet
-- [ ] Stranica `/trgovina` — grid printera
-- [ ] Stranica `/najam-printera` — benefit sekcije + CTA
-- [ ] Stranica `/o-nama`
-- [ ] Stranica `/kontakt` — forma + mapa
-- [ ] Stranica `/servis`
-- [ ] SEO metadata za sve stranice
-- [ ] Favicons + OG slike
+### Prioritet
+
+- [ ] Highfield video — **1 pokušaj, 10 kredita.** Hero je sada dizajniran,
+      pa su kadar i proporcije poznati. Upute za snimanje u
+      `public/media/README.md`. Generirati tek kad se klijent složi s konceptom.
+- [ ] Aktivirati slanje obrasca: Resend ključ + verificirani pošiljatelj u Vercelu
+- [ ] Prava fotografija umjesto CSS scene, ako video ne prođe
+
+### Normalno
+
+- [ ] Reference — klijent ih je nabrojao rukom (Vinodolska općina,
+      Požeško-slavonska županija i drugi). Rukopis nije čitljiv dovoljno
+      pouzdano da bih ih napisao. Tražiti popis u tekstu **i dopuštenje** za
+      objavu imena.
+- [ ] Sekcija „Tim" — samo ako stignu dobre fotografije. Bez njih je stranica
+      jača nego s lošim portretima.
+- [ ] OG slika (`opengraph-image`) — trenutno nema, pa dijeljenje linka nema
+      pregled
+- [ ] Favicon — još uvijek Next.js zadani
 
 ### Nije hitno
-- [ ] Animacije (scroll reveal, hover efekti)
-- [ ] Dark mode (razgovoriti s klijentom)
-- [ ] Blog/novosti sekcija
-- [ ] Live chat integacija
-- [ ] Google Analytics
+
+- [ ] Cijene paketa, ako ih klijent želi javno
+- [ ] Google Analytics ili Plausible, ako klijent traži
+- [ ] Stranica privatnosti, ako obrazac krene skupljati podatke
 
 ---
 
-## Ideje
+## Blokade
 
-- **Kalkulator uštedine** — interaktivni widget koji pokazuje koliko se štedi najmom vs. kupnjom printera
-- **Usporedba modela** — side-by-side tablica modela printera
-- **Testimonijali** — B2B reference (firme koje koriste usluge)
-- **Ticker traka** — brendovi koje prodaju (HP, Canon, Epson...)
-- **Chatbot** — AI asistent za pitanja o najmu
-- **Webshop integracija** — veza s existingom webshopom ili novi
+- **A1 mora odobriti tekst.** Sve o A1 pisano je u ulozi savjetnika, nikad
+  operatora, upravo zato. Ne mijenjati taj ton bez njihove suglasnosti.
+- **Nema fotografija klijenta.** Nijedna izmišljena fotografija nije korištena.
+- **Nema cijena.** Nigdje nije navedena nijedna brojka koju klijent nije dao.
 
 ---
 
-## Poznati problemi / blokeri
+## Odluke koje ne treba ponovno otvarati
 
-- Highfield video: samo 1 pokušaj dostupan — ne generirati dok hero sekcija nije gotova
-- Nemamo pristup CMS-u ili sadržaju (slike printera, opisi modela) — treba od klijenta
-
----
-
-## Kontakti
-
-| Tko | Kontakt | Uloga |
-|---|---|---|
-| Biz Up Team | webshop@bizupteam.hr | Klijent |
-| Biz Up Team | 091 636 7775 | Klijent tel. |
+- Jedna stranica, ne više njih — klijent je to izričito potvrdio
+- Bez personaliziranih QR kodova; jedan zajednički QR na naslovnicu
+- Četiri paketa, ne tri — klijentove stvarne brojke iz bilješki imaju četiri
+- Bez animacijske biblioteke — IntersectionObserver i CSS su dovoljni i brži
