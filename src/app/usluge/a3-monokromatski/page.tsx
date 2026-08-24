@@ -198,10 +198,14 @@ export default function A3MonoPage() {
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-px border-t border-[var(--line-strong)] sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid border-t border-[var(--line-strong)] sm:mt-16 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4">
             {primjene.map((p, i) => (
               <Reveal key={p.t} delay={i * 70}>
-                <div className="flex h-full flex-col border-[var(--line)] py-8 sm:border-r sm:pr-8 lg:last:border-r-0">
+                <div
+                  className={`flex h-full flex-col border-[var(--line)] py-8 ${
+                    i % 2 === 0 ? "sm:border-r sm:pr-10" : ""
+                  } ${i < 3 ? "lg:border-r lg:pr-10" : ""}`}
+                >
                   <span className="t-label text-[var(--muted)]" aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
                   </span>

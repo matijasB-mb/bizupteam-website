@@ -124,7 +124,7 @@ export default function UslugePage() {
               },
             ].map((x, i) => (
               <Reveal key={x.t} delay={i * 80}>
-                <div className="flex h-full flex-col border-[var(--line)] py-8 lg:border-r lg:py-10 lg:pr-10 lg:last:border-r-0">
+                <div className="flex h-full flex-col border-[var(--line)] py-8 lg:py-10 lg:pr-10">
                   <span className="t-label text-[var(--muted)]" aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
                   </span>

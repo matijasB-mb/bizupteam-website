@@ -93,10 +93,14 @@ export default function A1Page() {
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-px border-t border-[var(--line-strong)] sm:mt-16 sm:grid-cols-2">
+          <div className="mt-14 grid border-t border-[var(--line-strong)] sm:mt-16 sm:grid-cols-2 sm:gap-x-12">
             {a1.items.map((item, i) => (
               <Reveal key={item.title} delay={i * 70}>
-                <div className="flex h-full flex-col border-b border-[var(--line)] py-9 sm:pr-10 sm:odd:border-r sm:odd:border-[var(--line)]">
+                <div
+                  className={`flex h-full flex-col border-b border-[var(--line)] py-9 ${
+                    i % 2 === 0 ? "sm:border-r sm:border-[var(--line)] sm:pr-12" : ""
+                  }`}
+                >
                   <span className="t-label text-[var(--red-on-light)]" aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
                   </span>

@@ -89,7 +89,7 @@ export default function ServiceA1() {
         <div className="mt-16 grid gap-px border-t border-white/12 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
           {a1.items.map((item, i) => (
             <Reveal key={item.title} delay={i * 70} className="group">
-              <div className="flex h-full flex-col border-white/12 py-8 sm:border-r sm:pr-8 sm:last:border-r-0 lg:py-10">
+              <div className="flex h-full flex-col border-white/12 py-8 sm:pr-8 lg:py-10">
                 <span
                   className="t-label text-white/55 transition-colors duration-300 group-hover:text-[var(--red-on-dark)]"
                   aria-hidden="true"

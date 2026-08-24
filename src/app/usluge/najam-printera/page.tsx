@@ -170,12 +170,14 @@ export default function NajamPage() {
             </div>
           </Reveal>
 
-          <div className="mt-12 grid gap-px border-t border-[var(--line-strong)] sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid border-t border-[var(--line-strong)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4">
             {kategorije.map((k, i) => (
               <Reveal key={k.label} delay={i * 70} className="h-full">
                 <Link
                   href={k.href}
-                  className="group flex h-full flex-col justify-between border-b border-[var(--line)] py-9 pr-8 transition-colors duration-500 hover:bg-[var(--paper)] sm:border-r lg:last:border-r-0"
+                  className={`group flex h-full flex-col justify-between border-b border-[var(--line)] py-9 pr-8 transition-colors duration-500 hover:bg-[var(--paper)] ${
+                    i % 2 === 0 ? "sm:border-r sm:pr-10" : ""
+                  } ${i < 3 ? "lg:border-r lg:pr-10" : ""}`}
                 >
                   <span
                     className="block text-[2rem] leading-none tracking-[-0.035em] text-[var(--ink)] transition-colors duration-300 group-hover:text-[var(--red-on-light)]"
@@ -225,7 +227,7 @@ export default function NajamPage() {
                       "flex h-full flex-col p-7 lg:p-8",
                       dark
                         ? "bg-[var(--ink)] text-white lg:-my-5 lg:py-13"
-                        : "bg-[var(--paper-warm)] lg:border-r lg:border-[var(--line)] lg:bg-transparent lg:last:border-r-0",
+                        : "bg-[var(--paper-warm)] lg:bg-transparent",
                     ].join(" ")}
                   >
                     <div className="flex items-baseline justify-between gap-3">

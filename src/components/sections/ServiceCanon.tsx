@@ -63,7 +63,7 @@ export default function ServiceCanon() {
         <div className="mt-16 grid gap-px border-t border-[var(--line-strong)] sm:mt-20 lg:grid-cols-3">
           {canon.pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 80}>
-              <div className="flex h-full flex-col border-[var(--line)] py-8 lg:border-r lg:pr-10 lg:py-10 lg:last:border-r-0">
+              <div className="flex h-full flex-col border-[var(--line)] py-8 lg:pr-10 lg:py-10">
                 <span className="t-label text-[var(--muted)]" aria-hidden="true">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -135,7 +135,7 @@ export default function ServiceCanon() {
                       "flex h-full flex-col p-7 lg:p-8",
                       dark
                         ? "bg-[var(--ink)] text-white lg:-my-5 lg:py-13"
-                        : "bg-[var(--paper)] lg:bg-transparent lg:border-r lg:border-[var(--line)] lg:last:border-r-0",
+                        : "bg-[var(--paper)] lg:bg-transparent",
                     ].join(" ")}
                   >
                     <div className="flex items-baseline justify-between gap-3">
