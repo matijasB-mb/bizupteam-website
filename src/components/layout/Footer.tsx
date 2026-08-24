@@ -13,7 +13,7 @@ export default function Footer() {
     <footer className="bg-[var(--ink)] text-white">
       <div className="shell">
         <div className="grid gap-y-12 border-t border-white/12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-12">
-          <div className="sm:col-span-2 lg:col-span-4">
+          <div className="sm:col-span-2 lg:col-span-3">
             <Link href="/" aria-label="Biz Up Team — početna">
               <Wordmark className="text-white" />
             </Link>
@@ -23,7 +23,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Podnožje — stranica" className="lg:col-span-2 lg:col-start-6">
+          <nav aria-label="Podnožje — stranica" className="lg:col-span-2 lg:col-start-5">
             <p className="t-label text-white/55">Stranica</p>
             <ul className="mt-4 flex flex-col gap-1">
               {nav.map((item) => (
@@ -34,7 +34,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Podnožje — usluge" className="lg:col-span-3">
+          <nav aria-label="Podnožje — usluge" className="lg:col-span-3 lg:col-start-7">
             <p className="t-label text-white/55">Usluge</p>
             <ul className="mt-4 flex flex-col gap-1">
               {usluge.map((u) => (
@@ -45,7 +45,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <address className="not-italic lg:col-span-3">
+          <address className="not-italic lg:col-span-3 lg:col-start-10">
             <p className="t-label text-white/55">Kontakt</p>
             <ul className="mt-4 flex flex-col gap-2 text-sm text-white/70">
               <li className="pt-1">
