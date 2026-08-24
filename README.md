@@ -1,6 +1,6 @@
 # Biz Up Team — web
 
-Jednostranična korporativna stranica za **Biz Up Team d.o.o.**, Osijek.
+Korporativna web stranica za **Biz Up Team d.o.o.**, Osijek.
 
 **Produkcija:** [bizupteam.hr](https://bizupteam.hr)
 **Klijent:** Biz Up Team d.o.o., ul. Ljudevita Posavskog 7, 31000 Osijek
@@ -8,9 +8,39 @@ Jednostranična korporativna stranica za **Biz Up Team d.o.o.**, Osijek.
 
 ---
 
+## Struktura
+
+```
+/                          naslovnica
+/o-nama
+/usluge                    pregled
+  /usluge/a3-kolor
+  /usluge/a3-monokromatski
+  /usluge/a4-kolor
+  /usluge/a4-monokromatski
+  /usluge/najam-printera
+/zasto-biz-up
+/tim
+/kontakt
+```
+
+Navigacija vodi na prave rute. Naslovnica zadržava vlastita sidra (`#usluge`,
+`#kontakt`) za svoje CTA-e — rade i dalje, samo više nisu meta izbornika.
+„Usluge" otvara padajući panel na desktopu i harmoniku na mobitelu; aktivno
+stanje se izvodi iz `usePathname`, pa je „Usluge" istaknuto i na svakoj
+podstranici.
+
+Svaka podstranica ima **vlastiti raspored**, ne isti predložak pet puta:
+A3 kolor su izmjenične uredničke trake, A3 mono je tablica usporedbe brzina,
+A4 kolor je proza uz popis primjena, A4 mono je namjerno najmirnija stranica s
+jednim velikim uređajem, a najam je servisna prodajna stranica s tri koraka i
+biračem kategorije.
+
+---
+
 ## Što stranica radi
 
-Dvije usluge, jasno odvojene, na jednoj stranici:
+Dvije usluge, jasno odvojene, na naslovnici:
 
 1. **A1** — savjetovanje i podrška poslovnim korisnicima za telekomunikacijske
    usluge. Biz Up je **ugovorni partner**, nije operator. Tekst je namjerno
@@ -121,6 +151,34 @@ komercijalnu upotrebu. Zamjena: prepiši datoteku na istoj putanji.
 
 Slike su namjerno u **četiri od sedam** sekcija. Hero, „Zašto Biz Up" i Kontakt
 nose samo tipografiju — da stranica ne postane niz slika s tekstom između.
+
+### Canon fotografije
+
+`canon.hr` vraća 403 na automatski dohvat, pa slike uređaja nisu preuzete.
+`DeviceFrame` renderira tehnički crtež multifunkcijskog uređaja u istom
+hairline jeziku kao ostatak stranice i oznaku „Fotografija u pripremi".
+
+Putanje su fiksne — ubaci datoteku i slika se sama pojavi, bez izmjene koda:
+
+```
+public/images/canon/irdx-c3900.jpg        A3 kolor
+public/images/canon/irdx-c3800.jpg
+public/images/canon/irdx-c3700.jpg
+public/images/canon/irdx-4845i.jpg        A3 mono
+public/images/canon/irdx-4835i.jpg
+public/images/canon/irdx-4825i.jpg
+public/images/canon/isensys-c1538if.jpg   A4 kolor
+public/images/canon/isensys-c1533if.jpg
+public/images/canon/isensys-c1533p.jpg
+public/images/canon/isensys-1440i.jpg     A4 mono
+public/images/canon/isensys-1643i.jpg
+public/images/canon/isensys-1440p.jpg
+public/images/canon/najam-hero.jpg        najam
+```
+
+Nazivi serija, modela i brzine ispisa u `lib/usluge.ts` provjereni su u
+službenim Canon Europe specifikacijama. Ništa nije procijenjeno — gdje podatak
+nije potvrđen, polje jednostavno ne postoji.
 
 **Portreti tima nisu stock.** Kartica bez fotografije renderira monogram u istom
 vizualnom jeziku. Stock portreti su fotografije stvarnih, prepoznatljivih ljudi;

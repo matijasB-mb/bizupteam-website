@@ -102,10 +102,11 @@ function Card({ member, index }: { member: ClanTima; index: number }) {
  *
  * Names and contacts are demo data — see the note in lib/site.ts.
  */
-export default function Team() {
+export default function Team({ showIntro = true }: { showIntro?: boolean } = {}) {
   return (
     <section id="tim" className="section bg-[var(--paper-mute)]">
       <div className="shell">
+        {showIntro && (
         <Reveal>
           <div className="grid gap-y-8 lg:grid-cols-12 lg:gap-x-16">
             <div className="lg:col-span-6">
@@ -120,10 +121,11 @@ export default function Team() {
             </p>
           </div>
         </Reveal>
+        )}
 
         {/* Grounds the section in real work before the portrait grid */}
         <Figure
-          className="mt-16 sm:mt-20"
+          className={showIntro ? "mt-16 sm:mt-20" : ""}
           src={images.teamWorking}
           alt="Tim za zajedničkim stolom radi na prijenosnim računalima"
           ratio="21 / 9"

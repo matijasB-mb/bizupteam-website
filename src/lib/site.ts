@@ -26,12 +26,14 @@ export const contact = {
   emailHref: "mailto:webshop@bizupteam.hr",
 } as const;
 
+/* Navigation points at real routes. The homepage keeps its own in-page
+   anchors for its section CTAs — those still work and are not nav targets. */
 export const nav = [
-  { label: "O nama", href: "#o-nama" },
-  { label: "Usluge", href: "#usluge" },
-  { label: "Zašto Biz Up", href: "#zasto" },
-  { label: "Tim", href: "#tim" },
-  { label: "Kontakt", href: "#kontakt" },
+  { label: "O nama", href: "/o-nama" },
+  { label: "Usluge", href: "/usluge" },
+  { label: "Zašto Biz Up", href: "/zasto-biz-up" },
+  { label: "Tim", href: "/tim" },
+  { label: "Kontakt", href: "/kontakt" },
 ] as const;
 
 /* ── Usluga 01 — A1 ────────────────────────────────────────────────────

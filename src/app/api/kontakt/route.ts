@@ -59,6 +59,7 @@ type Payload = {
   tvrtka: string;
   email: string;
   telefon: string;
+  usluga: string;
   poruka: string;
 };
 
@@ -68,6 +69,7 @@ function validate(body: Record<string, unknown>) {
     tvrtka: clean(body.tvrtka, 120),
     email: clean(body.email, 200),
     telefon: clean(body.telefon, 40),
+    usluga: clean(body.usluga, 60),
     poruka: clean(body.poruka, 4000),
   };
 
@@ -97,6 +99,7 @@ async function deliver(data: Payload): Promise<boolean> {
     `Tvrtka: ${data.tvrtka || "—"}`,
     `E-mail: ${data.email}`,
     `Telefon: ${data.telefon || "—"}`,
+    `Usluga: ${data.usluga || "—"}`,
     "",
     data.poruka,
   ].join("\n");

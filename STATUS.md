@@ -1,6 +1,6 @@
 # Status
 
-**Zadnje ažurirano:** 21.08.2026. (polish pass)
+**Zadnje ažurirano:** 24.08.2026. (unutarnje stranice)
 
 ---
 
@@ -26,6 +26,16 @@ portala, nema Supabasea. Jedna stranica, jedan zajednički QR koji vodi na nju.
 - Podnožje
 - SEO — metadata, OG, LocalBusiness JSON-LD, sitemap, robots
 - Sigurnosna zaglavlja — CSP, HSTS, nosniff, frame-ancestors, Permissions-Policy
+
+### Unutarnje stranice
+
+- 10 ruta, sve statički generirane
+- Navbar: padajući panel „Usluge", mobilna harmonika, aktivna stanja
+- Podnožje s poveznicama na sve usluge
+- `DeviceFrame` — Canon slot s tehničkim crtežom dok fotografije nema
+- `ContactForm` izdvojen: naslovnica i /kontakt dijele jednu implementaciju
+- Kontakt obrazac dobio polje „Vrsta usluge" (i u e-mailu koji ruta šalje)
+- Sitemap pokriva svih 10 ruta
 
 ### Polish pass
 
@@ -53,6 +63,13 @@ portala, nema Supabasea. Jedna stranica, jedan zajednički QR koji vodi na nju.
 | Put dokumenta: napredak 0 → 1 kroz vidno polje | da |
 | Kontrast natpisa preko A1 fotografije (uzorkovani pikseli) | 16.6:1 |
 | Tim: 2 stupca na 768, 1 na 320 | da |
+| Svih 10 ruta: 200, jedan H1, jedinstven title i description | da |
+| Mrtvih poveznica (`href="#"`) i internih 404 | 0 |
+| Kontrast na podstranicama (uzorkovano po stranici) | prolazi |
+| Padajući izbornik: hover, fokus, Escape; zatvoren je izvan tab reda | da |
+| Mobilna harmonika: otvaranje, 6 poveznica, zaključavanje scrolla | da |
+| Tablica na 320 px skrola unutar svog okvira, ne stranice | da |
+| Naslovnica nakon refaktora: iste sekcije, iste visine | da |
 
 Vizualni screenshot nije snimljen — preview pane nije bio prikazan, pa
 preglednik nije kompozitirao sličice. Provjera je rađena kroz izračunate
