@@ -12,6 +12,7 @@
  */
 
 export type UslugaSlug =
+  | "a1-telekomunikacije"
   | "a3-kolor"
   | "a3-monokromatski"
   | "a4-kolor"
@@ -28,8 +29,26 @@ export type Uredaj = {
   image: string;
 };
 
+/* Two halves of the business, not six siblings. A1 is not a printer category,
+   so the navigation groups rather than lists — see Navbar and /usluge. */
+export type Grupa = "telekom" | "canon";
+
+export const grupe: readonly { id: Grupa; label: string; opis: string }[] = [
+  {
+    id: "telekom",
+    label: "Telekomunikacije",
+    opis: "Savjetovanje i podrška kao ugovorni partner A1-a.",
+  },
+  {
+    id: "canon",
+    label: "Uredska tehnologija",
+    opis: "Canon printeri i multifunkcijski uređaji, u kupnji ili najmu.",
+  },
+];
+
 export type Usluga = {
   slug: UslugaSlug;
+  grupa: Grupa;
   nav: string;
   navOpis: string;
   breadcrumb: string;
@@ -46,7 +65,24 @@ export type Usluga = {
 
 export const usluge: readonly Usluga[] = [
   {
+    slug: "a1-telekomunikacije",
+    grupa: "telekom",
+    nav: "A1 poslovne usluge",
+    navOpis: "Telekomunikacije za tvrtke",
+    breadcrumb: "A1 telekomunikacije",
+    title: "A1 telekomunikacije",
+    metaTitle: "A1 Poslovne Usluge",
+    metaDescription:
+      "Biz Up Team je ugovorni partner A1-a. Savjetujemo poslovne korisnike pri odabiru mobilne i fiksne telefonije, interneta i međunarodne komunikacije.",
+    hero: "Telekomunikacije, odabrane prema poslu.",
+    heroLead:
+      "Kao ugovorni partner A1-a vodimo tvrtke kroz izbor telekomunikacijskih usluga — od prve procjene potreba do podrške nakon ugovora.",
+    format: "Poslovni korisnici",
+    boja: "A1",
+  },
+  {
     slug: "a3-kolor",
+    grupa: "canon",
     nav: "A3 kolor",
     navOpis: "Profesionalni A3 ispis u boji",
     breadcrumb: "A3 kolor",
@@ -62,6 +98,7 @@ export const usluge: readonly Usluga[] = [
   },
   {
     slug: "a3-monokromatski",
+    grupa: "canon",
     nav: "A3 monokromatski",
     navOpis: "Pouzdan A3 crno-bijeli ispis",
     breadcrumb: "A3 monokromatski",
@@ -77,6 +114,7 @@ export const usluge: readonly Usluga[] = [
   },
   {
     slug: "a4-kolor",
+    grupa: "canon",
     nav: "A4 kolor",
     navOpis: "Kompaktna rješenja za A4 kolor ispis",
     breadcrumb: "A4 kolor",
@@ -92,6 +130,7 @@ export const usluge: readonly Usluga[] = [
   },
   {
     slug: "a4-monokromatski",
+    grupa: "canon",
     nav: "A4 monokromatski",
     navOpis: "Učinkovit A4 crno-bijeli ispis",
     breadcrumb: "A4 monokromatski",
@@ -106,6 +145,7 @@ export const usluge: readonly Usluga[] = [
   },
   {
     slug: "najam-printera",
+    grupa: "canon",
     nav: "Najam printera",
     navOpis: "Fleksibilno rješenje za poslovni ispis",
     breadcrumb: "Najam printera",
@@ -125,12 +165,16 @@ export function uslugaBySlug(slug: string): Usluga | undefined {
   return usluge.find((u) => u.slug === slug);
 }
 
+export function uslugeUGrupi(grupa: Grupa): readonly Usluga[] {
+  return usluge.filter((u) => u.grupa === grupa);
+}
+
 /* ── Uređaji po kategoriji ─────────────────────────────────────────────
    Podaci iz službenih Canon specifikacija (canon-europe.com). Brzine su
    navedene onako kako ih Canon navodi — po modelu, ne kao raspon serije. */
 
 export const uredaji: Record<
-  Exclude<UslugaSlug, "najam-printera">,
+  Exclude<UslugaSlug, "najam-printera" | "a1-telekomunikacije">,
   readonly Uredaj[]
 > = {
   "a3-kolor": [

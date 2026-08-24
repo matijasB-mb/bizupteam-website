@@ -14,6 +14,7 @@ Korporativna web stranica za **Biz Up Team d.o.o.**, Osijek.
 /                          naslovnica
 /o-nama
 /usluge                    pregled
+  /usluge/a1-telekomunikacije
   /usluge/a3-kolor
   /usluge/a3-monokromatski
   /usluge/a4-kolor
@@ -30,11 +31,28 @@ Navigacija vodi na prave rute. Naslovnica zadržava vlastita sidra (`#usluge`,
 stanje se izvodi iz `usePathname`, pa je „Usluge" istaknuto i na svakoj
 podstranici.
 
+Usluge su **grupirane u dva stupa**, ne u šest ravnopravnih stavki — A1 nije
+kategorija printera pa bi kao šesti red ispod „A4 monokromatski" izgledao kao
+greška u taksonomiji:
+
+```
+Telekomunikacije        →  A1 poslovne usluge
+Uredska tehnologija     →  A3/A4 kolor i mono, najam
+```
+
+Grupe su definirane jednom u `lib/usluge.ts` (`grupe`, `uslugeUGrupi`) i iz
+njih se renderiraju dropdown, mobilna harmonika, `/usluge` i podnožje.
+
 Svaka podstranica ima **vlastiti raspored**, ne isti predložak pet puta:
 A3 kolor su izmjenične uredničke trake, A3 mono je tablica usporedbe brzina,
 A4 kolor je proza uz popis primjena, A4 mono je namjerno najmirnija stranica s
 jednim velikim uređajem, a najam je servisna prodajna stranica s tri koraka i
 biračem kategorije.
+
+**A1 stranica je namjerno najkraća.** Svaka rečenica o A1 mora proći njihov
+pregled, pa navodi ulogu savjetnika, četiri područja i staje. Bez tarifa,
+paketa i brojki — to nije naše za objaviti. Ako A1 kasnije odobri više
+detalja, ima mjesta dopuniti; nema mjesta povući krivu tvrdnju.
 
 ---
 

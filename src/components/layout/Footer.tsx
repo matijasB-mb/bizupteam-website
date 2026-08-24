@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Wordmark from "@/components/ui/Wordmark";
 import { contact, nav, site } from "@/lib/site";
-import { usluge } from "@/lib/usluge";
+import { grupe, uslugeUGrupi } from "@/lib/usluge";
 
 const linkClass =
   "inline-block py-1.5 text-sm text-white/70 transition-colors duration-300 hover:text-[var(--red-on-dark)]";
@@ -35,14 +35,18 @@ export default function Footer() {
           </nav>
 
           <nav aria-label="Podnožje — usluge" className="lg:col-span-3 lg:col-start-7">
-            <p className="t-label text-white/55">Usluge</p>
-            <ul className="mt-4 flex flex-col gap-1">
-              {usluge.map((u) => (
-                <li key={u.slug}>
-                  <Link href={`/usluge/${u.slug}`} className={linkClass}>{u.nav}</Link>
-                </li>
-              ))}
-            </ul>
+            {grupe.map((g, i) => (
+              <div key={g.id} className={i > 0 ? "mt-6" : ""}>
+                <p className="t-label text-white/55">{g.label}</p>
+                <ul className="mt-4 flex flex-col gap-1">
+                  {uslugeUGrupi(g.id).map((u) => (
+                    <li key={u.slug}>
+                      <Link href={`/usluge/${u.slug}`} className={linkClass}>{u.nav}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </nav>
 
           <address className="not-italic lg:col-span-3 lg:col-start-10">

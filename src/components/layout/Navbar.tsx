@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Wordmark from "@/components/ui/Wordmark";
 import { pauseScroll, resumeScroll } from "@/lib/smoothScroll";
 import { contact, nav } from "@/lib/site";
-import { usluge } from "@/lib/usluge";
+import { grupe, uslugeUGrupi } from "@/lib/usluge";
 
 const BAR_HEIGHT = 72;
 
@@ -230,39 +230,46 @@ export default function Navbar() {
                           </Link>
                         </div>
 
-                        <ul className="col-span-8 p-2">
-                          {usluge.map((u) => {
-                            const href = `/usluge/${u.slug}`;
-                            const on = pathname === href;
-                            return (
-                              <li key={u.slug}>
-                                <Link
-                                  href={href}
-                                  onClick={closeAll}
-                                  aria-current={on ? "page" : undefined}
-                                  className={`group/item flex items-start justify-between gap-4 px-5 py-3.5 transition-colors duration-300 hover:bg-[var(--paper-warm)] ${
-                                    on ? "bg-[var(--paper-warm)]" : ""
-                                  }`}
-                                >
-                                  <span className="min-w-0">
-                                    <span
-                                      className={`block text-[0.9375rem] font-semibold tracking-[-0.015em] transition-colors duration-300 group-hover/item:text-[var(--red-on-light)] ${
-                                        on ? "text-[var(--red-on-light)]" : "text-[var(--ink)]"
-                                      }`}
-                                      style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                                    >
-                                      {u.nav}
-                                    </span>
-                                    <span className="mt-0.5 block text-[0.8125rem] text-[var(--muted)]">
-                                      {u.navOpis}
-                                    </span>
-                                  </span>
-                                  <span className="text-[var(--red)]"><ItemArrow /></span>
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
+                        <div className="col-span-8 p-2">
+                          {grupe.map((g, gi) => (
+                            <div key={g.id} className={gi > 0 ? "mt-1 border-t border-[var(--line)] pt-3" : ""}>
+                              <p className="t-label px-5 pb-1 pt-2 text-[var(--muted)]">{g.label}</p>
+                              <ul>
+                                {uslugeUGrupi(g.id).map((u) => {
+                                  const href = `/usluge/${u.slug}`;
+                                  const on = pathname === href;
+                                  return (
+                                    <li key={u.slug}>
+                                      <Link
+                                        href={href}
+                                        onClick={closeAll}
+                                        aria-current={on ? "page" : undefined}
+                                        className={`group/item flex items-start justify-between gap-4 px-5 py-2.5 transition-colors duration-300 hover:bg-[var(--paper-warm)] ${
+                                          on ? "bg-[var(--paper-warm)]" : ""
+                                        }`}
+                                      >
+                                        <span className="min-w-0">
+                                          <span
+                                            className={`block text-[0.9375rem] font-semibold tracking-[-0.015em] transition-colors duration-300 group-hover/item:text-[var(--red-on-light)] ${
+                                              on ? "text-[var(--red-on-light)]" : "text-[var(--ink)]"
+                                            }`}
+                                            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                                          >
+                                            {u.nav}
+                                          </span>
+                                          <span className="mt-0.5 block text-[0.8125rem] text-[var(--muted)]">
+                                            {u.navOpis}
+                                          </span>
+                                        </span>
+                                        <span className="text-[var(--red)]"><ItemArrow /></span>
+                                      </Link>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -353,17 +360,24 @@ export default function Navbar() {
                     >
                       Sve usluge
                     </Link>
-                    {usluge.map((u) => (
-                      <Link
-                        key={u.slug}
-                        href={`/usluge/${u.slug}`}
-                        onClick={closeAll}
-                        className={`block border-t border-white/10 py-3.5 text-[0.9375rem] transition-colors duration-300 hover:text-white ${
-                          pathname === `/usluge/${u.slug}` ? "text-[var(--red-on-dark)]" : "text-white/80"
-                        }`}
-                      >
-                        {u.nav}
-                      </Link>
+                    {grupe.map((g) => (
+                      <div key={g.id}>
+                        <p className="t-label border-t border-white/10 pb-1 pt-4 text-white/45">
+                          {g.label}
+                        </p>
+                        {uslugeUGrupi(g.id).map((u) => (
+                          <Link
+                            key={u.slug}
+                            href={`/usluge/${u.slug}`}
+                            onClick={closeAll}
+                            className={`block py-3 text-[0.9375rem] transition-colors duration-300 hover:text-white ${
+                              pathname === `/usluge/${u.slug}` ? "text-[var(--red-on-dark)]" : "text-white/80"
+                            }`}
+                          >
+                            {u.nav}
+                          </Link>
+                        ))}
+                      </div>
                     ))}
                   </div>
                 </div>

@@ -29,8 +29,10 @@ portala, nema Supabasea. Jedna stranica, jedan zajednički QR koji vodi na nju.
 
 ### Unutarnje stranice
 
-- 10 ruta, sve statički generirane
+- 12 ruta, sve statički generirane
 - Navbar: padajući panel „Usluge", mobilna harmonika, aktivna stanja
+- Usluge grupirane u dva stupa: Telekomunikacije (A1) i Uredska tehnologija (Canon)
+- `/usluge/a1-telekomunikacije` — namjerno kratka, radi A1 odobrenja
 - Podnožje s poveznicama na sve usluge
 - `DeviceFrame` — Canon slot s tehničkim crtežom dok fotografije nema
 - `ContactForm` izdvojen: naslovnica i /kontakt dijele jednu implementaciju
@@ -63,7 +65,7 @@ portala, nema Supabasea. Jedna stranica, jedan zajednički QR koji vodi na nju.
 | Put dokumenta: napredak 0 → 1 kroz vidno polje | da |
 | Kontrast natpisa preko A1 fotografije (uzorkovani pikseli) | 16.6:1 |
 | Tim: 2 stupca na 768, 1 na 320 | da |
-| Svih 10 ruta: 200, jedan H1, jedinstven title i description | da |
+| Svih 12 ruta: 200, jedan H1, jedinstven title i description | da |
 | Mrtvih poveznica (`href="#"`) i internih 404 | 0 |
 | Kontrast na podstranicama (uzorkovano po stranici) | prolazi |
 | Padajući izbornik: hover, fokus, Escape; zatvoren je izvan tab reda | da |
@@ -122,6 +124,8 @@ stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
 
 - **A1 mora odobriti tekst.** Sve o A1 pisano je u ulozi savjetnika, nikad
   operatora, upravo zato. Ne mijenjati taj ton bez njihove suglasnosti.
+  Sada postoji i `/usluge/a1-telekomunikacije` — držana kratkom baš zato što
+  je svaka rečenica dodatna površina za njihov pregled.
 - **Nema fotografija klijenta.** Nijedna izmišljena fotografija nije korištena.
 - **Nema cijena.** Nigdje nije navedena nijedna brojka koju klijent nije dao.
 
