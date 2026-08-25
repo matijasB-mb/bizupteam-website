@@ -2,14 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import CTABand from "@/components/ui/CTABand";
-import DeviceFrame from "@/components/ui/DeviceFrame";
+import DeviceGallery from "@/components/ui/DeviceGallery";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { paketi } from "@/lib/site";
 import CustomSolutions from "@/components/ui/CustomSolutions";
-import { uslugaBySlug } from "@/lib/usluge";
+import { uredaji, uslugaBySlug } from "@/lib/usluge";
 
 const usluga = uslugaBySlug("najam-printera")!;
+
+/* The rental page has no single device of its own, so the hero shows the
+   breadth instead: A3 colour, A3 mono, A4 colour. Pulled from the catalogue
+   rather than hard-coded paths — that is exactly how the previous shot went
+   stale when the files were renamed. */
+const uNajmu = [
+  uredaji["a3-kolor"][0].image,
+  uredaji["a3-monokromatski"][0].image,
+  uredaji["a4-kolor"][0].image,
+];
 
 export const metadata: Metadata = {
   title: usluga.metaTitle,
@@ -56,12 +66,11 @@ export default function NajamPage() {
         title={usluga.hero}
         lead={usluga.heroLead}
         aside={
-          <DeviceFrame
-            src="/images/canon/irdx-c3926i.png"
-            alt="Canon imageRUNNER ADVANCE DX C3926i, multifunkcijski uređaj"
-            label="Canon uređaj u najmu"
+          <DeviceGallery
+            images={uNajmu}
+            alt="Canon multifunkcijski uređaji dostupni u najmu"
+            label="Uređaji u najmu"
             tone="dark"
-            ratio="4 / 3"
             priority
             sizes="(min-width: 1024px) 46vw, 100vw"
           />
