@@ -179,14 +179,15 @@ hairline jeziku kao ostatak stranice i oznaku „Fotografija u pripremi".
 
 Putanje su fiksne — ubaci datoteku i slika se sama pojavi, bez izmjene koda:
 
-```
-public/images/canon/irdx-c3926i.jpg    A3 kolor   — imageRUNNER ADVANCE DX C3926i
-public/images/canon/ir-2930i.jpg       A3 mono    — imageRUNNER 2930i
-public/images/canon/ir-c1533if.jpg     A4 kolor   — imageRUNNER C1533iF
-public/images/canon/ir-1643i.jpg       A4 mono    — imageRUNNER 1643i
-public/images/canon/isensys-1440i.jpg  A4 mono    — i-SENSYS X 1440i
-public/images/canon/najam-hero.jpg     najam
-```
+| Datoteka | Uređaj | Izvor | Stanje |
+|---|---|---|---|
+| `irdx-c3926i.png` | imageRUNNER ADVANCE DX C3926i | Canon CDN | 800×600 ✓ |
+| `ir-2930i.png` | imageRUNNER 2930i | Canon CDN | 800×800 ✓ |
+| `ir-c1533if.jpg` | imageRUNNER C1533iF | **vacom.hr** (preprodavač) | 800×800, 27 kB — slabija |
+| `isensys-1440i.png` | i-SENSYS X 1440i | Canon CDN | 800×600 ✓ |
+| `ir-1643i.jpg` | imageRUNNER 1643i | — | **nedostaje** |
+
+Najam stranica koristi C3926i sliku za hero; nema zaseban slot.
 
 Ovo je **točno ono što klijent drži u ponudi** — pet uređaja, ne katalog.
 Puni nazivi provjereni u Canon Europe specifikacijama.

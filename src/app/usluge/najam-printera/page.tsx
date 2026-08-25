@@ -57,8 +57,8 @@ export default function NajamPage() {
         lead={usluga.heroLead}
         aside={
           <DeviceFrame
-            src="/images/canon/najam-hero.jpg"
-            alt="Canon multifunkcijski uređaj u uredskom okruženju"
+            src="/images/canon/irdx-c3926i.png"
+            alt="Canon imageRUNNER ADVANCE DX C3926i, multifunkcijski uređaj"
             label="Canon uređaj u najmu"
             tone="dark"
             ratio="4 / 3"

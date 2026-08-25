@@ -194,7 +194,7 @@ export const uredaji: Record<
         { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
         { k: "Softver", v: "uniFLOW Online Express" },
       ],
-      image: "/images/canon/irdx-c3926i.jpg",
+      image: "/images/canon/irdx-c3926i.png",
     },
   ],
 
@@ -211,7 +211,7 @@ export const uredaji: Record<
         { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
         { k: "Podavač dokumenata", v: "Do A3 (DADF)" },
       ],
-      image: "/images/canon/ir-2930i.jpg",
+      image: "/images/canon/ir-2930i.png",
     },
   ],
 
@@ -257,7 +257,7 @@ export const uredaji: Record<
         { k: "Format", v: "A4" },
         { k: "Funkcije", v: "Ispis, kopiranje, skeniranje" },
       ],
-      image: "/images/canon/isensys-1440i.jpg",
+      image: "/images/canon/isensys-1440i.png",
     },
   ],
 };

@@ -89,6 +89,13 @@ stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
 - [ ] **Zamijeniti demo podatke tima** prije nego stranica ode live —
       imena, funkcije, brojevi i LinkedIn u `lib/site.ts`
 - [ ] Prave fotografije tima na putanje iz `lib/site.ts` (sad su monogrami)
+- [ ] **Fotografija za imageRUNNER 1643i** — link koji je klijent poslao vodi
+      na imageRUNNER **2425i** (drugi uređaj: A3, podni, veći). Nije objavljen;
+      taj slot i dalje crta tehnički nacrt.
+- [ ] Bolja fotografija za C1533iF — trenutna je s vacom.hr (preprodavač),
+      800×800 i 27 kB. Provjeriti smijemo li je koristiti i naći Canonovu.
+- [ ] Za padajuću sekciju „Specifikacije" trebaju **datasheet PDF linkovi**
+      (canon.a.bigcontent.io) — te mogu čitati, pa specifikacije izvlačim sam.
 - [x] ~~Potvrditi oznaku Canon uređaja~~ — klijent potvrdio pet uređaja
       (C3926i, C1533iF, 2930i, 1643i, 1440i); katalog zamijenjen
 - [ ] **Reći klijentu:** nije sve „imageRUNNER ADVANCE serija". Samo C3926i je
