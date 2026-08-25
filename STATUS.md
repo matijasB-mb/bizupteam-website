@@ -89,11 +89,13 @@ stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
 - [ ] **Zamijeniti demo podatke tima** prije nego stranica ode live —
       imena, funkcije, brojevi i LinkedIn u `lib/site.ts`
 - [ ] Prave fotografije tima na putanje iz `lib/site.ts` (sad su monogrami)
-- [ ] **Fotografija za imageRUNNER 1643i** — link koji je klijent poslao vodi
-      na imageRUNNER **2425i** (drugi uređaj: A3, podni, veći). Nije objavljen;
-      taj slot i dalje crta tehnički nacrt.
-- [ ] Bolja fotografija za C1533iF — trenutna je s vacom.hr (preprodavač),
-      800×800 i 27 kB. Provjeriti smijemo li je koristiti i naći Canonovu.
+- [x] ~~Fotografije uređaja~~ — svih pet ima Canon CDN snimak
+- [ ] **Zamijeniti dva privremena snimka** prije launcha: na A4 kolor stranici
+      stoji fotografija **C1538iF** (piše na kućištu) iako stranica govori o
+      C1533iF, a na A4 mono stoji **1643i II**. Iz istih serija su i kućište je
+      isto, ali tko pogleda izbliza vidi drugu oznaku. Klijent je najavio svoje
+      fotografije.
+- [ ] Potvrditi generaciju 1643i koju klijent drži — original ili II
 - [ ] Za padajuću sekciju „Specifikacije" trebaju **datasheet PDF linkovi**
       (canon.a.bigcontent.io) — te mogu čitati, pa specifikacije izvlačim sam.
 - [x] ~~Potvrditi oznaku Canon uređaja~~ — klijent potvrdio pet uređaja

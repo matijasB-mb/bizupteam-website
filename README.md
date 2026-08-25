@@ -179,15 +179,19 @@ hairline jeziku kao ostatak stranice i oznaku „Fotografija u pripremi".
 
 Putanje su fiksne — ubaci datoteku i slika se sama pojavi, bez izmjene koda:
 
-| Datoteka | Uređaj | Izvor | Stanje |
-|---|---|---|---|
-| `irdx-c3926i.png` | imageRUNNER ADVANCE DX C3926i | Canon CDN | 800×600 ✓ |
-| `ir-2930i.png` | imageRUNNER 2930i | Canon CDN | 800×800 ✓ |
-| `ir-c1533if.jpg` | imageRUNNER C1533iF | **vacom.hr** (preprodavač) | 800×800, 27 kB — slabija |
-| `isensys-1440i.png` | i-SENSYS X 1440i | Canon CDN | 800×600 ✓ |
-| `ir-1643i.jpg` | imageRUNNER 1643i | — | **nedostaje** |
+| Datoteka | Uređaj | Izvor |
+|---|---|---|
+| `irdx-c3926i.png` | imageRUNNER ADVANCE DX C3926i | Canon CDN |
+| `ir-2930i.png` | imageRUNNER 2930i | Canon CDN |
+| `ir-c1533if.png` | imageRUNNER C1533iF | Canon CDN — **snimak je C1538iF** |
+| `ir-1643i.png` | imageRUNNER 1643i | Canon CDN — snimak je 1643i **II** |
+| `isensys-1440i.png` | i-SENSYS X 1440i | Canon CDN |
 
-Najam stranica koristi C3926i sliku za hero; nema zaseban slot.
+Sve 800×600 ili 800×800, ~220–350 kB; Next ih isporučuje kao WebP na 10–24 kB.
+Najam stranica koristi C3926i snimak za hero, nema zaseban slot.
+
+Dva snimka su privremena zamjena iz iste serije jer Canon nema zaseban studijski
+snimak za točan model. Zabilježeno u `lib/usluge.ts` i STATUS.md.
 
 Ovo je **točno ono što klijent drži u ponudi** — pet uređaja, ne katalog.
 Puni nazivi provjereni u Canon Europe specifikacijama.

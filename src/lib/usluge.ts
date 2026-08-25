@@ -222,12 +222,15 @@ export const uredaji: Record<
       modeli: ["C1533iF"],
       opis:
         "Kompaktan A4 multifunkcijski uređaj u boji. Stane na ormarić, spaja se na postojeću mrežu i nosi kolor ispis cijelog manjeg ureda.",
+      // PRIVREMENO: fotografija je C1538iF iz iste serije — isto kućište, veća
+      // brzina. Canon nema zaseban studijski snimak za C1533iF. Zamijeniti kad
+      // klijent pošalje svoju fotografiju.
       podaci: [
         { k: "Format", v: "A4" },
         { k: "Ispis", v: "U boji" },
         { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
       ],
-      image: "/images/canon/ir-c1533if.jpg",
+      image: "/images/canon/ir-c1533if.png",
     },
   ],
 
@@ -244,7 +247,7 @@ export const uredaji: Record<
         { k: "Ispis", v: "Crno-bijelo" },
         { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
       ],
-      image: "/images/canon/ir-1643i.jpg",
+      image: "/images/canon/ir-1643i.png",
     },
     {
       id: "isensys-1440i",
