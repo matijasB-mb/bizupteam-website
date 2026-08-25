@@ -179,19 +179,27 @@ hairline jeziku kao ostatak stranice i oznaku „Fotografija u pripremi".
 
 Putanje su fiksne — ubaci datoteku i slika se sama pojavi, bez izmjene koda:
 
-| Datoteka | Uređaj | Izvor |
-|---|---|---|
-| `irdx-c3926i.png` | imageRUNNER ADVANCE DX C3926i | Canon CDN |
-| `ir-2930i.png` | imageRUNNER 2930i | Canon CDN |
-| `ir-c1533if.png` | imageRUNNER C1533iF | Canon CDN — **snimak je C1538iF** |
-| `ir-1643i.png` | imageRUNNER 1643i | Canon CDN — snimak je 1643i **II** |
-| `isensys-1440i.png` | i-SENSYS X 1440i | Canon CDN |
+Svaki uređaj ima **tri snimka** s Canonovog CDN-a — sprijeda, pod kutom i
+detalj — u `public/images/canon/<uređaj>-1..3.png`:
 
-Sve 800×600 ili 800×800, ~220–350 kB; Next ih isporučuje kao WebP na 10–24 kB.
-Najam stranica koristi C3926i snimak za hero, nema zaseban slot.
+```
+irdx-c3926i-1..3.png    imageRUNNER ADVANCE DX C3926i
+ir-2930i-1..3.png       imageRUNNER 2930i
+ir-c1533if-1..3.png     imageRUNNER C1533iF   (Canon ih objavljuje kao C1538iF/C1533iF)
+ir-1643i-1..3.png       imageRUNNER 1643i II
+isensys-1440i-1..3.png  i-SENSYS X 1440i
+```
 
-Dva snimka su privremena zamjena iz iste serije jer Canon nema zaseban studijski
-snimak za točan model. Zabilježeno u `lib/usluge.ts` i STATUS.md.
+`DeviceGallery` prikazuje veliki kadar i tri sličice; `DeviceSpec` četiri
+istaknuta retka pa punu tablicu u `<details>`.
+
+### Odakle specifikacije
+
+**Svaki redak je s canon.hr, ništa nije procijenjeno.** `canon.hr` vraća 403 na
+`curl`, ali se otvara u pravom pregledniku — podaci su čitani odande i upisani u
+`spec` polje svakog uređaja. Uz tablicu stoji poveznica na Canonovu stranicu
+(`canonUrl`), pa Canon ostaje autoritet za vlastiti proizvod, a naša tablica ne
+može tiho zastarjeti u odnosu na njegovu.
 
 Ovo je **točno ono što klijent drži u ponudi** — pet uređaja, ne katalog.
 Puni nazivi provjereni u Canon Europe specifikacijama.

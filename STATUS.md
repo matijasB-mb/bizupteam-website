@@ -90,12 +90,13 @@ stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
       imena, funkcije, brojevi i LinkedIn u `lib/site.ts`
 - [ ] Prave fotografije tima na putanje iz `lib/site.ts` (sad su monogrami)
 - [x] ~~Fotografije uređaja~~ — svih pet ima Canon CDN snimak
-- [ ] **Zamijeniti dva privremena snimka** prije launcha: na A4 kolor stranici
-      stoji fotografija **C1538iF** (piše na kućištu) iako stranica govori o
-      C1533iF, a na A4 mono stoji **1643i II**. Iz istih serija su i kućište je
-      isto, ali tko pogleda izbliza vidi drugu oznaku. Klijent je najavio svoje
-      fotografije.
-- [ ] Potvrditi generaciju 1643i koju klijent drži — original ili II
+- [ ] **A4 kolor snimci su iz serije C1530** — Canon ih objavljuje pod
+      zajedničkom oznakom C1538iF / C1533iF jer dijele kućište. Na prvom snimku
+      izbliza piše C1538iF. Klijent je najavio svoje fotografije.
+- [ ] **Potvrditi generaciju 1643i** — na stranici stoji `imageRUNNER 1643i II`
+      jer su i snimak i specifikacije s Canonove stranice za II (43 ppm).
+      Originalni 1643i ima 45 ppm. Ako klijent drži stariji, treba promijeniti
+      naziv i tri brojke.
 - [ ] Za padajuću sekciju „Specifikacije" trebaju **datasheet PDF linkovi**
       (canon.a.bigcontent.io) — te mogu čitati, pa specifikacije izvlačim sam.
 - [x] ~~Potvrditi oznaku Canon uređaja~~ — klijent potvrdio pet uređaja

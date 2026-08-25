@@ -24,8 +24,15 @@ export type Uredaj = {
   serija: string;
   modeli: readonly string[];
   opis: string;
-  /** Samo potvrđeni podaci iz Canon specifikacija. */
-  podaci: readonly { k: string; v: string }[];
+  /** Tri snimka s Canonovog CDN-a: sprijeda, pod kutom, detalj. */
+  slike: readonly string[];
+  /** Četiri retka koja stoje uz galeriju, bez otvaranja tablice. */
+  istaknuto: readonly string[];
+  /** Puna tablica — svaki redak prepisan s canon.hr, ništa procijenjeno. */
+  spec: readonly { k: string; v: string }[];
+  /** Canonova stranica s potpunim tehničkim podacima. */
+  canonUrl: string;
+  /** Prvi snimak; zadržan radi komponenti koje traže jednu sliku. */
   image: string;
 };
 
@@ -177,6 +184,9 @@ export function uslugeUGrupi(grupa: Grupa): readonly Usluga[] {
    C1533iF, 2930i i 1643i su imageRUNNER (bez ADVANCE), a 1440i je i-SENSYS X.
    Ne spajati ih pod jedan naziv serije.                                    */
 
+const CANON =
+  "https://www.canon.hr/business/products/office-printers/multifunction";
+
 export const uredaji: Record<
   Exclude<UslugaSlug, "najam-printera" | "a1-telekomunikacije">,
   readonly Uredaj[]
@@ -188,13 +198,31 @@ export const uredaji: Record<
       modeli: ["C3926i"],
       opis:
         "A3 multifunkcijski uređaj u boji iz serije C3900. Građen oko rada s oblakom i dijeljenja dokumenata unutar tima — ispisuje, kopira, skenira i šalje iz istog kućišta.",
-      podaci: [
-        { k: "Format", v: "A3 / A4" },
-        { k: "Ispis", v: "U boji i crno-bijelo" },
-        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
-        { k: "Softver", v: "uniFLOW Online Express" },
+      slike: [
+        "/images/canon/irdx-c3926i-1.png",
+        "/images/canon/irdx-c3926i-2.png",
+        "/images/canon/irdx-c3926i-3.png",
       ],
-      image: "/images/canon/irdx-c3926i.png",
+      istaknuto: [
+        "26 ppm ispis u boji i crno-bijelo (A4)",
+        "270 ipm obostrano skeniranje",
+        "Dodirni zaslon u boji od 10,1 inča",
+        "Do 2.300 listova kapaciteta papira",
+      ],
+      spec: [
+        { k: "Tip uređaja", v: "Laserski višefunkcijski A3 uređaj u boji" },
+        { k: "Osnovne funkcije", v: "Ispisivanje, kopiranje, skeniranje, slanje, pohranjivanje i opcionalno faksiranje" },
+        { k: "Brzina ispisivanja", v: "Do 26 ppm (A4), do 15 ppm (A3), do 20 ppm (A4R)" },
+        { k: "Razlučivost ispisivanja", v: "1200 × 600 dpi, 1200 × 1200 dpi (pola brzine)" },
+        { k: "Brzina skeniranja", v: "Do 270 ipm obostrano (300 × 300 dpi, slanje)" },
+        { k: "Kapacitet zalihe papira", v: "Standardno 1.200 listova, maksimalno 2.300 listova" },
+        { k: "Izlazni kapacitet papira", v: "Standardno 250 listova, maksimalno 3.450 listova" },
+        { k: "Upravljačka ploča", v: "TFT LCD WSVGA dodirni zaslon u boji od 10,1 inča" },
+        { k: "Povezivanje", v: "1000Base-T / 100Base-TX / 10Base-T, opcionalno bežični LAN" },
+        { k: "Vrijeme do prve kopije", v: "Pribl. 6,1 s ili manje" },
+      ],
+      canonUrl: CANON + "/colour/imagerunner-advance-dx-c3900-series/specifications/imagerunner-advance-dx-c3926i.html",
+      image: "/images/canon/irdx-c3926i-1.png",
     },
   ],
 
@@ -205,13 +233,30 @@ export const uredaji: Record<
       modeli: ["2930i"],
       opis:
         "A3 crno-bijeli multifunkcijski uređaj iz serije 2900. Rađen za urede u kojima ispis ide svaki dan i u kojima zastoj košta više od uređaja.",
-      podaci: [
-        { k: "Format", v: "A3 / A4" },
-        { k: "Ispis", v: "Crno-bijelo" },
-        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
-        { k: "Podavač dokumenata", v: "Do A3 (DADF)" },
+      slike: [
+        "/images/canon/ir-2930i-1.png",
+        "/images/canon/ir-2930i-2.png",
+        "/images/canon/ir-2930i-3.png",
       ],
-      image: "/images/canon/ir-2930i.png",
+      istaknuto: [
+        "30 ppm crno-bijeli ispis (A4)",
+        "15 ppm u punom A3 formatu",
+        "Dodirni zaslon u boji od 7 inča",
+        "Do 2.300 listova kapaciteta papira",
+      ],
+      spec: [
+        { k: "Tip uređaja", v: "A3 monokromatski laserski višefunkcijski uređaj" },
+        { k: "Osnovne funkcije", v: "Ispisivanje, kopiranje, skeniranje, slanje i opcionalno faksiranje" },
+        { k: "Brzina ispisivanja", v: "Do 30 ppm (A4), do 15 ppm (A3), do 20 ppm (A4R)" },
+        { k: "Razlučivost ispisivanja", v: "Do 1200 × 1200 dpi" },
+        { k: "Brzina skeniranja", v: "35/25 ipm jednostrano (300 × 300 dpi, slanje)" },
+        { k: "Kapacitet zalihe papira", v: "Standardno 1.200 listova, maksimalno 2.300 listova" },
+        { k: "Izlazni kapacitet papira", v: "Standardno 250 listova, maksimalno 645 listova" },
+        { k: "Upravljačka ploča", v: "TFT LCD WVGA dodirni zaslon u boji od 7 inča" },
+        { k: "Povezivanje", v: "1000Base-T / 100Base-TX / 10Base-T, bežični LAN, izravna Wi-Fi veza" },
+      ],
+      canonUrl: CANON + "/black-and-white/imagerunner-2900-series/specifications/imagerunner-2930i.html",
+      image: "/images/canon/ir-2930i-1.png",
     },
   ],
 
@@ -222,32 +267,66 @@ export const uredaji: Record<
       modeli: ["C1533iF"],
       opis:
         "Kompaktan A4 multifunkcijski uređaj u boji. Stane na ormarić, spaja se na postojeću mrežu i nosi kolor ispis cijelog manjeg ureda.",
-      // PRIVREMENO: fotografija je C1538iF iz iste serije — isto kućište, veća
-      // brzina. Canon nema zaseban studijski snimak za C1533iF. Zamijeniti kad
-      // klijent pošalje svoju fotografiju.
-      podaci: [
-        { k: "Format", v: "A4" },
-        { k: "Ispis", v: "U boji" },
-        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
+      // Canon objavljuje snimke serije C1530 pod zajedničkom oznakom
+      // C1538iF / C1533iF — isto kućište, razlika je u brzini.
+      slike: [
+        "/images/canon/ir-c1533if-1.png",
+        "/images/canon/ir-c1533if-2.png",
+        "/images/canon/ir-c1533if-3.png",
       ],
-      image: "/images/canon/ir-c1533if.png",
+      istaknuto: [
+        "33 ppm u boji i crno-bijelo",
+        "Ispis, kopiranje, skeniranje i faks",
+        "Dodirni zaslon u boji od 7 inča",
+        "Do 2.300 listova kapaciteta papira",
+      ],
+      spec: [
+        { k: "Tip uređaja", v: "Laserski višefunkcijski A4 uređaj u boji" },
+        { k: "Osnovne funkcije", v: "Ispis, kopiranje, skeniranje, slanje i faksiranje" },
+        { k: "Brzina ispisivanja", v: "Do 33/33 ppm (A4R), u boji i crno-bijelo" },
+        { k: "Razlučivost ispisivanja", v: "Do 1200 × 1200 dpi" },
+        { k: "Brzina skeniranja", v: "95 ipm jednostrano (300 dpi, slanje)" },
+        { k: "Kapacitet zalihe papira", v: "Standardno 650 listova, maksimalno 2.300 listova" },
+        { k: "Izlazni kapacitet papira", v: "200 listova" },
+        { k: "Upravljačka ploča", v: "TFT WVGA LCD dodirna ploča u boji od 17,8 cm (7 inča)" },
+        { k: "Povezivanje", v: "1000Base-T / 100Base-TX / 10Base-T, bežični LAN" },
+      ],
+      canonUrl: CANON + "/colour/imagerunner-c1530-series/specifications/",
+      image: "/images/canon/ir-c1533if-1.png",
     },
   ],
 
   "a4-monokromatski": [
     {
       id: "ir-1643i",
-      serija: "imageRUNNER 1643i",
-      modeli: ["1643i"],
+      serija: "imageRUNNER 1643i II",
+      modeli: ["1643i II"],
       opis:
         "Uređaj koji nudimo u svim paketima najma. Brz, provjeren u radu i jednostavan za održavanje — radna konjica za svakodnevni uredski ispis.",
-      podaci: [
-        { k: "Brzina ispisa", v: "45 str./min (A4)" },
-        { k: "Format", v: "A4" },
-        { k: "Ispis", v: "Crno-bijelo" },
-        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
+      slike: [
+        "/images/canon/ir-1643i-1.png",
+        "/images/canon/ir-1643i-2.png",
+        "/images/canon/ir-1643i-3.png",
       ],
-      image: "/images/canon/ir-1643i.png",
+      istaknuto: [
+        "43 ppm jednostrano (A4)",
+        "36 ppm obostrano (A4)",
+        "Dodirni zaslon u boji od 5 inča",
+        "Do 2.300 listova kapaciteta papira",
+      ],
+      spec: [
+        { k: "Tip uređaja", v: "Crno-bijeli laserski višefunkcijski uređaj" },
+        { k: "Osnovne funkcije", v: "Ispisivanje, kopiranje, skeniranje i slanje" },
+        { k: "Brzina ispisivanja", v: "Jednostrano do 43 ppm, obostrano do 36 ppm (A4)" },
+        { k: "Razlučivost ispisivanja", v: "Do 1200 × 1200 dpi" },
+        { k: "Brzina skeniranja", v: "38 ipm jednostrano, 70 ipm obostrano (crno-bijelo)" },
+        { k: "Kapacitet zalihe papira", v: "Standardno 650 listova, maksimalno 2.300 listova" },
+        { k: "Izlazni kapacitet papira", v: "150 listova" },
+        { k: "Upravljačka ploča", v: "TFT LCD WVGA dodirna ploča u boji od 12,7 cm (5 inča)" },
+        { k: "Povezivanje", v: "1000Base-T / 100Base-TX / 10Base-T, bežični LAN, izravna Wi-Fi veza" },
+      ],
+      canonUrl: CANON + "/black-and-white/imagerunner-1643-ii-series/specifications/imagerunner-1643i-ii.html",
+      image: "/images/canon/ir-1643i-1.png",
     },
     {
       id: "isensys-1440i",
@@ -255,12 +334,26 @@ export const uredaji: Record<
       modeli: ["1440i"],
       opis:
         "Kompaktniji A4 crno-bijeli multifunkcijski uređaj za radna mjesta i manje urede kojima ne treba puni volumen većeg modela.",
-      podaci: [
-        { k: "Brzina ispisa", v: "Do 40 str./min" },
-        { k: "Format", v: "A4" },
-        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje" },
+      slike: [
+        "/images/canon/isensys-1440i-1.png",
+        "/images/canon/isensys-1440i-2.png",
+        "/images/canon/isensys-1440i-3.png",
       ],
-      image: "/images/canon/isensys-1440i.png",
+      istaknuto: [
+        "40 ppm jednostrano (A4)",
+        "50 ipm skeniranje",
+        "Dodirni zaslon u boji od 12,7 cm",
+        "Ispis, kopiranje i skeniranje",
+      ],
+      spec: [
+        { k: "Tip uređaja", v: "Crno-bijeli laserski uređaj sve u jednom" },
+        { k: "Brzina ispisivanja", v: "Jednostrano do 40 ppm (A4), obostrano do 33,6 ipm" },
+        { k: "Razlučivost ispisivanja", v: "Do 1200 × 1200 dpi" },
+        { k: "Brzina skeniranja", v: "50 ipm jednostrano, 100 ipm obostrano (300 × 300 dpi)" },
+        { k: "Upravljačka ploča", v: "LCD dodirni zaslon u boji dijagonale 12,7 cm" },
+      ],
+      canonUrl: CANON + "/black-and-white/i-sensys-x-1440i-series/specifications/i-sensys-x-1440i.html",
+      image: "/images/canon/isensys-1440i-1.png",
     },
   ],
 };

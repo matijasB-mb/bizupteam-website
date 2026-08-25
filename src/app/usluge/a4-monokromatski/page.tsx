@@ -3,6 +3,8 @@ import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import CTABand from "@/components/ui/CTABand";
 import DeviceFrame from "@/components/ui/DeviceFrame";
+import DeviceGallery from "@/components/ui/DeviceGallery";
+import DeviceSpec from "@/components/ui/DeviceSpec";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 
@@ -41,11 +43,10 @@ export default function A4MonoPage() {
       <section className="section bg-[var(--paper)]">
         <div className="shell">
           <div className="mx-auto max-w-4xl">
-            <DeviceFrame
-              src={lead.image}
+            <DeviceGallery
+              images={lead.slike}
               alt={`Canon ${lead.serija}`}
-              label="imageRUNNER 1643i"
-              ratio="16 / 10"
+              label={lead.serija}
               priority
               sizes="(min-width: 1024px) 56rem, 100vw"
             />
@@ -61,14 +62,9 @@ export default function A4MonoPage() {
               </div>
               <div className="sm:col-span-7">
                 <p className="t-body max-w-[46ch]">{lead.opis}</p>
-                <dl className="mt-7 flex flex-col gap-3 border-t border-[var(--line)] pt-5">
-                  {lead.podaci.map((p) => (
-                    <div key={p.k} className="flex items-baseline justify-between gap-4 text-[0.9375rem]">
-                      <dt className="text-[var(--muted)]">{p.k}</dt>
-                      <dd className="text-right text-[var(--text)]">{p.v}</dd>
-                    </div>
-                  ))}
-                </dl>
+                <div className="mt-7">
+                  <DeviceSpec device={lead} />
+                </div>
               </div>
             </div>
           </Reveal>

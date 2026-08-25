@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import CTABand from "@/components/ui/CTABand";
-import DeviceFrame from "@/components/ui/DeviceFrame";
+import DeviceGallery from "@/components/ui/DeviceGallery";
+import DeviceSpec from "@/components/ui/DeviceSpec";
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
@@ -76,18 +77,7 @@ export default function A3MonoPage() {
               <span className="t-label text-[var(--red-on-light)]">Canon</span>
               <h3 className="t-h2 mt-4 max-w-[13ch]">{device.serija}</h3>
               <p className="t-body mt-6 max-w-[42ch]">{device.opis}</p>
-
-              <dl className="mt-9 border-t border-[var(--line)]">
-                {device.podaci.map((d) => (
-                  <div
-                    key={d.k}
-                    className="flex items-baseline justify-between gap-6 border-b border-[var(--line)] py-4"
-                  >
-                    <dt className="t-label text-[var(--muted)]">{d.k}</dt>
-                    <dd className="text-right text-[0.9375rem] text-[var(--text)]">{d.v}</dd>
-                  </div>
-                ))}
-              </dl>
+              <DeviceSpec device={device} />
 
               <Link
                 href="/kontakt"
@@ -99,10 +89,9 @@ export default function A3MonoPage() {
             </div>
 
             <div className="lg:col-span-6 lg:col-start-7">
-              <DeviceFrame
-                src={device.image}
+              <DeviceGallery
+                images={device.slike}
                 alt={`Canon ${device.serija}`}
-                ratio="4 / 3"
                 priority
                 sizes="(min-width: 1024px) 46vw, 100vw"
               />
