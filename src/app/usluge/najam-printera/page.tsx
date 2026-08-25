@@ -6,6 +6,7 @@ import DeviceFrame from "@/components/ui/DeviceFrame";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { paketi } from "@/lib/site";
+import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uslugaBySlug } from "@/lib/usluge";
 
 const usluga = uslugaBySlug("najam-printera")!;
@@ -301,8 +302,12 @@ export default function NajamPage() {
               Nudimo i najam bez dugoročne obveze te kupnju uz servisni ugovor.
             </p>
           </Reveal>
+
+          <CustomSolutions variant="note" />
         </div>
       </section>
+
+      <CustomSolutions />
 
       <CTABand
         title="Ne kupujte printer prije nego što provjerite opciju najma."

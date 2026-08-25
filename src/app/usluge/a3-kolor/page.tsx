@@ -6,10 +6,11 @@ import DeviceFrame from "@/components/ui/DeviceFrame";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 
+import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
 
 const usluga = uslugaBySlug("a3-kolor")!;
-const devices = uredaji["a3-kolor"];
+const [device] = uredaji["a3-kolor"];
 
 export const metadata: Metadata = {
   title: usluga.metaTitle,
@@ -56,9 +57,9 @@ export default function A3KolorPage() {
         lead={usluga.heroLead}
         aside={
           <DeviceFrame
-            src={devices[0].image}
-            alt="Canon imageRUNNER ADVANCE DX C3900 A3 multifunkcijski uređaj u boji"
-            label="imageRUNNER ADVANCE DX C3900"
+            src={device.image}
+            alt="Canon imageRUNNER ADVANCE DX C3926i, A3 multifunkcijski uređaj u boji"
+            label="imageRUNNER ADVANCE DX C3926i"
             tone="dark"
             ratio="5 / 4"
             priority
@@ -83,70 +84,60 @@ export default function A3KolorPage() {
         </div>
       </PageHero>
 
-      {/* ── Uređaji: izmjenične uredničke trake, ne mreža kartica ── */}
+      {/* ── Uređaj ── */}
       <section className="section bg-[var(--paper)]">
         <div className="shell">
           <Reveal>
             <div className="grid gap-y-6 border-t border-[var(--line-strong)] pt-10 lg:grid-cols-12 lg:gap-x-16">
               <div className="lg:col-span-5">
-                <SectionLabel>Uređaji</SectionLabel>
-                <h2 className="t-h2 mt-6 max-w-[14ch]">Tri serije, jedna klasa</h2>
+                <SectionLabel>Uređaj</SectionLabel>
+                <h2 className="t-h2 mt-6 max-w-[14ch]">Naš izbor za A3 kolor</h2>
               </div>
               <p className="t-lead lg:col-span-6 lg:col-start-7 lg:self-end">
-                Razlika među njima je brzina i opseg, ne kvaliteta ispisa. Koja
-                vam odgovara, ovisi o tome koliko stvarno ispisujete — a to
-                provjerimo prije nego išta predložimo.
+                Jedan uređaj koji pokriva i puni format i svakodnevni A4 ispis —
+                bez drugog stroja u kutu koji se pali dvaput mjesečno.
               </p>
             </div>
           </Reveal>
 
-          <div className="mt-16 flex flex-col gap-px sm:mt-20">
-            {devices.map((d, i) => {
-              const flip = i % 2 === 1;
-              return (
-                <Reveal key={d.id} delay={i * 60}>
-                  <article className="grid items-center gap-y-8 border-t border-[var(--line)] py-12 lg:grid-cols-12 lg:gap-x-16 lg:py-16">
-                    <div className={`lg:col-span-5 ${flip ? "lg:order-2 lg:col-start-8" : ""}`}>
-                      <DeviceFrame
-                        src={d.image}
-                        alt={`Canon ${d.serija}`}
-                        ratio="4 / 3"
-                        sizes="(min-width: 1024px) 40vw, 100vw"
-                      />
-                    </div>
+          <div className="mt-14 grid items-center gap-y-10 sm:mt-16 lg:grid-cols-12 lg:gap-x-16">
+            <div className="lg:col-span-6">
+              <DeviceFrame
+                src={device.image}
+                alt={`Canon ${device.serija}`}
+                ratio="4 / 3"
+                sizes="(min-width: 1024px) 46vw, 100vw"
+              />
+            </div>
 
-                    <div className={`lg:col-span-6 ${flip ? "lg:order-1 lg:col-start-1" : "lg:col-start-7"}`}>
-                      <span className="t-label text-[var(--red-on-light)]">
-                        {String(i + 1).padStart(2, "0")} — Canon
-                      </span>
-                      <h3 className="t-h3 mt-4">{d.serija}</h3>
-                      <p className="mt-2 text-[0.875rem] text-[var(--muted)]">
-                        {d.modeli.join(" · ")}
-                      </p>
-                      <p className="t-body mt-5 max-w-[46ch]">{d.opis}</p>
+            <div className="lg:col-span-5 lg:col-start-8">
+              <span className="t-label text-[var(--red-on-light)]">Canon</span>
+              <h3 className="t-h2 mt-4 max-w-[14ch]">{device.serija}</h3>
+              <p className="t-body mt-6 max-w-[44ch]">{device.opis}</p>
 
-                      <dl className="mt-8 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-[var(--line)] pt-6">
-                        {d.podaci.map((p) => (
-                          <div key={p.k}>
-                            <dt className="t-label text-[var(--muted)]">{p.k}</dt>
-                            <dd className="mt-2 text-[0.9375rem] text-[var(--text)]">{p.v}</dd>
-                          </div>
-                        ))}
-                      </dl>
+              <dl className="mt-9 border-t border-[var(--line)]">
+                {device.podaci.map((d) => (
+                  <div
+                    key={d.k}
+                    className="flex items-baseline justify-between gap-6 border-b border-[var(--line)] py-4"
+                  >
+                    <dt className="t-label text-[var(--muted)]">{d.k}</dt>
+                    <dd className="text-right text-[0.9375rem] text-[var(--text)]">{d.v}</dd>
+                  </div>
+                ))}
+              </dl>
 
-                      <Link
-                        href="/kontakt"
-                        className="group mt-8 inline-flex items-center gap-2.5 border-b border-[var(--line-strong)] pb-1.5 text-[0.9375rem] font-medium transition-colors duration-300 hover:border-[var(--red)] hover:text-[var(--red-on-light)]"
-                      >
-                        Zatražite ponudu za ovu seriju
-                        <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                      </Link>
-                    </div>
-                  </article>
-                </Reveal>
-              );
-            })}
+              <Link
+                href="/kontakt"
+                className="group mt-9 inline-flex items-center gap-2.5 bg-[var(--ink)] px-6 py-3.5 text-[0.9375rem] font-medium leading-none text-white transition-colors duration-300 hover:bg-[var(--red)]"
+              >
+                Zatražite ponudu
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </Link>
+            </div>
           </div>
+
+          <CustomSolutions variant="note" />
         </div>
       </section>
 
@@ -178,6 +169,8 @@ export default function A3KolorPage() {
           </ul>
         </div>
       </section>
+
+      <CustomSolutions />
 
       <CTABand
         title="Treba vam A3 pisač u boji?"

@@ -89,7 +89,11 @@ stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
 - [ ] **Zamijeniti demo podatke tima** prije nego stranica ode live —
       imena, funkcije, brojevi i LinkedIn u `lib/site.ts`
 - [ ] Prave fotografije tima na putanje iz `lib/site.ts` (sad su monogrami)
-- [ ] Potvrditi kod klijenta: točna oznaka Canon uređaja (`1643` iz rukopisa)
+- [x] ~~Potvrditi oznaku Canon uređaja~~ — klijent potvrdio pet uređaja
+      (C3926i, C1533iF, 2930i, 1643i, 1440i); katalog zamijenjen
+- [ ] **Reći klijentu:** nije sve „imageRUNNER ADVANCE serija". Samo C3926i je
+      ADVANCE DX; C1533iF, 2930i i 1643i su imageRUNNER, a 1440i je i-SENSYS X.
+      Canonov predstavnik bi to primijetio.
 - [ ] Potvrditi telefon — stara stranica ima `0916367770`, ranija bilješka `7775`
 
 ### Prioritet

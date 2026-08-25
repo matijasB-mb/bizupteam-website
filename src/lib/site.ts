@@ -103,7 +103,7 @@ export const canon = {
 } as const;
 
 /* Volumes, inclusions and the shared device come from the client's own notes.
-   TODO (klijent): potvrditi točnu oznaku uređaja i mjesečne cijene po paketu. */
+   Uređaj potvrdio klijent: imageRUNNER 1643i. TODO: mjesečne cijene po paketu. */
 
 export type Paket = {
   id: string;
@@ -122,7 +122,7 @@ export const paketi: readonly Paket[] = [
     volume: "500",
     volumeNote: "crno-bijelih ispisa mjesečno",
     blurb: "Za manje urede s umjerenim ispisom.",
-    includes: ["Canon uređaj 1643", "Servis", "Toner"],
+    includes: ["Canon imageRUNNER 1643i", "Servis", "Toner"],
   },
   {
     id: "low",
@@ -130,7 +130,7 @@ export const paketi: readonly Paket[] = [
     volume: "1.500",
     volumeNote: "crno-bijelih ispisa mjesečno",
     blurb: "Za urede u kojima ispis ide svaki dan.",
-    includes: ["Canon uređaj 1643", "Servis", "Toner"],
+    includes: ["Canon imageRUNNER 1643i", "Servis", "Toner"],
   },
   {
     id: "mid",
@@ -139,7 +139,7 @@ export const paketi: readonly Paket[] = [
     volumeNote: "crno-bijelih ispisa mjesečno",
     blurb: "Za timove koji rastu i trebaju zajamčen odziv servisa.",
     includes: [
-      "Canon uređaj 1643",
+      "Canon imageRUNNER 1643i",
       "Servis u roku 8 sati",
       "Toner",
       "Telefonska podrška",
@@ -153,7 +153,7 @@ export const paketi: readonly Paket[] = [
     volumeNote: "crno-bijelih ispisa mjesečno",
     blurb: "Za poslovanja u kojima ispis ne smije stati.",
     includes: [
-      "Canon uređaj 1643",
+      "Canon imageRUNNER 1643i",
       "Prioritetni servis u roku 4 sata",
       "Toner",
       "Cloud skeniranje",

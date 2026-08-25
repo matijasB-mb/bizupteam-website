@@ -169,9 +169,13 @@ export function uslugeUGrupi(grupa: Grupa): readonly Usluga[] {
   return usluge.filter((u) => u.grupa === grupa);
 }
 
-/* ── Uređaji po kategoriji ─────────────────────────────────────────────
-   Podaci iz službenih Canon specifikacija (canon-europe.com). Brzine su
-   navedene onako kako ih Canon navodi — po modelu, ne kao raspon serije. */
+/* ── Uređaji ───────────────────────────────────────────────────────────
+   Točno ono što klijent drži u ponudi — pet uređaja, ne katalog. Puni nazivi
+   provjereni u Canon Europe specifikacijama.
+
+   Napomena o nazivima: samo je C3926i iz serije imageRUNNER **ADVANCE** DX.
+   C1533iF, 2930i i 1643i su imageRUNNER (bez ADVANCE), a 1440i je i-SENSYS X.
+   Ne spajati ih pod jedan naziv serije.                                    */
 
 export const uredaji: Record<
   Exclude<UslugaSlug, "najam-printera" | "a1-telekomunikacije">,
@@ -179,140 +183,75 @@ export const uredaji: Record<
 > = {
   "a3-kolor": [
     {
-      id: "irdx-c3900",
-      serija: "imageRUNNER ADVANCE DX C3900",
-      modeli: ["C3922i", "C3926i", "C3930i", "C3935i"],
+      id: "irdx-c3926i",
+      serija: "imageRUNNER ADVANCE DX C3926i",
+      modeli: ["C3926i"],
       opis:
-        "A3 multifunkcijski uređaji u boji za urede koji rade s dokumentima svaki dan. Serija je građena oko rada s oblakom i dijeljenja dokumenata unutar tima.",
+        "A3 multifunkcijski uređaj u boji iz serije C3900. Građen oko rada s oblakom i dijeljenja dokumenata unutar tima — ispisuje, kopira, skenira i šalje iz istog kućišta.",
       podaci: [
         { k: "Format", v: "A3 / A4" },
         { k: "Ispis", v: "U boji i crno-bijelo" },
         { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
         { k: "Softver", v: "uniFLOW Online Express" },
       ],
-      image: "/images/canon/irdx-c3900.jpg",
-    },
-    {
-      id: "irdx-c3800",
-      serija: "imageRUNNER ADVANCE DX C3800",
-      modeli: ["22 ppm", "26 ppm", "30 ppm", "35 ppm"],
-      opis:
-        "Serija A3 kolor uređaja s izborom brzine prema stvarnom opsegu ispisa — od mirnijeg ureda do odjela s stalnim protokom dokumenata.",
-      podaci: [
-        { k: "Format", v: "A3 / A4" },
-        { k: "Brzina ispisa", v: "22 / 26 / 30 / 35 str./min (A4)" },
-        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
-      ],
-      image: "/images/canon/irdx-c3800.jpg",
-    },
-    {
-      id: "irdx-c3700",
-      serija: "imageRUNNER ADVANCE DX C3700",
-      modeli: ["20 ppm", "25 ppm", "30 ppm"],
-      opis:
-        "Kompaktnija A3 kolor serija za urede kojima treba puni format, ali ne i najveći volumen.",
-      podaci: [
-        { k: "Format", v: "A3 / A4" },
-        { k: "Brzina ispisa", v: "20 / 25 / 30 str./min (A4)" },
-        { k: "Skeniranje", v: "Do 270 slika/min, obostrano" },
-      ],
-      image: "/images/canon/irdx-c3700.jpg",
+      image: "/images/canon/irdx-c3926i.jpg",
     },
   ],
 
   "a3-monokromatski": [
     {
-      id: "irdx-4845i",
-      serija: "imageRUNNER ADVANCE DX 4845i",
-      modeli: ["4845i"],
+      id: "ir-2930i",
+      serija: "imageRUNNER 2930i",
+      modeli: ["2930i"],
       opis:
-        "Najbrži model serije. Za odjele u kojima ispis ide bez prekida i u kojima zastoj košta.",
+        "A3 crno-bijeli multifunkcijski uređaj iz serije 2900. Rađen za urede u kojima ispis ide svaki dan i u kojima zastoj košta više od uređaja.",
       podaci: [
-        { k: "Brzina ispisa", v: "Do 45 str./min (A4)" },
-        { k: "Brzina ispisa A3", v: "Do 22 str./min" },
-        { k: "Skeniranje", v: "Do 270 slika/min, obostrano" },
-        { k: "Sigurnost", v: "Trusted Platform Module 2.0" },
+        { k: "Format", v: "A3 / A4" },
+        { k: "Ispis", v: "Crno-bijelo" },
+        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
+        { k: "Podavač dokumenata", v: "Do A3 (DADF)" },
       ],
-      image: "/images/canon/irdx-4845i.jpg",
-    },
-    {
-      id: "irdx-4835i",
-      serija: "imageRUNNER ADVANCE DX 4835i",
-      modeli: ["4835i"],
-      opis:
-        "Srednji model serije — ravnoteža brzine i troška za urede s redovitim dnevnim volumenom.",
-      podaci: [
-        { k: "Brzina ispisa", v: "Do 35 str./min (A4)" },
-        { k: "Brzina ispisa A3", v: "Do 17 str./min" },
-        { k: "Skeniranje", v: "Do 270 slika/min, obostrano" },
-      ],
-      image: "/images/canon/irdx-4835i.jpg",
-    },
-    {
-      id: "irdx-4825i",
-      serija: "imageRUNNER ADVANCE DX 4825i",
-      modeli: ["4825i"],
-      opis:
-        "Ulazni model A3 mono serije, za urede kojima treba format A3 uz umjeren volumen.",
-      podaci: [
-        { k: "Brzina ispisa", v: "Do 25 str./min (A4)" },
-        { k: "Brzina ispisa A3", v: "Do 15 str./min" },
-        { k: "Skeniranje", v: "Do 270 slika/min, obostrano" },
-      ],
-      image: "/images/canon/irdx-4825i.jpg",
+      image: "/images/canon/ir-2930i.jpg",
     },
   ],
 
   "a4-kolor": [
     {
-      id: "isensys-c1538if",
-      serija: "i-SENSYS X C1538iF II",
-      modeli: ["C1538iF II"],
+      id: "ir-c1533if",
+      serija: "imageRUNNER C1533iF",
+      modeli: ["C1533iF"],
       opis:
-        "Kompaktan A4 kolor multifunkcijski uređaj s najvišom brzinom u seriji. Stane na ormarić, a nosi opterećenje cijelog manjeg ureda.",
+        "Kompaktan A4 multifunkcijski uređaj u boji. Stane na ormarić, spaja se na postojeću mrežu i nosi kolor ispis cijelog manjeg ureda.",
       podaci: [
-        { k: "Brzina ispisa", v: "Do 38 str./min (A4R)" },
-        { k: "Kapacitet papira", v: "550 listova, proširivo do 2.300" },
-        { k: "Ispis s uređaja", v: "AirPrint, Mopria, Universal Print" },
-        { k: "Softver", v: "uniFLOW Online Express" },
-      ],
-      image: "/images/canon/isensys-c1538if.jpg",
-    },
-    {
-      id: "isensys-c1533if",
-      serija: "i-SENSYS X C1533iF II",
-      modeli: ["C1533iF II"],
-      opis:
-        "Isti oblik i iste mogućnosti uz nešto nižu brzinu — za urede kojima kolor treba redovito, ali ne stalno.",
-      podaci: [
-        { k: "Brzina ispisa", v: "Do 33 str./min (A4R)" },
-        { k: "Kapacitet papira", v: "550 listova, proširivo do 2.300" },
-        { k: "Ispis s uređaja", v: "AirPrint, Mopria, Universal Print" },
-      ],
-      image: "/images/canon/isensys-c1533if.jpg",
-    },
-    {
-      id: "isensys-c1533p",
-      serija: "i-SENSYS X C1533P / C1538P",
-      modeli: ["C1533P", "C1538P"],
-      opis:
-        "Verzija bez skenera, za radna mjesta na kojima treba samo ispis u boji.",
-      podaci: [
-        { k: "Tip", v: "Jednofunkcijski pisač" },
         { k: "Format", v: "A4" },
         { k: "Ispis", v: "U boji" },
+        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
       ],
-      image: "/images/canon/isensys-c1533p.jpg",
+      image: "/images/canon/ir-c1533if.jpg",
     },
   ],
 
   "a4-monokromatski": [
     {
+      id: "ir-1643i",
+      serija: "imageRUNNER 1643i",
+      modeli: ["1643i"],
+      opis:
+        "Uređaj koji nudimo u svim paketima najma. Brz, provjeren u radu i jednostavan za održavanje — radna konjica za svakodnevni uredski ispis.",
+      podaci: [
+        { k: "Brzina ispisa", v: "45 str./min (A4)" },
+        { k: "Format", v: "A4" },
+        { k: "Ispis", v: "Crno-bijelo" },
+        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje, slanje" },
+      ],
+      image: "/images/canon/ir-1643i.jpg",
+    },
+    {
       id: "isensys-1440i",
       serija: "i-SENSYS X 1440i",
-      modeli: ["1440i", "1440iF"],
+      modeli: ["1440i"],
       opis:
-        "Kompaktan i brz A4 crno-bijeli multifunkcijski uređaj. Za urede u kojima je ispis svakodnevan alat, a ne poseban događaj.",
+        "Kompaktniji A4 crno-bijeli multifunkcijski uređaj za radna mjesta i manje urede kojima ne treba puni volumen većeg modela.",
       podaci: [
         { k: "Brzina ispisa", v: "Do 40 str./min" },
         { k: "Format", v: "A4" },
@@ -320,31 +259,20 @@ export const uredaji: Record<
       ],
       image: "/images/canon/isensys-1440i.jpg",
     },
-    {
-      id: "isensys-1643i",
-      serija: "i-SENSYS X 1643i",
-      modeli: ["1643i"],
-      opis:
-        "Uređaj koji nudimo u svim našim paketima najma — provjeren u radu i jednostavan za održavanje.",
-      podaci: [
-        { k: "Format", v: "A4" },
-        { k: "Ispis", v: "Crno-bijelo" },
-        { k: "Funkcije", v: "Ispis, kopiranje, skeniranje" },
-      ],
-      image: "/images/canon/isensys-1643i.jpg",
-    },
-    {
-      id: "isensys-1440p",
-      serija: "i-SENSYS X 1440P",
-      modeli: ["1440P"],
-      opis:
-        "Jednofunkcijska verzija za radna mjesta kojima treba samo ispis, bez skenera i kopirke.",
-      podaci: [
-        { k: "Tip", v: "Jednofunkcijski pisač" },
-        { k: "Format", v: "A4" },
-        { k: "Ispis", v: "Crno-bijelo" },
-      ],
-      image: "/images/canon/isensys-1440p.jpg",
-    },
   ],
 };
+
+/* ── Custom rješenja ───────────────────────────────────────────────────
+   Pet uređaja gore je redovna ponuda, ne granica. Bez ove poruke popis
+   izgleda kao "to je sve što imaju", pa se ponavlja na svakoj stranici
+   usluge — jednom, kratko, uvijek istim riječima.                       */
+
+export const custom = {
+  label: "Custom rješenja",
+  naslov: "Ne vidite ono što tražite?",
+  tekst:
+    "Uređaji iznad su ono što nudimo u pravilu. Ako vaše poslovanje traži nešto drugo — drugi format, veći volumen, više uređaja na više lokacija ili poseban način rada s dokumentima — složimo rješenje prema potrebi.",
+  kratko:
+    "Ovo je redovna ponuda. Za drugačije potrebe slažemo rješenje po mjeri.",
+  cta: "Recite nam što trebate",
+} as const;

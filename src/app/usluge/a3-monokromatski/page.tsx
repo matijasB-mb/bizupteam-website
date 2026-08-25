@@ -3,13 +3,13 @@ import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import CTABand from "@/components/ui/CTABand";
 import DeviceFrame from "@/components/ui/DeviceFrame";
+import CustomSolutions from "@/components/ui/CustomSolutions";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
 
 const usluga = uslugaBySlug("a3-monokromatski")!;
-const devices = uredaji["a3-monokromatski"];
+const [device] = uredaji["a3-monokromatski"];
 
 export const metadata: Metadata = {
   title: usluga.metaTitle,
@@ -21,14 +21,6 @@ export const metadata: Metadata = {
     url: "/usluge/a3-monokromatski",
   },
 };
-
-/* Comparison rows. Every figure below is from Canon's own specification for
-   the imageRUNNER ADVANCE DX 4800 series — nothing is estimated. */
-const usporedba = [
-  { model: "4825i", a4: "25", a3: "15" },
-  { model: "4835i", a4: "35", a3: "17" },
-  { model: "4845i", a4: "45", a3: "22" },
-];
 
 const primjene = [
   { t: "Računovodstvo", d: "Mjesečna zaključenja i arhiva koja mora biti čitljiva i za pet godina." },
@@ -46,144 +38,83 @@ export default function A3MonoPage() {
         title={usluga.hero}
         lead={usluga.heroLead}
       >
-        {/* Performance read straight away — this page leads with numbers */}
-        <dl className="grid max-w-3xl grid-cols-2 gap-px border-t border-white/15 sm:grid-cols-4">
-          {[
-            { k: "Brzina", v: "45", u: "str./min A4" },
-            { k: "Format A3", v: "22", u: "str./min" },
-            { k: "Skeniranje", v: "270", u: "slika/min" },
-            { k: "Modeli", v: "3", u: "u seriji" },
-          ].map((s) => (
-            <div key={s.k} className="pt-6 pr-6">
-              <dt className="t-label text-white/55">{s.k}</dt>
-              <dd className="mt-3">
-                <span
-                  className="text-[2.25rem] leading-none tabular-nums tracking-[-0.04em] text-white"
-                  style={{ fontFamily: "var(--font-archivo), sans-serif", fontWeight: 600 }}
-                >
-                  {s.v}
-                </span>
-                <span className="mt-1.5 block text-[0.8125rem] text-white/50">{s.u}</span>
-              </dd>
-            </div>
-          ))}
-        </dl>
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+          <Link
+            href="/kontakt"
+            className="group inline-flex items-center gap-2.5 bg-white px-6 py-3.5 text-[0.9375rem] font-medium leading-none text-[var(--ink)] transition-colors duration-300 hover:bg-[var(--red)] hover:text-white"
+          >
+            Zatražite ponudu
+            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </Link>
+          <Link
+            href="/usluge/najam-printera"
+            className="text-[0.9375rem] text-white/60 underline-offset-4 transition-colors duration-300 hover:text-white hover:underline"
+          >
+            Dostupno i u najmu
+          </Link>
+        </div>
       </PageHero>
 
-      {/* ── Usporedba serije: prava tablica, ne kartice ── */}
+      {/* ── Uređaj: tekst lijevo, uređaj desno — zrcalo A3 kolor stranice ── */}
       <section className="section bg-[var(--paper)]">
         <div className="shell">
           <Reveal>
             <div className="grid gap-y-6 border-t border-[var(--line-strong)] pt-10 lg:grid-cols-12 lg:gap-x-16">
               <div className="lg:col-span-5">
-                <SectionLabel>Serija 4800</SectionLabel>
-                <h2 className="t-h2 mt-6 max-w-[13ch]">Odaberite prema brzini</h2>
+                <SectionLabel>Uređaj</SectionLabel>
+                <h2 className="t-h2 mt-6 max-w-[14ch]">Naš izbor za A3 crno-bijelo</h2>
               </div>
               <p className="t-lead lg:col-span-6 lg:col-start-7 lg:self-end">
-                Tri modela dijele isto kućište, isti pribor i isti način rada.
-                Razlikuju se samo po tome koliko stranica izbace u minuti.
+                Kada je najveći dio ispisa ionako crno-bijel, mono uređaj je
+                jeftiniji za držati — a puni format je tu kada zatreba.
               </p>
             </div>
           </Reveal>
 
-          <Reveal delay={80}>
-            <div className="mt-14 overflow-x-auto sm:mt-16">
-              <table className="w-full min-w-[34rem] border-collapse text-left">
-                <caption className="sr-only">
-                  Usporedba brzine ispisa modela Canon imageRUNNER ADVANCE DX serije 4800
-                </caption>
-                <thead>
-                  <tr className="border-b border-[var(--line-strong)]">
-                    <th scope="col" className="t-label py-4 pr-6 text-[var(--muted)]">Model</th>
-                    <th scope="col" className="t-label py-4 pr-6 text-[var(--muted)]">A4 — str./min</th>
-                    <th scope="col" className="t-label py-4 pr-6 text-[var(--muted)]">A3 — str./min</th>
-                    <th scope="col" className="t-label py-4 text-[var(--muted)]">Za koga</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {usporedba.map((r, i) => (
-                    <tr key={r.model} className="group border-b border-[var(--line)] transition-colors duration-500 hover:bg-[var(--paper-warm)]">
-                      <th scope="row" className="py-7 pr-6 align-top">
-                        <span
-                          className="text-[1.0625rem] font-semibold tracking-[-0.02em]"
-                          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                        >
-                          {r.model}
-                        </span>
-                      </th>
-                      <td className="py-7 pr-6 align-top">
-                        <span
-                          className="text-[1.75rem] leading-none tabular-nums tracking-[-0.03em] text-[var(--ink)]"
-                          style={{ fontFamily: "var(--font-archivo), sans-serif", fontWeight: 600 }}
-                        >
-                          {r.a4}
-                        </span>
-                      </td>
-                      <td className="py-7 pr-6 align-top">
-                        <span
-                          className="text-[1.75rem] leading-none tabular-nums tracking-[-0.03em] text-[var(--muted)]"
-                          style={{ fontFamily: "var(--font-archivo), sans-serif", fontWeight: 600 }}
-                        >
-                          {r.a3}
-                        </span>
-                      </td>
-                      <td className="py-7 align-top text-[0.9375rem] text-[var(--text-2)]">
-                        {["Umjeren dnevni volumen", "Redovit dnevni volumen", "Ispis koji ne smije stati"][i]}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="mt-14 grid items-center gap-y-10 sm:mt-16 lg:grid-cols-12 lg:gap-x-16">
+            <div className="lg:col-span-5">
+              <span className="t-label text-[var(--red-on-light)]">Canon</span>
+              <h3 className="t-h2 mt-4 max-w-[13ch]">{device.serija}</h3>
+              <p className="t-body mt-6 max-w-[42ch]">{device.opis}</p>
+
+              <dl className="mt-9 border-t border-[var(--line)]">
+                {device.podaci.map((d) => (
+                  <div
+                    key={d.k}
+                    className="flex items-baseline justify-between gap-6 border-b border-[var(--line)] py-4"
+                  >
+                    <dt className="t-label text-[var(--muted)]">{d.k}</dt>
+                    <dd className="text-right text-[0.9375rem] text-[var(--text)]">{d.v}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <Link
+                href="/kontakt"
+                className="group mt-9 inline-flex items-center gap-2.5 bg-[var(--ink)] px-6 py-3.5 text-[0.9375rem] font-medium leading-none text-white transition-colors duration-300 hover:bg-[var(--red)]"
+              >
+                Zatražite ponudu
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </Link>
             </div>
-          </Reveal>
 
-          <Reveal delay={120}>
-            <p className="mt-8 max-w-[62ch] text-[0.875rem] leading-relaxed text-[var(--muted)]">
-              Brzine su prema službenoj Canon specifikaciji serije imageRUNNER
-              ADVANCE DX 4800. Sva tri modela skeniraju do 270 slika u minuti
-              obostrano i podržavaju Trusted Platform Module 2.0.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── Uređaji ── */}
-      <section className="section bg-[var(--paper-warm)]">
-        <div className="shell">
-          <Reveal>
-            <SectionLabel>Uređaji</SectionLabel>
-            <h2 className="t-h2 mt-7 max-w-[16ch]">imageRUNNER ADVANCE DX 4800</h2>
-          </Reveal>
-
-          <div className="mt-14 grid gap-x-8 gap-y-12 sm:mt-16 lg:grid-cols-3">
-            {devices.map((d, i) => (
-              <Reveal key={d.id} delay={i * 80} className="h-full">
-                <article className="flex h-full flex-col">
-                  <DeviceFrame
-                    src={d.image}
-                    alt={`Canon ${d.serija}`}
-                    ratio="1 / 1"
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
-                  />
-                  <h3 className="t-h3 mt-7">{d.serija}</h3>
-                  <p className="t-body mt-3 max-w-[38ch] flex-1">{d.opis}</p>
-                  <dl className="mt-6 flex flex-col gap-3 border-t border-[var(--line)] pt-5">
-                    {d.podaci.map((p) => (
-                      <div key={p.k} className="flex items-baseline justify-between gap-4 text-[0.875rem]">
-                        <dt className="text-[var(--muted)]">{p.k}</dt>
-                        <dd className="text-right text-[var(--text)]">{p.v}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </article>
-              </Reveal>
-            ))}
+            <div className="lg:col-span-6 lg:col-start-7">
+              <DeviceFrame
+                src={device.image}
+                alt={`Canon ${device.serija}`}
+                ratio="4 / 3"
+                priority
+                sizes="(min-width: 1024px) 46vw, 100vw"
+              />
+            </div>
           </div>
+
+          <CustomSolutions variant="note" />
         </div>
       </section>
 
       {/* ── Primjene ── */}
-      <section className="section bg-[var(--paper)]">
+      <section className="section bg-[var(--paper-warm)]">
         <div className="shell">
           <Reveal>
             <div className="grid gap-y-6 lg:grid-cols-12 lg:gap-x-16">
@@ -192,8 +123,8 @@ export default function A3MonoPage() {
                 <h2 className="t-h2 mt-6 max-w-[13ch]">Tamo gdje se ispisuje svaki dan</h2>
               </div>
               <p className="t-lead lg:col-span-6 lg:col-start-7 lg:self-end">
-                Crno-bijeli A3 rijetko kupuje netko tko ispisuje povremeno. Kupuje
-                ga netko kome je ispis dio radnog dana.
+                Crno-bijeli A3 rijetko kupuje netko tko ispisuje povremeno.
+                Kupuje ga netko kome je ispis dio radnog dana.
               </p>
             </div>
           </Reveal>
@@ -222,7 +153,7 @@ export default function A3MonoPage() {
                 href="/usluge/najam-printera"
                 className="group inline-flex items-center gap-3 text-[1.0625rem] font-medium transition-colors duration-300 hover:text-[var(--red-on-light)]"
               >
-                Isti uređaji dostupni su i u najmu
+                Isti uređaj dostupan je i u najmu
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
             </div>
@@ -230,9 +161,11 @@ export default function A3MonoPage() {
         </div>
       </section>
 
+      <CustomSolutions />
+
       <CTABand
         title="Koliko stvarno ispisujete mjesečno?"
-        lead="Odgovor na to pitanje bira model umjesto vas. Pogledamo brojila i potrošnju, pa predložimo ono što ima smisla."
+        lead="Odgovor na to pitanje bira uređaj umjesto vas. Pogledamo brojila i potrošnju, pa predložimo ono što ima smisla."
         primary={{ label: "Zatražite ponudu", href: "/kontakt" }}
       />
     </>

@@ -5,6 +5,7 @@ import CTABand from "@/components/ui/CTABand";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 
+import CustomSolutions from "@/components/ui/CustomSolutions";
 import { grupe, uslugeUGrupi } from "@/lib/usluge";
 
 export const metadata: Metadata = {
@@ -136,6 +137,8 @@ export default function UslugePage() {
           </div>
         </div>
       </section>
+
+      <CustomSolutions />
 
       <CTABand
         title="Niste sigurni što vam treba?"

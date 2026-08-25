@@ -4,6 +4,7 @@ import Figure from "@/components/ui/Figure";
 import AmbientFlow from "@/components/ui/AmbientFlow";
 import CanonFlow from "@/components/sections/CanonFlow";
 import { ButtonLink } from "@/components/ui/Button";
+import CustomSolutions from "@/components/ui/CustomSolutions";
 import { canon, images, paketi } from "@/lib/site";
 
 function Check({ dark }: { dark: boolean }) {
@@ -211,6 +212,8 @@ export default function ServiceCanon() {
               Nudimo i najam bez dugoročne obveze te kupnju uz servisni ugovor.
             </p>
           </Reveal>
+
+          <CustomSolutions variant="note" />
 
           <Reveal delay={140}>
             <div className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center">

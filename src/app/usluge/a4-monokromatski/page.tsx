@@ -6,6 +6,7 @@ import DeviceFrame from "@/components/ui/DeviceFrame";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 
+import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
 
 const usluga = uslugaBySlug("a4-monokromatski")!;
@@ -43,7 +44,7 @@ export default function A4MonoPage() {
             <DeviceFrame
               src={lead.image}
               alt={`Canon ${lead.serija}`}
-              label="i-SENSYS X 1440i"
+              label="imageRUNNER 1643i"
               ratio="16 / 10"
               priority
               sizes="(min-width: 1024px) 56rem, 100vw"
@@ -115,7 +116,7 @@ export default function A4MonoPage() {
         <div className="shell">
           <Reveal>
             <div className="flex flex-col gap-6 border-t border-[var(--line-strong)] pt-10 md:flex-row md:items-end md:justify-between">
-              <h2 className="t-h3 max-w-[20ch]">Ostale izvedbe u ponudi</h2>
+              <h2 className="t-h3 max-w-[22ch]">Kompaktnija alternativa</h2>
               <Link
                 href="/usluge/najam-printera"
                 className="group inline-flex items-center gap-2.5 text-[0.9375rem] font-medium transition-colors duration-300 hover:text-[var(--red-on-light)]"
@@ -126,7 +127,7 @@ export default function A4MonoPage() {
             </div>
           </Reveal>
 
-          <div className="mt-12 grid gap-x-12 gap-y-12 sm:grid-cols-2">
+          <div className="mt-12 grid gap-x-12 gap-y-12 lg:grid-cols-2">
             {rest.map((d, i) => (
               <Reveal key={d.id} delay={i * 80} className="h-full">
                 <article className="flex h-full gap-6">
@@ -153,8 +154,12 @@ export default function A4MonoPage() {
               </Reveal>
             ))}
           </div>
+
+          <CustomSolutions variant="note" />
         </div>
       </section>
+
+      <CustomSolutions />
 
       <CTABand
         title="Jednostavan uređaj, jasan trošak."

@@ -44,10 +44,11 @@ Grupe su definirane jednom u `lib/usluge.ts` (`grupe`, `uslugeUGrupi`) i iz
 njih se renderiraju dropdown, mobilna harmonika, `/usluge` i podnožje.
 
 Svaka podstranica ima **vlastiti raspored**, ne isti predložak pet puta:
-A3 kolor su izmjenične uredničke trake, A3 mono je tablica usporedbe brzina,
-A4 kolor je proza uz popis primjena, A4 mono je namjerno najmirnija stranica s
-jednim velikim uređajem, a najam je servisna prodajna stranica s tri koraka i
-biračem kategorije.
+A3 kolor drži uređaj lijevo i specifikacije desno, A3 mono je zrcali (tekst
+lijevo, uređaj desno) i dodaje primjene u četiri stupca, A4 kolor otvara prozom
+uz numerirani popis primjena, A4 mono je namjerno najmirnija stranica — jedan
+uređaj velik pa kompaktnija alternativa — a najam je servisna prodajna stranica
+s tri koraka, biračem kategorije i paketima.
 
 **A1 stranica je namjerno najkraća.** Svaka rečenica o A1 mora proći njihov
 pregled, pa navodi ulogu savjetnika, četiri područja i staje. Bez tarifa,
@@ -179,24 +180,25 @@ hairline jeziku kao ostatak stranice i oznaku „Fotografija u pripremi".
 Putanje su fiksne — ubaci datoteku i slika se sama pojavi, bez izmjene koda:
 
 ```
-public/images/canon/irdx-c3900.jpg        A3 kolor
-public/images/canon/irdx-c3800.jpg
-public/images/canon/irdx-c3700.jpg
-public/images/canon/irdx-4845i.jpg        A3 mono
-public/images/canon/irdx-4835i.jpg
-public/images/canon/irdx-4825i.jpg
-public/images/canon/isensys-c1538if.jpg   A4 kolor
-public/images/canon/isensys-c1533if.jpg
-public/images/canon/isensys-c1533p.jpg
-public/images/canon/isensys-1440i.jpg     A4 mono
-public/images/canon/isensys-1643i.jpg
-public/images/canon/isensys-1440p.jpg
-public/images/canon/najam-hero.jpg        najam
+public/images/canon/irdx-c3926i.jpg    A3 kolor   — imageRUNNER ADVANCE DX C3926i
+public/images/canon/ir-2930i.jpg       A3 mono    — imageRUNNER 2930i
+public/images/canon/ir-c1533if.jpg     A4 kolor   — imageRUNNER C1533iF
+public/images/canon/ir-1643i.jpg       A4 mono    — imageRUNNER 1643i
+public/images/canon/isensys-1440i.jpg  A4 mono    — i-SENSYS X 1440i
+public/images/canon/najam-hero.jpg     najam
 ```
 
-Nazivi serija, modela i brzine ispisa u `lib/usluge.ts` provjereni su u
-službenim Canon Europe specifikacijama. Ništa nije procijenjeno — gdje podatak
-nije potvrđen, polje jednostavno ne postoji.
+Ovo je **točno ono što klijent drži u ponudi** — pet uređaja, ne katalog.
+Puni nazivi provjereni u Canon Europe specifikacijama.
+
+Pazi na nazive serija: samo je **C3926i** iz serije imageRUNNER **ADVANCE** DX.
+C1533iF, 2930i i 1643i su imageRUNNER (bez ADVANCE), a 1440i je i-SENSYS X.
+Ne spajati ih pod jedan naziv.
+
+Uz pet uređaja ide i poruka o **custom rješenjima** — bez nje popis izgleda kao
+granica ponude. Tekst je na jednom mjestu (`custom` u `lib/usluge.ts`) i
+renderira ga `CustomSolutions`, kao kratka bilješka ispod uređaja i kao traka
+pri dnu stranice.
 
 **Portreti tima nisu stock.** Kartica bez fotografije renderira monogram u istom
 vizualnom jeziku. Stock portreti su fotografije stvarnih, prepoznatljivih ljudi;

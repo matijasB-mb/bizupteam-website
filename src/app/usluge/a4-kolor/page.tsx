@@ -6,10 +6,11 @@ import DeviceFrame from "@/components/ui/DeviceFrame";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 
+import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
 
 const usluga = uslugaBySlug("a4-kolor")!;
-const devices = uredaji["a4-kolor"];
+const [device] = uredaji["a4-kolor"];
 
 export const metadata: Metadata = {
   title: usluga.metaTitle,
@@ -40,9 +41,9 @@ export default function A4KolorPage() {
         lead={usluga.heroLead}
         aside={
           <DeviceFrame
-            src={devices[0].image}
-            alt="Canon i-SENSYS X C1538iF II A4 multifunkcijski uređaj u boji"
-            label="i-SENSYS X C1538iF II"
+            src={device.image}
+            alt="Canon imageRUNNER C1533iF, A4 multifunkcijski uređaj u boji"
+            label="imageRUNNER C1533iF"
             tone="dark"
             ratio="4 / 3"
             priority
@@ -105,55 +106,56 @@ export default function A4KolorPage() {
         </div>
       </section>
 
-      {/* ── Uređaji: kompaktna traka ── */}
+      {/* ── Uređaj ── */}
       <section className="section bg-[var(--paper-warm)]">
         <div className="shell">
           <Reveal>
             <div className="flex flex-col gap-6 border-t border-[var(--line-strong)] pt-10 md:flex-row md:items-end md:justify-between">
               <div>
-                <SectionLabel>Uređaji</SectionLabel>
-                <h2 className="t-h2 mt-6 max-w-[14ch]">i-SENSYS X, A4 kolor</h2>
+                <SectionLabel>Uređaj</SectionLabel>
+                <h2 className="t-h2 mt-6 max-w-[14ch]">Naš izbor za A4 kolor</h2>
               </div>
               <p className="max-w-[38ch] text-[0.9375rem] text-[var(--muted)]">
-                Ista serija u tri izvedbe: dvije multifunkcijske i jedna samo za
-                ispis, za radna mjesta kojima skener ne treba.
+                Kompaktan multifunkcijski uređaj — ispis, kopiranje, skeniranje
+                i slanje iz jednog kućišta.
               </p>
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-x-8 gap-y-12 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
-            {devices.map((d, i) => (
-              <Reveal key={d.id} delay={i * 80} className="h-full">
-                <article className="flex h-full flex-col">
-                  <DeviceFrame
-                    src={d.image}
-                    alt={`Canon ${d.serija}`}
-                    ratio="4 / 3"
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
-                  />
-                  <h3
-                    className="mt-6 text-[1.0625rem] font-semibold tracking-[-0.02em]"
-                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          <div className="mt-12 grid items-center gap-y-10 lg:grid-cols-12 lg:gap-x-16">
+            <div className="lg:col-span-6">
+              <DeviceFrame
+                src={device.image}
+                alt={`Canon ${device.serija}`}
+                ratio="4 / 3"
+                sizes="(min-width: 1024px) 46vw, 100vw"
+              />
+            </div>
+
+            <div className="lg:col-span-5 lg:col-start-8">
+              <span className="t-label text-[var(--red-on-light)]">Canon</span>
+              <h3 className="t-h2 mt-4 max-w-[13ch]">{device.serija}</h3>
+              <p className="t-body mt-6 max-w-[42ch]">{device.opis}</p>
+
+              <dl className="mt-9 border-t border-[var(--line)]">
+                {device.podaci.map((d) => (
+                  <div
+                    key={d.k}
+                    className="flex items-baseline justify-between gap-6 border-b border-[var(--line)] py-4"
                   >
-                    {d.serija}
-                  </h3>
-                  <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-[var(--muted)]">
-                    {d.opis}
-                  </p>
-                  <dl className="mt-6 flex flex-col gap-2.5 border-t border-[var(--line)] pt-5">
-                    {d.podaci.map((p) => (
-                      <div key={p.k} className="flex items-baseline justify-between gap-4 text-[0.875rem]">
-                        <dt className="text-[var(--muted)]">{p.k}</dt>
-                        <dd className="text-right text-[var(--text)]">{p.v}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </article>
-              </Reveal>
-            ))}
+                    <dt className="t-label text-[var(--muted)]">{d.k}</dt>
+                    <dd className="text-right text-[0.9375rem] text-[var(--text)]">{d.v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
+
+          <CustomSolutions variant="note" />
         </div>
       </section>
+
+      <CustomSolutions />
 
       <CTABand
         title="Treba vam kolor koji radi kad zatreba?"
