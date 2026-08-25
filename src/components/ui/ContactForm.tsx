@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { contact } from "@/lib/site";
@@ -193,8 +194,14 @@ export default function ContactForm({
         <Button type="submit" variant="solid" tone="paper" disabled={busy}>
           {busy ? "Šaljem…" : "Pošaljite upit"}
         </Button>
-        <p className="max-w-[30ch] text-xs leading-relaxed text-white/55">
-          Podatke koristimo isključivo za odgovor na vaš upit.
+        <p className="max-w-[34ch] text-xs leading-relaxed text-white/55">
+          Podatke koristimo isključivo za odgovor na vaš upit.{" "}
+          <Link
+            href="/privatnost"
+            className="underline underline-offset-2 transition-colors duration-300 hover:text-white"
+          >
+            Izjava o privatnosti
+          </Link>
         </p>
       </div>
 

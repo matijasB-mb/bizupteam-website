@@ -23,6 +23,7 @@ Korporativna web stranica za **Biz Up Team d.o.o.**, Osijek.
 /zasto-biz-up
 /tim
 /kontakt
+/privatnost                izjava o privatnosti
 ```
 
 Navigacija vodi na prave rute. Naslovnica zadržava vlastita sidra (`#usluge`,

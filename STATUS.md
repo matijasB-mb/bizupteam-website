@@ -130,7 +130,12 @@ stilove i geometriju. **Treba pogledati stranicu očima prije slanja klijentu.**
 
 - [ ] Cijene paketa, ako ih klijent želi javno
 - [ ] Google Analytics ili Plausible, ako klijent traži
-- [ ] Stranica privatnosti, ako obrazac krene skupljati podatke
+- [x] ~~Stranica privatnosti~~ — `/privatnost`, povezana iz podnožja i obrasca
+- [ ] **Dopuniti dva podatka u izjavi o privatnosti** (označeni crveno na
+      stranici, ne mogu se previdjeti): OIB tvrtke i rok čuvanja upita
+      (prijedlog: 2 godine)
+- [ ] Dati izjavu o privatnosti na pravni pregled prije launcha — točna je u
+      odnosu na ono što stranica tehnički radi, ali nisam pravnik
 
 ---
 

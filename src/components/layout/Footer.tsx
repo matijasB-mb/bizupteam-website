@@ -73,7 +73,15 @@ export default function Footer() {
 
         <div className="flex flex-col gap-3 border-t border-white/12 py-7 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
           {/* legalName already ends in "d.o.o." — a full stop here would double it. */}
-          <p>© {year} {site.legalName} | Sva prava pridržana.</p>
+          <p>
+            © {year} {site.legalName} | Sva prava pridržana. |{" "}
+            <Link
+              href="/privatnost"
+              className="underline underline-offset-4 transition-colors duration-300 hover:text-[var(--red-on-dark)]"
+            >
+              Izjava o privatnosti
+            </Link>
+          </p>
           <p>A1 i Canon su zaštitni znakovi svojih vlasnika. Biz Up Team je njihov partner.</p>
         </div>
       </div>
