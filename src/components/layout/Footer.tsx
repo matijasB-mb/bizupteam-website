@@ -1,10 +1,13 @@
 import Link from "next/link";
 import Wordmark from "@/components/ui/Wordmark";
-import { contact, nav, site } from "@/lib/site";
+import { adresaRedak, contact, nav, site, uredi } from "@/lib/site";
 import { grupe, uslugeUGrupi } from "@/lib/usluge";
 
 const linkClass =
   "inline-block py-1.5 text-sm text-white/70 transition-colors duration-300 hover:text-[var(--red-on-dark)]";
+
+const legalLink =
+  "underline underline-offset-4 transition-colors duration-300 hover:text-[var(--red-on-dark)]";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -19,7 +22,7 @@ export default function Footer() {
             </Link>
             <p className="mt-6 max-w-[34ch] text-sm leading-relaxed text-white/60">
               Ugovorni partner A1-a za telekomunikacijske usluge i partner
-              Canona za uredsku tehnologiju. {site.city}.
+              Canona za uredsku tehnologiju. {site.cities}.
             </p>
           </div>
 
@@ -52,11 +55,11 @@ export default function Footer() {
           <address className="not-italic lg:col-span-3 lg:col-start-10">
             <p className="t-label text-white/55">Kontakt</p>
             <ul className="mt-4 flex flex-col gap-2 text-sm text-white/70">
-              <li className="pt-1">
-                {contact.street}
-                <br />
-                {contact.cityLine}
-              </li>
+              {uredi.map((u) => (
+                <li key={u.id} className="pt-1">
+                  {adresaRedak(u)}
+                </li>
+              ))}
               <li>
                 <a href={contact.phoneHref} className="inline-block py-1 tabular-nums transition-colors duration-300 hover:text-[var(--red-on-dark)]">
                   {contact.phone}
@@ -75,11 +78,12 @@ export default function Footer() {
           {/* legalName already ends in "d.o.o." — a full stop here would double it. */}
           <p>
             © {year} {site.legalName} | Sva prava pridržana. |{" "}
-            <Link
-              href="/privatnost"
-              className="underline underline-offset-4 transition-colors duration-300 hover:text-[var(--red-on-dark)]"
-            >
+            <Link href="/privatnost" className={legalLink}>
               Izjava o privatnosti
+            </Link>{" "}
+            |{" "}
+            <Link href="/uvjeti-koristenja" className={legalLink}>
+              Uvjeti korištenja
             </Link>
           </p>
           <p>A1 i Canon su zaštitni znakovi svojih vlasnika. Biz Up Team je njihov partner.</p>

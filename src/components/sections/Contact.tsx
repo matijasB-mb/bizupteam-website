@@ -1,6 +1,6 @@
 import SectionLabel from "@/components/ui/SectionLabel";
 import ContactForm from "@/components/ui/ContactForm";
-import { contact } from "@/lib/site";
+import { adresaLinije, contact, uredi } from "@/lib/site";
 
 /**
  * Homepage contact section. The form itself now lives in ui/ContactForm so the
@@ -24,14 +24,18 @@ export default function Contact() {
             </p>
 
             <dl className="mt-14 grid gap-px border-t border-white/12 sm:grid-cols-2 lg:grid-cols-1">
-              <div className="pt-6 lg:border-b lg:border-white/12 lg:pb-6">
-                <dt className="t-label text-white/55">Adresa</dt>
-                <dd className="mt-3 text-white/85">
-                  {contact.street}
-                  <br />
-                  {contact.cityLine}
-                </dd>
-              </div>
+              {uredi.map((u) => (
+                <div key={u.id} className="pt-6 lg:border-b lg:border-white/12 lg:pb-6">
+                  <dt className="t-label text-white/55">{u.label}</dt>
+                  <dd className="mt-3 text-white/85">
+                    {adresaLinije(u).map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </dd>
+                </div>
+              ))}
               <div className="pt-6 lg:border-b lg:border-white/12 lg:pb-6">
                 <dt className="t-label text-white/55">Telefon</dt>
                 <dd className="mt-3">

@@ -3,7 +3,10 @@ import { Archivo, Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/ui/SmoothScroll";
-import { contact, site } from "@/lib/site";
+import LdJson from "@/components/ui/LdJson";
+import { siteGraph } from "@/lib/jsonld";
+import { ogImage } from "@/lib/seo";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 /* Archivo carries the headlines — a grotesk with enough width and weight to
@@ -27,7 +30,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Telekomunikacije i uredska tehnologija | Osijek`,
+    default: "Najam Canon printera i A1 poslovne usluge | Biz Up Team",
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -47,6 +50,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — Telekomunikacije i uredska tehnologija`,
     description: site.description,
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
@@ -65,26 +69,6 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-/* LocalBusiness data, built only from values the client confirmed. */
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: site.legalName,
-  alternateName: site.name,
-  url: site.url,
-  description: site.description,
-  telephone: contact.phoneHref.replace("tel:", ""),
-  email: contact.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: contact.street,
-    addressLocality: site.city,
-    postalCode: contact.postal,
-    addressCountry: "HR",
-  },
-  areaServed: "HR",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -92,20 +76,16 @@ export default function RootLayout({
     <html lang="hr" className={`${inter.variable} ${archivo.variable}`}>
       <body>
         <a
-          href="#o-nama"
+          href="#sadrzaj"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-[var(--ink)] focus:px-5 focus:py-3 focus:text-white"
         >
           Preskoči na sadržaj
         </a>
         <SmoothScroll />
         <Navbar />
-        <main>{children}</main>
+        <main id="sadrzaj">{children}</main>
         <Footer />
-        <script
-          type="application/ld+json"
-          // Serialised from a local object literal — no user input reaches this.
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <LdJson data={siteGraph} />
       </body>
     </html>
   );

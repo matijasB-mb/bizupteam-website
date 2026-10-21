@@ -8,6 +8,7 @@ import CustomSolutions from "@/components/ui/CustomSolutions";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
+import { og } from "@/lib/seo";
 
 const usluga = uslugaBySlug("a3-monokromatski")!;
 const [device] = uredaji["a3-monokromatski"];
@@ -16,11 +17,11 @@ export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
   alternates: { canonical: "/usluge/a3-monokromatski" },
-  openGraph: {
+  openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
     url: "/usluge/a3-monokromatski",
-  },
+  }),
 };
 
 const primjene = [

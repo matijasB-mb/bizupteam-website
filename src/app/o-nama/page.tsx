@@ -4,19 +4,19 @@ import CTABand from "@/components/ui/CTABand";
 import Figure from "@/components/ui/Figure";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { images, site } from "@/lib/site";
+import { adresaLinije, images, site, uredi } from "@/lib/site";
+import { og } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "O nama",
   description:
-    "Biz Up Team je osječka tvrtka koja poslovnim korisnicima pokriva telekomunikacije i uredsku tehnologiju — ugovorni partner A1-a i partner Canona.",
+    "Biz Up Team je osječka tvrtka s uredima u Osijeku i Zagrebu — ugovorni partner A1-a za telekomunikacije i partner Canona za uredsku tehnologiju.",
   alternates: { canonical: "/o-nama" },
-  openGraph: {
+  openGraph: og({
     title: "O nama",
-    description:
-      "Osječka tvrtka koja poslovnim korisnicima pokriva telekomunikacije i uredsku tehnologiju.",
+    description: "Osječka tvrtka s uredima u Osijeku i Zagrebu — telekomunikacije i uredska tehnologija za poslovne korisnike.",
     url: "/o-nama",
-  },
+  }),
 };
 
 export default function ONamaPage() {
@@ -24,7 +24,7 @@ export default function ONamaPage() {
     <>
       <PageHero
         crumbs={[{ label: "O nama" }]}
-        eyebrow={`${site.city} · B2B`}
+        eyebrow={`${site.cities} · B2B`}
         title="Dva dobavljača manje."
         lead="Telekomunikacije i uredska tehnologija obično se kupuju od dvije različite tvrtke. Kod nas se ne moraju."
       />
@@ -64,6 +64,22 @@ export default function ONamaPage() {
                     koga nazvati.
                   </p>
                 </div>
+
+                {/* Dvije lokacije, pa „lokalno" ne znači samo Slavonija. */}
+                <dl className="mt-12 grid gap-px border-t border-[var(--line-strong)] sm:grid-cols-2">
+                  {uredi.map((u) => (
+                    <div key={u.id} className="pt-6">
+                      <dt className="t-label text-[var(--muted)]">{u.label}</dt>
+                      <dd className="mt-3 text-[1.0625rem] leading-relaxed text-[var(--text-2)]">
+                        {adresaLinije(u).map((line) => (
+                          <span key={line} className="block">
+                            {line}
+                          </span>
+                        ))}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
               </Reveal>
             </div>
           </div>

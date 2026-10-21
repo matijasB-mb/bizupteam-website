@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import AmbientFlow from "@/components/ui/AmbientFlow";
+import LdJson from "@/components/ui/LdJson";
+import { breadcrumbGraph } from "@/lib/jsonld";
 
 export type Crumb = { label: string; href?: string };
 
@@ -51,6 +53,7 @@ export default function PageHero({
       <div className="shell relative">
         {crumbs && crumbs.length > 0 && (
           <nav aria-label="Putanja" className="hero-cue mb-9" style={{ "--i": 0 } as React.CSSProperties}>
+            <LdJson data={breadcrumbGraph(crumbs)} />
             <ol className="t-label flex flex-wrap items-center gap-2 text-white/45">
               {crumbs.map((c, i) => (
                 <li key={c.label} className="flex items-center gap-2">

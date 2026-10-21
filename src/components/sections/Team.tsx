@@ -2,7 +2,7 @@ import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Figure from "@/components/ui/Figure";
-import { images, tim, type ClanTima } from "@/lib/site";
+import { contact, images, tim, type ClanTima } from "@/lib/site";
 
 function LinkedInMark() {
   return (
@@ -59,37 +59,50 @@ function Card({ member, index }: { member: ClanTima; index: number }) {
         <h3 className="t-h3 mt-6">{member.name}</h3>
         <p className="mt-1.5 text-[0.9375rem] text-[var(--muted)]">{member.role}</p>
 
-        <div className="mt-5 flex flex-1 flex-col gap-2 border-t border-[var(--line)] pt-5 text-[0.9375rem]">
-          <a
-            href={member.phoneHref}
-            className="inline-flex w-fit py-0.5 tabular-nums text-[var(--text-2)] transition-colors duration-300 hover:text-[var(--red-on-light)]"
-          >
-            {member.phone}
-          </a>
-          <a
-            href={`mailto:${member.email}`}
-            className="inline-flex w-fit break-all py-0.5 text-[var(--text-2)] transition-colors duration-300 hover:text-[var(--red-on-light)]"
-          >
-            {member.email}
-          </a>
-        </div>
+        {/* Every contact line is optional. A person without a direct number
+            gets no empty row and no dash — the central number below the grid
+            covers them, and a placeholder would only look like a defect. */}
+        {(member.phone || member.email) && (
+          <div className="mt-5 flex flex-col gap-2 border-t border-[var(--line)] pt-5 text-[0.9375rem]">
+            {member.phone && (
+              <a
+                href={member.phoneHref}
+                className="inline-flex w-fit py-0.5 tabular-nums text-[var(--text-2)] transition-colors duration-300 hover:text-[var(--red-on-light)]"
+              >
+                {member.phone}
+              </a>
+            )}
+            {member.email && (
+              <a
+                href={`mailto:${member.email}`}
+                className="inline-flex w-fit break-all py-0.5 text-[var(--text-2)] transition-colors duration-300 hover:text-[var(--red-on-light)]"
+              >
+                {member.email}
+              </a>
+            )}
+          </div>
+        )}
 
-        <div className="mt-5 flex min-h-9 items-center justify-between gap-3 border-t border-[var(--line)] pt-4">
-          <span className="t-label text-[var(--muted)]">{member.location}</span>
-          {/* Rendered only once a real profile URL is set — a dead "#" link is
-              a control that lies about being clickable. */}
-          {member.linkedin && member.linkedin !== "#" && (
-            <a
-              href={member.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`LinkedIn profil — ${member.name}`}
-              className="inline-flex h-9 w-9 items-center justify-center text-[var(--muted)] transition-colors duration-300 hover:text-[var(--red-on-light)] group-hover:text-[var(--text-2)]"
-            >
-              <LinkedInMark />
-            </a>
-          )}
-        </div>
+        <div className="flex-1" />
+
+        {(member.location || (member.linkedin && member.linkedin !== "#")) && (
+          <div className="mt-5 flex min-h-9 items-center justify-between gap-3 border-t border-[var(--line)] pt-4">
+            <span className="t-label text-[var(--muted)]">{member.location}</span>
+            {/* Rendered only once a real profile URL is set — a dead "#" link is
+                a control that lies about being clickable. */}
+            {member.linkedin && member.linkedin !== "#" && (
+              <a
+                href={member.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`LinkedIn profil — ${member.name}`}
+                className="inline-flex h-9 w-9 items-center justify-center text-[var(--muted)] transition-colors duration-300 hover:text-[var(--red-on-light)] group-hover:text-[var(--text-2)]"
+              >
+                <LinkedInMark />
+              </a>
+            )}
+          </div>
+        )}
       </article>
     </Reveal>
   );
@@ -100,7 +113,7 @@ function Card({ member, index }: { member: ClanTima; index: number }) {
  * alternation the rest of the page runs on without adding a third dark block
  * before the contact finale.
  *
- * Names and contacts are demo data — see the note in lib/site.ts.
+ * Names, roles and numbers come from the client — see the note in lib/site.ts.
  */
 export default function Team({ showIntro = true }: { showIntro?: boolean } = {}) {
   return (
@@ -132,11 +145,33 @@ export default function Team({ showIntro = true }: { showIntro?: boolean } = {})
           sizes="(min-width: 1344px) 1216px, 100vw"
         />
 
-        <div className="mt-20 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Three across, not four: six people divide evenly into two rows and
+            the cards get a wider measure for the longer role titles. */}
+        <div className="mt-20 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {tim.map((member, i) => (
             <Card key={member.id} member={member} index={i} />
           ))}
         </div>
+
+        <Reveal>
+          <p className="mt-14 max-w-[52ch] text-[0.9375rem] leading-relaxed text-[var(--muted)]">
+            Ne znate koga zvati? Nazovite centralu na{" "}
+            <a
+              href={contact.phoneHref}
+              className="tabular-nums text-[var(--text)] underline underline-offset-4 transition-colors duration-300 hover:text-[var(--red-on-light)]"
+            >
+              {contact.phone}
+            </a>{" "}
+            ili pišite na{" "}
+            <a
+              href={contact.emailHref}
+              className="text-[var(--text)] underline underline-offset-4 transition-colors duration-300 hover:text-[var(--red-on-light)]"
+            >
+              {contact.email}
+            </a>{" "}
+            — preusmjerimo vas osobi koja vam može odgovoriti.
+          </p>
+        </Reveal>
       </div>
     </section>
   );

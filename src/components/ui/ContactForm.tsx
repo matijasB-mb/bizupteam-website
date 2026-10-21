@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useId, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
+import { contactEndpoint } from "@/lib/endpoint";
 import { contact } from "@/lib/site";
 import { usluge } from "@/lib/usluge";
 
@@ -74,7 +75,7 @@ export default function ContactForm({
     setNotice("");
 
     try {
-      const response = await fetch("/api/kontakt", {
+      const response = await fetch(contactEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...values, website: String(raw.get("website") ?? "") }),

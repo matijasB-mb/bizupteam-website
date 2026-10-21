@@ -5,7 +5,7 @@ import { contact, images } from "@/lib/site";
 
 /* Facts only — each one verifiable from the client's own material. */
 const facts = [
-  { k: "Sjedište", v: "Osijek" },
+  { k: "Uredi", v: "Osijek · Zagreb" },
   { k: "Fokus", v: "B2B" },
   { k: "Partnerstva", v: "A1 · Canon" },
 ] as const;
@@ -29,9 +29,10 @@ export default function About() {
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal delay={90}>
               <p className="t-lead text-[var(--text)]">
-                Biz Up Team je osječka tvrtka koja poslovnim korisnicima
-                pokriva dva područja koja se inače kupuju od dva različita
-                dobavljača — telekomunikacije i uredsku tehnologiju.
+                Biz Up Team je osječka tvrtka s uredima u Osijeku i Zagrebu.
+                Poslovnim korisnicima pokrivamo dva područja koja se inače
+                kupuju od dva različita dobavljača — telekomunikacije i uredsku
+                tehnologiju.
               </p>
 
               <div className="mt-8 flex max-w-[var(--measure)] flex-col gap-5">

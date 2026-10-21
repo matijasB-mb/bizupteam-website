@@ -10,6 +10,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
+import { og } from "@/lib/seo";
 
 const usluga = uslugaBySlug("a4-kolor")!;
 const [device] = uredaji["a4-kolor"];
@@ -18,11 +19,11 @@ export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
   alternates: { canonical: "/usluge/a4-kolor" },
-  openGraph: {
+  openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
     url: "/usluge/a4-kolor",
-  },
+  }),
 };
 
 const primjene = [

@@ -10,6 +10,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
+import { og } from "@/lib/seo";
 
 const usluga = uslugaBySlug("a4-monokromatski")!;
 const devices = uredaji["a4-monokromatski"];
@@ -18,11 +19,11 @@ export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
   alternates: { canonical: "/usluge/a4-monokromatski" },
-  openGraph: {
+  openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
     url: "/usluge/a4-monokromatski",
-  },
+  }),
 };
 
 /* Deliberately the calmest page on the site: one device held large, three

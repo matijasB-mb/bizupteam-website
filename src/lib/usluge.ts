@@ -78,7 +78,7 @@ export const usluge: readonly Usluga[] = [
     navOpis: "Telekomunikacije za tvrtke",
     breadcrumb: "A1 telekomunikacije",
     title: "A1 telekomunikacije",
-    metaTitle: "A1 Poslovne Usluge",
+    metaTitle: "A1 poslovne telekomunikacije",
     metaDescription:
       "Biz Up Team je ugovorni partner A1-a. Savjetujemo poslovne korisnike pri odabiru mobilne i fiksne telefonije, interneta i međunarodne komunikacije.",
     hero: "Telekomunikacije, odabrane prema poslu.",
@@ -94,7 +94,7 @@ export const usluge: readonly Usluga[] = [
     navOpis: "Profesionalni A3 ispis u boji",
     breadcrumb: "A3 kolor",
     title: "A3 kolor",
-    metaTitle: "A3 Kolor Pisači",
+    metaTitle: "Canon A3 kolor printeri",
     metaDescription:
       "Canon A3 multifunkcijski uređaji u boji za profesionalni uredski ispis. Najam ili kupnja uz servis i podršku — Biz Up Team, Osijek.",
     hero: "Profesionalni A3 ispis u boji.",
@@ -110,7 +110,7 @@ export const usluge: readonly Usluga[] = [
     navOpis: "Pouzdan A3 crno-bijeli ispis",
     breadcrumb: "A3 monokromatski",
     title: "A3 monokromatski",
-    metaTitle: "A3 Monokromatski Pisači",
+    metaTitle: "Canon A3 crno-bijeli printeri",
     metaDescription:
       "Canon A3 crno-bijeli multifunkcijski uređaji za velike dnevne volumene ispisa. Servis, toner i podrška — Biz Up Team, Osijek.",
     hero: "Brz. Pouzdan. Precizan.",
@@ -126,7 +126,7 @@ export const usluge: readonly Usluga[] = [
     navOpis: "Kompaktna rješenja za A4 kolor ispis",
     breadcrumb: "A4 kolor",
     title: "A4 kolor",
-    metaTitle: "A4 Kolor Pisači",
+    metaTitle: "Canon A4 kolor printeri",
     metaDescription:
       "Canon A4 multifunkcijski uređaji u boji za svakodnevni uredski ispis. Kompaktno rješenje uz servis i podršku — Biz Up Team, Osijek.",
     hero: "Boja koja izgleda profesionalno.",
@@ -142,7 +142,7 @@ export const usluge: readonly Usluga[] = [
     navOpis: "Učinkovit A4 crno-bijeli ispis",
     breadcrumb: "A4 monokromatski",
     title: "A4 monokromatski",
-    metaTitle: "A4 Monokromatski Pisači",
+    metaTitle: "Canon A4 crno-bijeli printeri",
     metaDescription:
       "Canon A4 crno-bijeli uređaji za svakodnevne poslovne potrebe. Jednostavno, brzo i pouzdano — Biz Up Team, Osijek.",
     hero: "Jednostavno. Brzo. Pouzdano.",
@@ -157,7 +157,7 @@ export const usluge: readonly Usluga[] = [
     navOpis: "Fleksibilno rješenje za poslovni ispis",
     breadcrumb: "Najam printera",
     title: "Najam printera",
-    metaTitle: "Najam Printera",
+    metaTitle: "Najam printera za tvrtke",
     metaDescription:
       "Najam Canon printera bez velikog početnog ulaganja. Uređaj, servis i potrošni materijal prema dogovoru — Biz Up Team, Osijek.",
     hero: "Printer bez velikog početnog ulaganja.",

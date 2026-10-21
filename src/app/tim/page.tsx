@@ -4,18 +4,19 @@ import CTABand from "@/components/ui/CTABand";
 import Team from "@/components/sections/Team";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { contact } from "@/lib/site";
+import { adresaRedak, contact, uredi } from "@/lib/site";
+import { og } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Tim",
   description:
-    "Ljudi iza Biz Up Teama u Osijeku — kontakti za telekomunikacijske usluge, Canon opremu i tehničku podršku.",
+    "Ljudi iza Biz Up Teama — kontakti za telekomunikacijske usluge, Canon opremu i tehničku podršku. Uredi u Osijeku i Zagrebu.",
   alternates: { canonical: "/tim" },
-  openGraph: {
+  openGraph: og({
     title: "Tim",
     description: "Tehnologija je važna. Ljudi koji stoje iza nje još su važniji.",
     url: "/tim",
-  },
+  }),
 };
 
 export default function TimPage() {
@@ -73,12 +74,17 @@ export default function TimPage() {
                       </a>
                     </dd>
                   </div>
-                  <div className="flex items-baseline justify-between gap-6 py-5">
-                    <dt className="t-label text-[var(--muted)]">Adresa</dt>
-                    <dd className="text-right text-[1.0625rem]">
-                      {contact.street}, {contact.cityLine}
-                    </dd>
-                  </div>
+                  {uredi.map((u, i) => (
+                    <div
+                      key={u.id}
+                      className={`flex items-baseline justify-between gap-6 py-5 ${
+                        i < uredi.length - 1 ? "border-b border-[var(--line)]" : ""
+                      }`}
+                    >
+                      <dt className="t-label text-[var(--muted)]">{u.city}</dt>
+                      <dd className="text-right text-[1.0625rem]">{adresaRedak(u)}</dd>
+                    </div>
+                  ))}
                 </dl>
               </Reveal>
             </div>

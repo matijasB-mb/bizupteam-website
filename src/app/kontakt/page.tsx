@@ -3,18 +3,19 @@ import PageHero from "@/components/ui/PageHero";
 import ContactForm from "@/components/ui/ContactForm";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { contact, site } from "@/lib/site";
+import { adresaLinije, contact, site, uredi } from "@/lib/site";
+import { og } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Kontakt",
   description:
-    "Javite se Biz Up Teamu u Osijeku — telekomunikacijske usluge i uredska tehnologija. Telefon 091 636 7770, webshop@bizupteam.hr.",
+    "Javite se Biz Up Teamu — uredi u Osijeku i Zagrebu. Telekomunikacijske usluge i uredska tehnologija. Telefon 091 636 7770, webshop@bizupteam.hr.",
   alternates: { canonical: "/kontakt" },
-  openGraph: {
+  openGraph: og({
     title: "Kontakt",
     description: "Recite nam što vam je potrebno i pomoći ćemo vam pronaći odgovarajuće rješenje.",
     url: "/kontakt",
-  },
+  }),
 };
 
 export default function KontaktPage() {
@@ -22,7 +23,7 @@ export default function KontaktPage() {
     <>
       <PageHero
         crumbs={[{ label: "Kontakt" }]}
-        eyebrow={`${site.city} · Poslovni korisnici`}
+        eyebrow={`${site.cities} · Poslovni korisnici`}
         title="Razgovarajmo o vašem ispisu."
         lead="Recite nam što vam je potrebno i pomoći ćemo vam pronaći odgovarajuće rješenje."
       />
@@ -35,14 +36,18 @@ export default function KontaktPage() {
               <SectionLabel tone="paper">Gdje smo</SectionLabel>
 
               <dl className="mt-10 border-t border-white/12">
-                <div className="border-b border-white/12 py-6">
-                  <dt className="t-label text-white/55">Adresa</dt>
-                  <dd className="mt-3 text-[1.0625rem] text-white/85">
-                    {contact.street}
-                    <br />
-                    {contact.cityLine}
-                  </dd>
-                </div>
+                {uredi.map((u) => (
+                  <div key={u.id} className="border-b border-white/12 py-6">
+                    <dt className="t-label text-white/55">{u.label}</dt>
+                    <dd className="mt-3 text-[1.0625rem] text-white/85">
+                      {adresaLinije(u).map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                ))}
                 <div className="border-b border-white/12 py-6">
                   <dt className="t-label text-white/55">Telefon</dt>
                   <dd className="mt-3">

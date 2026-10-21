@@ -7,6 +7,7 @@ import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { a1, images } from "@/lib/site";
 import { uslugaBySlug } from "@/lib/usluge";
+import { og } from "@/lib/seo";
 
 const usluga = uslugaBySlug("a1-telekomunikacije")!;
 
@@ -14,11 +15,11 @@ export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
   alternates: { canonical: "/usluge/a1-telekomunikacije" },
-  openGraph: {
+  openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
     url: "/usluge/a1-telekomunikacije",
-  },
+  }),
 };
 
 /**

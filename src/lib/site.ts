@@ -11,12 +11,62 @@ export const site = {
   legalName: "Biz Up Team d.o.o.",
   url: "https://bizupteam.hr",
   city: "Osijek",
+  /* Obje lokacije, redoslijed: sjedište pa Zagreb. Koristi se u copyju. */
+  cities: "Osijek i Zagreb",
   tagline: "Telekomunikacije i uredska tehnologija na jednom mjestu.",
   description:
-    "Biz Up Team iz Osijeka — partner A1-a za telekomunikacijske usluge i partner Canona za najam i prodaju printera, skenera te cloud rješenja za urede.",
+    "Biz Up Team — partner A1-a za telekomunikacijske usluge i partner Canona za najam i prodaju printera, skenera te cloud rješenja za urede. Osijek i Zagreb.",
 } as const;
 
+/* ── Uredi ─────────────────────────────────────────────────────────────
+   Dvije lokacije, potvrdio klijent. Zagrebačka adresa stigla je bez
+   poštanskog broja, pa ga ovdje nema — radije nepotpuno nego izmišljeno.
+   TODO: poštanski broj za Gustava Krkleca 38a.                          */
+
+export type Ured = {
+  id: string;
+  label: string;
+  city: string;
+  street: string;
+  postal: string;
+  cityLine: string;
+  /** Sjedište tvrtke — ono koje ide u pravne tekstove i strukturirane podatke. */
+  hq: boolean;
+};
+
+export const uredi: readonly Ured[] = [
+  {
+    id: "osijek",
+    label: "Osijek — sjedište",
+    city: "Osijek",
+    street: "ul. Ljudevita Posavskog 7",
+    postal: "31000",
+    cityLine: "31000 Osijek",
+    hq: true,
+  },
+  {
+    id: "zagreb",
+    label: "Zagreb",
+    city: "Zagreb",
+    street: "Gustava Krkleca 38a",
+    postal: "",
+    cityLine: "Zagreb",
+    hq: false,
+  },
+] as const;
+
+/** Retci adrese kad grad već stoji u naslovu bloka — bez ponavljanja imena. */
+export function adresaLinije(u: Ured): string[] {
+  return u.postal ? [u.street, u.cityLine] : [u.street];
+}
+
+/** Cijela adresa u jednom retku, za mjesta bez vlastitog naslova (podnožje). */
+export function adresaRedak(u: Ured): string {
+  return `${u.street}, ${u.cityLine}`;
+}
+
 export const contact = {
+  /* Zadržano radi sjedišta: pravni tekstovi, JSON-LD i račun idu na Osijek. */
   street: "ul. Ljudevita Posavskog 7",
   postal: "31000",
   cityLine: "31000 Osijek",
@@ -102,67 +152,106 @@ export const canon = {
   ],
 } as const;
 
-/* Volumes, inclusions and the shared device come from the client's own notes.
-   Uredaj potvrdio klijent kao "1643"; specifikacije i snimak su za 1643i II,
-   sto je model koji Canon danas prodaje. TODO: potvrditi generaciju. TODO: mjesečne cijene po paketu. */
+/* ── Paketi najma ──────────────────────────────────────────────────────
+   Cijene, količine i uređaji preuzeti su doslovno iz klijentove tablice
+   (Mario, 21.10.2026.). Ništa nije preračunato ni zaokruženo.
+
+   Redoslijed stupaca je klijentov: LOW → BASIC → MID → LARGE, dakle po
+   rastućem opsegu, ne abecedno.
+
+   Oznaka na MID paketu glasi „Preporučeni izbor", kako je u tablici.
+   Klijent je u napomeni ostavio otvorenim da je kasnije zamijeni s
+   „Najtraženiji paket" — tada se mijenja samo `badge` ispod.
+
+   TODO: potvrditi prikazuju li se cijene s PDV-om ili bez njega.          */
 
 export type Paket = {
   id: string;
   name: string;
-  volume: string;
-  volumeNote: string;
+  /** Oznaka iznad naziva; samo istaknuti paket je ima. */
+  badge?: string;
   blurb: string;
-  includes: readonly string[];
+  cijena: string;
+  uredaj: string;
+  ispisi: string;
+  skeniranja: string;
+  servis: string;
+  toner: string;
+  dodatniIspis: string;
+  dodatnoSkeniranje: string;
   featured?: boolean;
 };
 
+export const paketiUvod =
+  "Primjer unaprijed definiranih paketa za uredski ispis. Uključene količine odnose se na jedan mjesec.";
+
 export const paketi: readonly Paket[] = [
-  {
-    id: "basic",
-    name: "Basic",
-    volume: "500",
-    volumeNote: "crno-bijelih ispisa mjesečno",
-    blurb: "Za manje urede s umjerenim ispisom.",
-    includes: ["Canon imageRUNNER 1643i II", "Servis", "Toner"],
-  },
   {
     id: "low",
     name: "Low",
-    volume: "1.500",
-    volumeNote: "crno-bijelih ispisa mjesečno",
+    blurb: "Za urede s povremenim ispisom.",
+    cijena: "19 €",
+    uredaj: "Canon i-SENSYS X 1440i",
+    ispisi: "500",
+    skeniranja: "100",
+    servis: "Prema paketu",
+    toner: "Uključen",
+    dodatniIspis: "0,015 €",
+    dodatnoSkeniranje: "0,001 €",
+  },
+  {
+    id: "basic",
+    name: "Basic",
     blurb: "Za urede u kojima ispis ide svaki dan.",
-    includes: ["Canon imageRUNNER 1643i II", "Servis", "Toner"],
+    cijena: "29 €",
+    uredaj: "Canon i-SENSYS X 1440i",
+    ispisi: "1.500",
+    skeniranja: "500",
+    servis: "Prema paketu",
+    toner: "Uključen",
+    dodatniIspis: "0,015 €",
+    dodatnoSkeniranje: "0,001 €",
   },
   {
     id: "mid",
     name: "Mid",
-    volume: "2.500",
-    volumeNote: "crno-bijelih ispisa mjesečno",
-    blurb: "Za timove koji rastu i trebaju zajamčen odziv servisa.",
-    includes: [
-      "Canon imageRUNNER 1643i II",
-      "Servis u roku 8 sati",
-      "Toner",
-      "Telefonska podrška",
-    ],
+    badge: "Preporučeni izbor",
+    blurb: "Veći volumen, više skeniranja i brža servisna podrška.",
+    cijena: "45 €",
+    uredaj: "Canon imageRUNNER 1643i II",
+    ispisi: "2.500",
+    skeniranja: "1.250",
+    servis: "Telefonski servis unutar 8 h",
+    toner: "Uključen",
+    dodatniIspis: "0,007 €",
+    dodatnoSkeniranje: "0,001 €",
     featured: true,
   },
   {
-    id: "premium",
-    name: "Premium",
-    volume: "5.000",
-    volumeNote: "crno-bijelih ispisa mjesečno",
+    id: "large",
+    name: "Large",
     blurb: "Za poslovanja u kojima ispis ne smije stati.",
-    includes: [
-      "Canon imageRUNNER 1643i II",
-      "Prioritetni servis u roku 4 sata",
-      "Toner",
-      "Cloud skeniranje",
-      "Arhiviranje dokumenata",
-      "Zamjenski uređaj isti dan",
-      "Telefonska podrška",
-    ],
+    cijena: "65 €",
+    uredaj: "Canon imageRUNNER 1643i II",
+    ispisi: "5.000",
+    skeniranja: "Neograničeno",
+    servis: "Telefonski servis unutar 4 h",
+    toner: "Uključen",
+    dodatniIspis: "0,007 €",
+    dodatnoSkeniranje: "Prema uvjetima paketa",
   },
+] as const;
+
+/** Jedan popis redaka za sva mjesta koja pakete prikazuju — kartice i tablica
+    ne mogu se razići jer čitaju isti izvor. */
+export const paketRedci = [
+  { k: "Uređaj", get: (p: Paket) => p.uredaj },
+  { k: "Uključeni BW ispisi", get: (p: Paket) => p.ispisi },
+  { k: "Uključena skeniranja", get: (p: Paket) => p.skeniranja },
+  { k: "Servis", get: (p: Paket) => p.servis },
+  { k: "Toner", get: (p: Paket) => p.toner },
+  { k: "Dodatni BW ispis", get: (p: Paket) => p.dodatniIspis },
+  { k: "Dodatno skeniranje", get: (p: Paket) => p.dodatnoSkeniranje },
 ] as const;
 
 /* Wording lifted from the card the client already prints and ships in the box,
@@ -176,8 +265,8 @@ export const prednosti = [
   },
   {
     index: "02",
-    title: "Lokalno",
-    text: "Sjedište nam je u Osijeku. Poznajemo tržište na kojem poslujete i dolazimo kada treba doći.",
+    title: "Dvije lokacije",
+    text: "Uredi u Osijeku i Zagrebu pokrivaju i istok i sjeverozapad zemlje. Poznajemo tržište na kojem poslujete i dolazimo kada treba doći.",
   },
   {
     index: "03",
@@ -192,9 +281,14 @@ export const prednosti = [
 ] as const;
 
 /* ── Tim ───────────────────────────────────────────────────────────────
-   DEMO PODACI. Nijedna osoba ispod nije stvarna i nijedan kontakt ne radi.
-   Zamjena: prepiši polja i stavi fotografiju na navedenu putanju. Struktura
-   ostaje ista, komponenta se ne dira.
+   Imena, funkcije i brojevi stigli su od klijenta (Mario, 21.10.2026.).
+   Brojevi su zapisani u međunarodnom obliku (385…) i ovdje su prikazani u
+   domaćem formatu; `phoneHref` nosi izvorni broj s +.
+
+   Prazno polje znači „nije dobiveno", a ne „ne postoji". Kartica svako
+   neobavezno polje jednostavno preskoči — bez praznog retka, bez crtice i
+   bez mrtve poveznice. Klijent nije poslao e-mail adrese ni lokacije po
+   osobi, pa ih nema; središnji kontakt stoji ispod mreže.
 
    `image` smije biti prazan string — kartica tada renderira monogram u istom
    vizualnom jeziku umjesto praznog okvira. Namjerno nisu korišteni stock
@@ -206,58 +300,58 @@ export type ClanTima = {
   id: string;
   name: string;
   role: string;
-  phone: string;
-  phoneHref: string;
-  email: string;
-  linkedin: string;
-  location: string;
+  phone?: string;
+  phoneHref?: string;
+  email?: string;
+  linkedin?: string;
+  location?: string;
   image: string;
 };
 
 export const tim: readonly ClanTima[] = [
   {
-    id: "1",
+    id: "marko-horvat",
     name: "Marko Horvat",
     role: "Voditelj prodaje",
-    phone: "091 000 0001",
-    phoneHref: "tel:+385910000001",
-    email: "marko.horvat@example.com",
-    linkedin: "#",
-    location: "Osijek",
+    phone: "091 636 7771",
+    phoneHref: "tel:+385916367771",
     image: "", // stavi na /images/team/marko-horvat.jpg
   },
   {
-    id: "2",
-    name: "Ivana Kovač",
-    role: "Poslovna rješenja — A1",
-    phone: "091 000 0002",
-    phoneHref: "tel:+385910000002",
-    email: "ivana.kovac@example.com",
-    linkedin: "#",
-    location: "Osijek",
-    image: "", // stavi na /images/team/ivana-kovac.jpg
+    id: "goran-pavlovic",
+    name: "Goran Pavlović",
+    role: "Business Consultant",
+    phone: "091 636 7778",
+    phoneHref: "tel:+385916367778",
+    image: "", // stavi na /images/team/goran-pavlovic.jpg
   },
   {
-    id: "3",
-    name: "Petar Šimić",
-    role: "Tehnička podrška — Canon",
-    phone: "091 000 0003",
-    phoneHref: "tel:+385910000003",
-    email: "petar.simic@example.com",
-    linkedin: "#",
-    location: "Osijek",
-    image: "", // stavi na /images/team/petar-simic.jpg
+    id: "branka-mutic",
+    name: "Branka Mutić",
+    role: "Business Consultant",
+    phone: "091 613 8853",
+    phoneHref: "tel:+385916138853",
+    image: "", // stavi na /images/team/branka-mutic.jpg
   },
   {
-    id: "4",
-    name: "Ana Novak",
-    role: "Korisnička podrška",
-    phone: "091 000 0004",
-    phoneHref: "tel:+385910000004",
-    email: "ana.novak@example.com",
-    linkedin: "#",
-    location: "Osijek",
-    image: "", // stavi na /images/team/ana-novak.jpg
+    id: "goran-vujic",
+    name: "Goran Vujić",
+    role: "Business Consultant",
+    phone: "091 621 5070",
+    phoneHref: "tel:+385916215070",
+    image: "", // stavi na /images/team/goran-vujic.jpg
+  },
+  {
+    id: "tamara-preka",
+    name: "Tamara Preka",
+    role: "Business Consultant",
+    image: "", // stavi na /images/team/tamara-preka.jpg
+  },
+  {
+    id: "barbara-pavlovic",
+    name: "Barbara Pavlović",
+    role: "Business Consultant",
+    image: "", // stavi na /images/team/barbara-pavlovic.jpg
   },
 ] as const;
 

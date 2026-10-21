@@ -5,9 +5,10 @@ import CTABand from "@/components/ui/CTABand";
 import DeviceGallery from "@/components/ui/DeviceGallery";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { paketi } from "@/lib/site";
+import Paketi from "@/components/ui/Paketi";
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
+import { og } from "@/lib/seo";
 
 const usluga = uslugaBySlug("najam-printera")!;
 
@@ -25,11 +26,11 @@ export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
   alternates: { canonical: "/usluge/najam-printera" },
-  openGraph: {
+  openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
     url: "/usluge/najam-printera",
-  },
+  }),
 };
 
 const koraci = [
@@ -214,103 +215,7 @@ export default function NajamPage() {
       {/* ── Paketi ── */}
       <section className="section bg-[var(--paper)]">
         <div className="shell">
-          <Reveal>
-            <div className="flex flex-col gap-6 border-t border-[var(--line-strong)] pt-10 md:flex-row md:items-end md:justify-between">
-              <div>
-                <SectionLabel>Paketi najma</SectionLabel>
-                <h2 className="t-h2 mt-6 max-w-[18ch]">Prema opsegu ispisa</h2>
-              </div>
-              <p className="max-w-[36ch] text-[0.9375rem] text-[var(--muted)]">
-                Isti Canon uređaj u svim paketima. Razlika je u mjesečnom opsegu
-                i razini podrške koja ide uz njega.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
-            {paketi.map((p, i) => {
-              const dark = Boolean(p.featured);
-              return (
-                <Reveal key={p.id} delay={i * 70} className="h-full">
-                  <article
-                    className={[
-                      "flex h-full flex-col p-7 lg:p-8",
-                      dark
-                        ? "bg-[var(--ink)] text-white lg:-my-5 lg:py-13"
-                        : "bg-[var(--paper-warm)] lg:bg-transparent",
-                    ].join(" ")}
-                  >
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h3 className="t-h3" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
-                        {p.name}
-                      </h3>
-                      {dark && (
-                        <span className="t-label shrink-0 bg-[var(--red)] px-2 py-1 text-white">
-                          Najtraženiji
-                        </span>
-                      )}
-                    </div>
-
-                    <p className={`mt-6 text-[0.9375rem] ${dark ? "text-white/55" : "text-[var(--muted)]"}`}>
-                      {p.blurb}
-                    </p>
-
-                    <div className="mt-8">
-                      <span
-                        className="block text-[2.75rem] leading-none tabular-nums tracking-[-0.04em]"
-                        style={{ fontFamily: "var(--font-archivo), sans-serif", fontWeight: 600 }}
-                      >
-                        {p.volume}
-                      </span>
-                      <span className={`mt-2 block text-[0.8125rem] ${dark ? "text-white/45" : "text-[var(--muted)]"}`}>
-                        {p.volumeNote}
-                      </span>
-                    </div>
-
-                    <ul
-                      className={`mt-8 flex flex-1 flex-col gap-3 border-t pt-7 text-[0.9375rem] ${
-                        dark ? "border-white/15 text-white/80" : "border-[var(--line)] text-[var(--text-2)]"
-                      }`}
-                    >
-                      {p.includes.map((line) => (
-                        <li key={line} className="flex gap-3 leading-snug">
-                          <svg
-                            width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"
-                            className={`mt-[0.45rem] shrink-0 ${dark ? "text-[var(--red-on-dark)]" : "text-[var(--red-on-light)]"}`}
-                          >
-                            <path d="M1 5.2 4.2 8.4 11 1.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="square" />
-                          </svg>
-                          <span>{line}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <Link
-                      href="/kontakt"
-                      className={[
-                        "mt-8 inline-flex items-center justify-between gap-3 border-t pt-5 text-[0.9375rem] font-medium transition-colors duration-300",
-                        dark
-                          ? "border-white/15 text-white hover:text-[var(--red-on-dark)]"
-                          : "border-[var(--line)] hover:text-[var(--red-on-light)]",
-                      ].join(" ")}
-                    >
-                      Zatražite ponudu
-                      <span aria-hidden="true">→</span>
-                      <span className="sr-only">za paket {p.name}</span>
-                    </Link>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
-
-          <Reveal delay={100}>
-            <p className="mt-10 max-w-[62ch] text-[0.875rem] leading-relaxed text-[var(--muted)]">
-              Cijena najma ovisi o broju uređaja, opsegu ispisa i trajanju
-              suradnje, pa je određujemo nakon kratke analize vaših potreba.
-              Nudimo i najam bez dugoročne obveze te kupnju uz servisni ugovor.
-            </p>
-          </Reveal>
+          <Paketi ctaHref="/kontakt" heading="h2" />
 
           <CustomSolutions variant="note" />
         </div>

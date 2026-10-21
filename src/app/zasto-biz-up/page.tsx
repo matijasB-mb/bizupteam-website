@@ -6,18 +6,18 @@ import Figure from "@/components/ui/Figure";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { images } from "@/lib/site";
+import { og } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Zašto Biz Up",
   description:
-    "Jedan partner za telekomunikacije i uredsku tehnologiju, lokalna podrška iz Osijeka, servis s dogovorenim rokom odziva i predvidivi mjesečni troškovi.",
+    "Jedan partner za telekomunikacije i uredsku tehnologiju, podrška iz Osijeka i Zagreba, servis s dogovorenim rokom odziva i predvidivi mjesečni troškovi.",
   alternates: { canonical: "/zasto-biz-up" },
-  openGraph: {
+  openGraph: og({
     title: "Zašto Biz Up",
-    description:
-      "Jedan partner za telekomunikacije i uredsku tehnologiju, s lokalnom podrškom iz Osijeka.",
+    description: "Jedan partner za telekomunikacije i uredsku tehnologiju, s podrškom iz Osijeka i Zagreba.",
     url: "/zasto-biz-up",
-  },
+  }),
 };
 
 /* Each reason is written as an argument with a cost attached, not as a claim. */
@@ -30,9 +30,9 @@ const razlozi = [
   },
   {
     n: "02",
-    t: "Lokalna dostupnost",
-    lead: "Sjedište u Osijeku znači da dolazak nije logistički projekt.",
-    body: "Poznajemo tržište na kojem poslujete i dolazimo kada treba doći. Za servis uredske opreme to je razlika između istog dana i sljedećeg tjedna.",
+    t: "Dvije lokacije",
+    lead: "Uredi u Osijeku i Zagrebu, pa dolazak nije logistički projekt.",
+    body: "Sjedište nam je u Osijeku, a drugi ured u Zagrebu — pokrivamo i istok i sjeverozapad zemlje. Poznajemo tržišta na kojima poslujete i dolazimo kada treba doći. Za servis uredske opreme to je razlika između istog dana i sljedećeg tjedna.",
   },
   {
     n: "03",
