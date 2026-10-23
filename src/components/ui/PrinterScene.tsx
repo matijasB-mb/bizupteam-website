@@ -211,8 +211,11 @@ export default function PrinterScene({ className = "" }: { className?: string })
            to the width of the screen, torso fading under the text. Units are
            world units — the camera sees 8.04 of them vertically at z=15. */
         const visibleW = 8.04 * cam.aspect;
-        const s = mob ? Math.min(0.78, (0.64 * visibleW) / 3.9) : tab ? 0.42 : Math.min(0.98, 0.2 * half);
-        const mobY = 4.02 - 0.22 * 8.04 - 1.1 * s;
+        const s = mob ? Math.min(0.5, (0.52 * visibleW) / 3.9) : tab ? 0.42 : Math.min(0.98, 0.2 * half);
+        /* The top of the head sits 100px down — clear of the 72px header bar —
+           whatever the height of the section. 3.05 is the head's top edge in
+           the figure's own units. */
+        const mobY = 4.02 - (100 / h) * 8.04 - 3.05 * s;
         root.position.set(
           mob ? 0.35 : (half - 2.25 * s * 1.1) * 0.97,
           mob ? mobY : tab ? 1.7 : -0.6 * s,
