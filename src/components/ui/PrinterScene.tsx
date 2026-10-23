@@ -192,7 +192,7 @@ export default function PrinterScene({ className = "" }: { className?: string })
       head.add(paper);
 
       /* Placement: the figure sits to the right on desktop and drops behind
-         its own band above the copy on a phone. */
+         behind the copy on a phone. */
       const size = () => {
         const w = host.clientWidth;
         const h = host.clientHeight;
@@ -207,12 +207,15 @@ export default function PrinterScene({ className = "" }: { className?: string })
         const mob = w < 700;
         const tab = !mob && w < 1100;
         const half = 4.02 * cam.aspect;
-        const s = mob ? 0.9 : tab ? 0.42 : Math.min(0.98, 0.2 * half);
-        /* On a phone the figure has a band of its own above the copy, so it is
-           centred and sized to the band instead of floating behind the text. */
+        /* On a phone the figure sits behind the copy: head near the top, sized
+           to the width of the screen, torso fading under the text. Units are
+           world units — the camera sees 8.04 of them vertically at z=15. */
+        const visibleW = 8.04 * cam.aspect;
+        const s = mob ? Math.min(0.78, (0.64 * visibleW) / 3.9) : tab ? 0.42 : Math.min(0.98, 0.2 * half);
+        const mobY = 4.02 - 0.22 * 8.04 - 1.1 * s;
         root.position.set(
-          mob ? 0 : (half - 2.25 * s * 1.1) * 0.97,
-          mob ? 0.55 : tab ? 1.7 : -0.6 * s,
+          mob ? 0.35 : (half - 2.25 * s * 1.1) * 0.97,
+          mob ? mobY : tab ? 1.7 : -0.6 * s,
           0,
         );
         root.scale.setScalar(s);
