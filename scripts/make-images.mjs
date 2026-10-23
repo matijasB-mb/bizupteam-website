@@ -149,60 +149,52 @@ function ogCard() {
 
 /* ── Ikona ─────────────────────────────────────────────────────────────── */
 
-/* Crvena podloga, ne tintana: u traci kartica favicon je zastavica, a ne
-   dio stranice — tu crvena smije nositi cijelu plohu. */
-function iconMark(size) {
-  return h(
-    "div",
-    {
-      style: {
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: RED,
-        fontFamily: "Archivo",
-      },
-    },
-    h(
-      "div",
-      {
-        style: {
-          display: "flex",
-          fontSize: size * 0.62,
-          fontWeight: 700,
-          letterSpacing: -size * 0.04,
-          color: "#FFFFFF",
-          lineHeight: 1,
-          marginTop: -size * 0.06,
-        },
-      },
-      "bu",
-    ),
-  );
+/* Ikona je pravi logotip (public/brand/logo-biz-up.png), ne naš nacrt: logo se
+   izreže po sadržaju, stavi na bijelu podlogu s malim rubom i skalira na
+   traženu veličinu. Izvor je raster od 142 px, pa je povećanje za velike ikone
+   mekano — vektorski logo (SVG) bi to riješio. */
+const LOGO = join(root, "public", "brand", "logo-biz-up.png");
+const LOGO_BOX = { left: 9, top: 11, width: 124, height: 55 }; // sadržaj bez prozirnog ruba
+
+async function logoIcon(size, pad = 0.09) {
+  const inner = Math.round(size * (1 - pad * 2));
+  const mark = await sharp(LOGO)
+    .extract(LOGO_BOX)
+    .resize({ width: inner, kernel: "lanczos3" })
+    .png()
+    .toBuffer();
+  return sharp({
+    create: { width: size, height: size, channels: 4, background: "#FFFFFF" },
+  })
+    .composite([{ input: mark, gravity: "center" }])
+    .png()
+    .toBuffer();
 }
 
 /* ── ICO ───────────────────────────────────────────────────────────────── */
 
-/** ICO spremnik s ugrađenim PNG-om — podržano od Windows Viste naovamo. */
-function ico(png, size) {
+/** ICO spremnik s ugrađenim PNG-ovima — podržano od Windows Viste naovamo.
+    Više veličina u jednoj datoteci: preglednik uzme onu koja mu odgovara. */
+function ico(images) {
   const head = Buffer.alloc(6);
   head.writeUInt16LE(0, 0); // rezervirano
   head.writeUInt16LE(1, 2); // tip: ikona
-  head.writeUInt16LE(1, 4); // broj slika
+  head.writeUInt16LE(images.length, 4);
 
-  const entry = Buffer.alloc(16);
-  entry.writeUInt8(size >= 256 ? 0 : size, 0);
-  entry.writeUInt8(size >= 256 ? 0 : size, 1);
-  entry.writeUInt8(0, 2); // paleta
-  entry.writeUInt8(0, 3); // rezervirano
-  entry.writeUInt16LE(1, 4); // ravnine
-  entry.writeUInt16LE(32, 6); // bitova po pikselu
-  entry.writeUInt32LE(png.length, 8);
-  entry.writeUInt32LE(head.length + entry.length, 12);
+  let offset = head.length + images.length * 16;
+  const entries = images.map(({ png, size }) => {
+    const e = Buffer.alloc(16);
+    e.writeUInt8(size >= 256 ? 0 : size, 0);
+    e.writeUInt8(size >= 256 ? 0 : size, 1);
+    e.writeUInt16LE(1, 4); // ravnine
+    e.writeUInt16LE(32, 6); // bitova po pikselu
+    e.writeUInt32LE(png.length, 8);
+    e.writeUInt32LE(offset, 12);
+    offset += png.length;
+    return e;
+  });
 
-  return Buffer.concat([head, entry, png]);
+  return Buffer.concat([head, ...entries, ...images.map((i) => i.png)]);
 }
 
 /* ── Izvedba ───────────────────────────────────────────────────────────── */
@@ -218,14 +210,16 @@ const og = await render(ogCard(), { width: 1200, height: 630, fonts });
 writeFileSync(join(app, "opengraph-image.png"), og);
 console.log(`napisano  src/app/opengraph-image.png (1200×630, ${og.length} B)`);
 
-const icon512 = await render(iconMark(512), { width: 512, height: 512, fonts });
+const icon512 = await logoIcon(512);
 writeFileSync(join(app, "icon.png"), icon512);
 console.log(`napisano  src/app/icon.png (512×512, ${icon512.length} B)`);
 
-const apple = await sharp(icon512).resize(180, 180).png().toBuffer();
+const apple = await logoIcon(180, 0.12);
 writeFileSync(join(app, "apple-icon.png"), apple);
 console.log(`napisano  src/app/apple-icon.png (180×180, ${apple.length} B)`);
 
-const small = await sharp(icon512).resize(48, 48).png().toBuffer();
-writeFileSync(join(app, "favicon.ico"), ico(small, 48));
-console.log(`napisano  src/app/favicon.ico (48×48)`);
+const sizes = [16, 32, 48];
+const icons = [];
+for (const size of sizes) icons.push({ size, png: await logoIcon(size, size <= 32 ? 0.04 : 0.07) });
+writeFileSync(join(app, "favicon.ico"), ico(icons));
+console.log(`napisano  src/app/favicon.ico (${sizes.join(", ")} px)`);

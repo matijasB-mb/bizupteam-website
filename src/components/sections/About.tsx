@@ -1,6 +1,7 @@
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Figure from "@/components/ui/Figure";
+import ReadMore from "@/components/ui/ReadMore";
 import { contact, images } from "@/lib/site";
 
 /* Facts only — each one verifiable from the client's own material. */
@@ -35,20 +36,26 @@ export default function About() {
                 tehnologiju.
               </p>
 
-              <div className="mt-8 flex max-w-[var(--measure)] flex-col gap-5">
-                <p className="t-body">
-                  Kao ugovorni partner A1-a savjetujemo tvrtke pri odabiru
-                  telekomunikacijskih usluga. Kao partner Canona isporučujemo,
-                  iznajmljujemo i održavamo printere, skenere i multifunkcijske
-                  uređaje, uz automatsku dostavu tonera i rješenja za
-                  digitalizaciju dokumenata.
-                </p>
-                <p className="t-body">
-                  Radimo s B2B sektorom i pristupamo svakom klijentu pojedinačno
-                  — prvo analiziramo kako ured stvarno radi, pa tek onda
-                  predlažemo opremu i usluge. Kada nešto zatreba, javljate se
-                  nama, a ne pozivnom centru.
-                </p>
+              {/* Two long paragraphs read as a wall on a phone, so there they
+                  sit behind "Pročitaj više"; from md up they show in full. */}
+              <div className="mt-8 max-w-[var(--measure)]">
+                <ReadMore>
+                  <div className="flex flex-col gap-5">
+                    <p className="t-body">
+                      Kao ugovorni partner A1-a savjetujemo tvrtke pri odabiru
+                      telekomunikacijskih usluga. Kao partner Canona isporučujemo,
+                      iznajmljujemo i održavamo printere, skenere i multifunkcijske
+                      uređaje, uz automatsku dostavu tonera i rješenja za
+                      digitalizaciju dokumenata.
+                    </p>
+                    <p className="t-body">
+                      Radimo s B2B sektorom i pristupamo svakom klijentu pojedinačno
+                      — prvo analiziramo kako ured stvarno radi, pa tek onda
+                      predlažemo opremu i usluge. Kada nešto zatreba, javljate se
+                      nama, a ne pozivnom centru.
+                    </p>
+                  </div>
+                </ReadMore>
               </div>
 
               {/* The line the client already prints on the card in every box.

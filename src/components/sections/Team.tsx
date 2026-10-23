@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Figure from "@/components/ui/Figure";
@@ -12,51 +13,32 @@ function LinkedInMark() {
   );
 }
 
-/** Initials, used when a portrait file is not in place yet. */
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join("");
-}
-
+/** A portrait renders only once a real photo path is set in lib/site.ts.
+    Until then the card is simply text — no grey box, no monogram. */
 function Portrait({ member }: { member: ClanTima }) {
-  if (!member.image) {
-    return (
-      <div className="absolute inset-0 grid place-items-center bg-[var(--ink)]">
-        <span
-          aria-hidden="true"
-          className="text-[3.25rem] leading-none tracking-[-0.04em] text-white/22"
-          style={{ fontFamily: "var(--font-archivo), sans-serif", fontWeight: 600 }}
-        >
-          {initials(member.name)}
-        </span>
-      </div>
-    );
-  }
+  if (!member.image) return null;
 
   return (
-    <Image
-      src={member.image}
-      alt={`${member.name}, ${member.role}`}
-      fill
-      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-      loading="lazy"
-      className="object-cover grayscale-[35%] transition-[transform,filter] duration-[900ms] ease-out will-change-transform group-hover:scale-[1.05] group-hover:grayscale-0 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-    />
+    <div className="relative overflow-hidden bg-[var(--paper-mute)]" style={{ aspectRatio: "4 / 5" }}>
+      <Image
+        src={member.image}
+        alt={`${member.name}, ${member.role}`}
+        fill
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+        loading="lazy"
+        className="object-cover grayscale-[35%] transition-[transform,filter] duration-[900ms] ease-out will-change-transform group-hover:scale-[1.05] group-hover:grayscale-0 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+      />
+    </div>
   );
 }
 
 function Card({ member, index }: { member: ClanTima; index: number }) {
   return (
     <Reveal delay={index * 90} className="h-full">
-      <article className="group flex h-full flex-col border-t border-[var(--line-strong)] pt-5 transition-transform duration-500 ease-out hover:-translate-y-1 motion-reduce:hover:translate-y-0">
-        <div className="relative overflow-hidden bg-[var(--paper-mute)]" style={{ aspectRatio: "4 / 5" }}>
-          <Portrait member={member} />
-        </div>
+      <article className="group flex h-full flex-col border-t border-[var(--line-strong)] pt-6">
+        <Portrait member={member} />
 
-        <h3 className="t-h3 mt-6">{member.name}</h3>
+        <h3 className={`t-h3 ${member.image ? "mt-6" : ""}`}>{member.name}</h3>
         <p className="mt-1.5 text-[0.9375rem] text-[var(--muted)]">{member.role}</p>
 
         {/* Every contact line is optional. A person without a direct number
@@ -171,6 +153,42 @@ export default function Team({ showIntro = true }: { showIntro?: boolean } = {})
             </a>{" "}
             — preusmjerimo vas osobi koja vam može odgovoriti.
           </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+
+/**
+ * Homepage version: a heading, one line and a link. The people themselves live
+ * on /tim — repeating six cards here only pushed the contact form further down.
+ */
+export function TeamTeaser() {
+  return (
+    <section id="tim" className="section bg-[var(--paper-mute)]">
+      <div className="shell">
+        <Reveal>
+          <div className="grid gap-y-8 lg:grid-cols-12 lg:items-end lg:gap-x-16">
+            <div className="lg:col-span-6">
+              <SectionLabel>Naš tim</SectionLabel>
+              <h2 className="t-h2 mt-7 max-w-[12ch]">Ljudi iza rješenja.</h2>
+            </div>
+            <div className="lg:col-span-5 lg:col-start-8">
+              <p className="t-lead">
+                Kod nas znate koga zovete i tko vam odgovara.
+              </p>
+              <Link
+                href="/tim"
+                className="group mt-8 inline-flex items-center gap-2.5 border-b border-[var(--line-strong)] pb-1.5 text-[0.9375rem] font-medium transition-colors duration-300 hover:border-[var(--red)] hover:text-[var(--red-on-light)]"
+              >
+                Upoznajte tim
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>
