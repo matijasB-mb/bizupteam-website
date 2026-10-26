@@ -37,12 +37,13 @@ export default function UslugePage() {
           <Reveal>
             <div className="grid gap-y-6 border-t border-[var(--line-strong)] pt-10 lg:grid-cols-12 lg:gap-x-16">
               <div className="lg:col-span-5">
-                <SectionLabel>Pregled</SectionLabel>
-                <h2 className="t-h2 mt-6 max-w-[13ch]">Šest putova, jedan razgovor</h2>
+                <SectionLabel>Sve usluge</SectionLabel>
+                <h2 className="t-h2 mt-6 max-w-[14ch]">Što vam možemo ponuditi</h2>
               </div>
               <p className="t-lead lg:col-span-6 lg:col-start-7 lg:self-end">
-                Ne morate unaprijed znati što točno tražite. Dovoljno je da
-                znate kako ured danas radi — ostalo je naš posao.
+                Odaberite uslugu koja vas zanima. Ako niste sigurni što vam
+                treba, recite nam kako vaš ured danas radi — a mi predlažemo
+                rješenje.
               </p>
             </div>
           </Reveal>
