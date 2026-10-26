@@ -1,21 +1,21 @@
 import SectionLabel from "@/components/ui/SectionLabel";
-import ParticleScene from "@/components/ui/ParticleScene";
+import PrinterScene from "@/components/ui/PrinterScene";
 import { ButtonLink } from "@/components/ui/Button";
 import { site } from "@/lib/site";
 
 /**
- * Hero with the particle-and-printer scene.
+ * Hero with the 3D printer.
  *
  * Built from the client's prototype (BizUp Hero Printer Scroll): near-black
- * field, the printer and its cloud of particles on the right, the copy at the
- * left. The prototype was a four-screen scroll story; here it is the opening
- * band only, and its scroll-driven part — the printer lifting away while the
- * cloud pulls into rings — runs as this band scrolls out of view.
+ * field, the printer on the right and the copy at the left. The printer rises
+ * into place on load and, as the page scrolls, shrinks and lifts away while
+ * the element marked `data-hero-copy` fades — PrinterScene does both. On a
+ * phone the printer is small and sits in the top-right corner, by the headline.
  *
  * Carries `id="top"` so the navbar goes transparent over it, as on every other
  * dark opening band.
  *
- * Server component. The only client code is ParticleScene, which loads three
+ * Server component. The only client code is PrinterScene, which loads three
  * lazily, so the text and buttons are in the HTML before any 3D exists.
  */
 export default function Hero() {
@@ -24,8 +24,7 @@ export default function Hero() {
       id="top"
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[#050505] text-white"
     >
-      {/* On a phone the scene sits behind the copy, so it is held back */}
-      <ParticleScene className="absolute inset-0 -z-10 max-[699px]:opacity-40" />
+      <PrinterScene className="absolute inset-0 -z-10" />
 
       {/* Red glow behind the scene, and a fade from the left under the copy */}
       <div
@@ -38,30 +37,20 @@ export default function Hero() {
       />
 
       <div className="shell pointer-events-none relative flex flex-1 flex-col justify-start pt-[6.5rem] pb-12 min-[700px]:justify-center min-[700px]:pt-28 min-[700px]:pb-20">
-        <div className="min-[700px]:max-w-[58%]">
+        <div data-hero-copy className="will-change-[opacity,transform] min-[700px]:max-w-[58%]">
           <SectionLabel tone="paper" className="hero-cue" style={{ "--i": 0 } as React.CSSProperties}>
             {site.cities} · Poslovna rješenja
           </SectionLabel>
 
           <h1
-            className="hero-cue mt-7 max-w-[17ch] text-white"
-            style={
-              {
-                "--i": 1,
-                fontFamily: "var(--font-archivo), sans-serif",
-                fontWeight: 600,
-                letterSpacing: "-0.04em",
-                lineHeight: 0.98,
-                fontSize: "clamp(2.5rem, min(6vw, 10vh), 5.6rem)",
-                textWrap: "balance",
-              } as React.CSSProperties
-            }
+            className="t-display hero-cue mt-7 max-w-[17ch] text-[clamp(2.25rem,min(6vw,10vh),5.6rem)] leading-[0.98] text-white max-[699px]:mt-5 max-[699px]:max-w-[62%] max-[699px]:text-[2.15rem]"
+            style={{ "--i": 1 } as React.CSSProperties}
           >
             Jedan partner za sve što vaš ured drži u pogonu.
           </h1>
 
           <p
-            className="t-lead hero-cue mt-7 max-w-[48ch] text-white/70"
+            className="t-lead hero-cue mt-7 max-w-[48ch] text-white/70 max-[699px]:mt-5"
             style={{ "--i": 2 } as React.CSSProperties}
           >
             Telekomunikacijske usluge kao ugovorni partner A1-a i uredska
@@ -70,7 +59,7 @@ export default function Hero() {
           </p>
 
           <div
-            className="hero-cue pointer-events-auto mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
+            className="hero-cue pointer-events-auto mt-10 flex flex-col gap-3 max-[699px]:mt-7 sm:flex-row sm:items-center sm:gap-4"
             style={{ "--i": 3 } as React.CSSProperties}
           >
             <ButtonLink

@@ -4,59 +4,30 @@ import { useEffect, useRef } from "react";
 import type * as THREE from "three";
 
 /**
- * The hero's 3D scene: a glossy printer with a face, inside a cloud of red and
- * white particles. Eyes follow the pointer and blink, a sheet feeds out of the
- * slot, and as the hero scrolls away the printer shrinks out of view while the
- * cloud pulls itself into concentric rings.
+ * The hero's 3D scene: a glossy printer with a face. It rises into place and
+ * turns to face the viewer on load, the eyes follow the pointer and blink, and
+ * a sheet feeds out of the slot. As the page scrolls the printer shrinks and
+ * lifts away while the hero copy fades, so the hero hands over to the page.
  *
  * Ported from the client's prototype (BizUp Hero Printer Scroll), written
- * against three r149 and built as a whole-page scroll story with a fixed
- * canvas. The site's own sections have solid backgrounds, so the canvas lives
- * inside the hero and only the first leg of that story — cloud to rings — is
- * kept, driven by how far the hero has scrolled.
- *
- * Moving to a current three needed these pinned so the look does not drift:
+ * against three r149. Moving to a current three needed these pinned so the
+ * look does not drift:
  *   • colour management is switched off, as it was by default in r149
  *   • lights are multiplied by π ("legacy lights" are gone), and the point
  *     light keeps its old linear decay
  *
- * three loads in its own chunk after first paint. Without WebGL the hero is
- * still complete — the scene is decoration, which is why it is aria-hidden.
+ * The scene fades the copy itself: it looks for an element marked
+ * `data-hero-copy` inside the same section. three loads in its own chunk after
+ * first paint; without WebGL the hero is still complete, which is why the
+ * canvas is aria-hidden.
  */
 
 type Mouse = { x: number; y: number; sx: number; sy: number };
 
-const VERT = `
-attribute vec3 aB;
-attribute float aR;
-attribute float aS;
-attribute vec3 color;
-uniform float uMix, uTime, uSize, uPR;
-varying vec3 vC;
-varying float vA;
-void main() {
-  float m = smoothstep(aR * .45, aR * .45 + .55, uMix);
-  vec3 p = mix(position, aB, m);
-  float sw = sin(3.14159 * m);
-  p += vec3(sin(aR * 40. + uTime * .6), cos(aR * 31. + uTime * .5), sin(aR * 23. + uTime * .7)) * (.035 + sw * 1.1 * aR);
-  p += normalize(p + .001) * sw * .5 * aR;
-  vec4 mv = modelViewMatrix * vec4(p, 1.);
-  gl_Position = projectionMatrix * mv;
-  gl_PointSize = uSize * aS * uPR * 10. / -mv.z;
-  vC = color;
-  vA = .6 + .4 * sin(uTime * 1.5 + aR * 50.);
-}`;
+/* Overshoot-and-settle for the entrance. */
+const ease = (x: number) => 1 + 2.7 * Math.pow(x - 1, 3) + 1.7 * Math.pow(x - 1, 2);
 
-const FRAG = `
-varying vec3 vC;
-varying float vA;
-void main() {
-  float d = length(gl_PointCoord - .5);
-  float a = smoothstep(.5, 0., d);
-  gl_FragColor = vec4(vC * (.7 + .8 * a), a * vA);
-}`;
-
-export default function ParticleScene({ className = "" }: { className?: string }) {
+export default function PrinterScene({ className = "" }: { className?: string }) {
   const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -88,99 +59,13 @@ export default function ParticleScene({ className = "" }: { className?: string }
       } catch {
         return; // no WebGL — the hero stands on its own without the scene
       }
-      const PR = Math.min(window.devicePixelRatio, 2);
-      renderer.setPixelRatio(PR);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.outputColorSpace = T.SRGBColorSpace;
       host.appendChild(renderer.domElement);
 
       const scene = new T.Scene();
       const cam = new T.PerspectiveCamera(30, 1, 0.1, 100);
       cam.position.set(0, 0, 12);
-
-      /* ── Particles ─────────────────────────────────────────────── */
-
-      const N = window.innerWidth < 700 ? 4500 : 7500;
-      let sd = 11;
-      const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
-      const tilt = (p: number[], a: number) => {
-        const c = Math.cos(a);
-        const s = Math.sin(a);
-        return [p[0], p[1] * c - p[2] * s, p[1] * s + p[2] * c];
-      };
-      const build = (fn: (i: number) => number[]) => {
-        const a = new Float32Array(N * 3);
-        for (let i = 0; i < N; i++) {
-          const p = fn(i);
-          a[i * 3] = p[0];
-          a[i * 3 + 1] = p[1];
-          a[i * 3 + 2] = p[2];
-        }
-        return a;
-      };
-
-      /* Start: a loose cloud around where the printer sits. */
-      const cloud = build(() => {
-        const a = rnd() * 6.283;
-        const c = Math.acos(2 * rnd() - 1);
-        const r = 2 + rnd() * 1.3;
-        return [r * Math.sin(c) * Math.cos(a), r * Math.sin(c) * Math.sin(a) * 0.9, r * Math.cos(c) * 0.6 - 0.5];
-      });
-      /* End: six concentric rings, tipped towards the viewer. */
-      const radii = [0.35, 0.9, 1.4, 1.9, 2.4, 2.6];
-      const rings = build((i) => {
-        const r = radii[i % 6] + (rnd() - 0.5) * 0.06;
-        const a = rnd() * 6.283;
-        return tilt([r * Math.cos(a), r * Math.sin(a), Math.sin(r * 3) * 0.3 + (rnd() - 0.5) * 0.05], 1.0);
-      });
-
-      const col = new Float32Array(N * 3);
-      const rr = new Float32Array(N);
-      const ss = new Float32Array(N);
-      const pal = [
-        [0.89, 0.12, 0.14],
-        [1, 1, 1],
-        [0.7, 0.7, 0.72],
-        [0.55, 0.07, 0.09],
-      ];
-      for (let i = 0; i < N; i++) {
-        const q = rnd();
-        const c =
-          i < 220 || (i >= 520 && i < 780)
-            ? [1, 1, 1]
-            : q < 0.45
-              ? pal[0]
-              : q < 0.75
-                ? pal[1]
-                : q < 0.93
-                  ? pal[2]
-                  : pal[3];
-        col.set(c, i * 3);
-        rr[i] = rnd();
-        ss[i] = i < 220 ? 2.2 : 0.7 + rnd() * 0.9;
-      }
-
-      const geo = new T.BufferGeometry();
-      geo.setAttribute("position", new T.BufferAttribute(cloud, 3));
-      geo.setAttribute("aB", new T.BufferAttribute(rings, 3));
-      geo.setAttribute("color", new T.BufferAttribute(col, 3));
-      geo.setAttribute("aR", new T.BufferAttribute(rr, 1));
-      geo.setAttribute("aS", new T.BufferAttribute(ss, 1));
-      const mob0 = window.innerWidth < 700;
-      const mat = new T.ShaderMaterial({
-        transparent: true,
-        depthWrite: false,
-        blending: T.AdditiveBlending,
-        uniforms: {
-          uMix: { value: 0 },
-          uTime: { value: 0 },
-          uSize: { value: mob0 ? 2.6 : 3.2 },
-          uPR: { value: PR },
-        },
-        vertexShader: VERT,
-        fragmentShader: FRAG,
-      });
-      const pts = new T.Points(geo, mat);
-      scene.add(pts);
 
       /* ── Studio light, only ever seen as reflections on the printer ── */
 
@@ -218,7 +103,7 @@ export default function ParticleScene({ className = "" }: { className?: string }
       const key = new T.DirectionalLight(0xffffff, 1.1 * Math.PI);
       key.position.set(-3, 4, 6);
       scene.add(key);
-      /* Red rim from behind, the one place the brand colour lights the object. */
+      /* Red rim from behind: the one place the brand colour lights the object. */
       const rim = new T.PointLight(0xe31e24, 18 * Math.PI, 30, 1);
       rim.position.set(6, 1, -2);
       scene.add(rim);
@@ -321,8 +206,13 @@ export default function ParticleScene({ className = "" }: { className?: string }
 
       /* ── Placement ─────────────────────────────────────────────── */
 
-      let printerScale = 1;
-      let printerY = 0;
+      /* Desktop: a large printer on the right, vertically centred. Phone: a
+         small one in the top-right corner, beside the headline. Scale and
+         position are applied in the loop, because the entrance and the scroll
+         both modulate them. */
+      let baseScale = 1;
+      let baseX = 0;
+      let baseY = 0;
       const size = () => {
         const w = host.clientWidth;
         const h = host.clientHeight;
@@ -330,17 +220,18 @@ export default function ParticleScene({ className = "" }: { className?: string }
         renderer.setSize(w, h);
         cam.aspect = w / h;
         const mob = w < 700;
-        const half = 3.2 * cam.aspect;
-        const s = mob ? (half * 0.8) / 2.6 : Math.min(1, 0.17 * half);
-        const px = mob ? 0 : half * 0.5;
-        const py = mob ? -1.3 : 0;
-        pts.scale.setScalar(s * 1.15);
-        pts.position.set(px, py, -1.5);
-        printerScale = s * 0.82;
-        printerY = py;
-        pr.scale.setScalar(printerScale);
-        pr.position.set(px, py, 0);
-        mat.uniforms.uSize.value = mob ? 2.6 : 3.2;
+        const half = 3.22 * cam.aspect;
+        if (mob) {
+          const s = (half * 0.2) / 0.82;
+          baseScale = s * 0.82;
+          baseX = half * 0.6;
+          baseY = 3.22 * (1 - (2 * (88 + 0.19 * window.innerHeight)) / h);
+        } else {
+          const s = Math.min(1, 0.17 * half);
+          baseScale = s * 0.82;
+          baseX = half * 0.5;
+          baseY = 0;
+        }
         cam.updateProjectionMatrix();
       };
       size();
@@ -363,9 +254,10 @@ export default function ParticleScene({ className = "" }: { className?: string }
       });
       io.observe(host);
 
+      const copy = host.closest("section")?.querySelector<HTMLElement>("[data-hero-copy]") ?? null;
+
       const clock = new T.Clock();
       let t = 0;
-      let sm = 0; // scroll progress, smoothed: 0 = top of page, 1 = hero scrolled away
       let frame = 0;
 
       const tick = () => {
@@ -375,42 +267,41 @@ export default function ParticleScene({ className = "" }: { className?: string }
           return;
         }
         const dt = clock.getDelta();
-        if (!reduce) t += dt;
+        t += dt;
 
-        const span = Math.max(1, host.clientHeight * 0.9);
-        const target = reduce ? 0 : Math.max(0, Math.min(1, window.scrollY / span));
-        sm += (target - sm) * Math.min(1, dt * 5);
-
-        mat.uniforms.uMix.value = sm;
-        mat.uniforms.uTime.value = t;
+        const vh = window.innerHeight;
+        const p = reduce ? 0 : Math.max(0, Math.min(1, window.scrollY / (vh * 0.55)));
+        const en = reduce ? 1 : Math.max(0, Math.min(1, (t - 0.15) / 1.5));
+        const e = ease(en);
+        const k = Math.max(0.001, e) * (1 - p);
 
         m.sx += (m.x - m.sx) * 0.05;
         m.sy += (m.y - m.sy) * 0.05;
-        pts.rotation.y = -m.sx * 0.2 + t * 0.08 - sm * 0.35;
-        pts.rotation.x = m.sy * 0.15;
 
-        pr.rotation.y = m.sx * 0.4 + Math.sin(t * 0.4) * 0.1 + sm * 0.45;
-        pr.rotation.x = m.sy * 0.15;
-        hd.position.y = Math.sin(t * 1.2) * 0.06;
+        pr.visible = k > 0.01;
+        pr.scale.setScalar(baseScale * k);
+        pr.position.set(baseX, baseY + (1 - e) * -2.2 + p * 1.4, 0);
+        pr.rotation.y = (1 - e) * -1.6 + p * 0.9 + m.sx * 0.4 + (reduce ? 0 : Math.sin(t * 0.4) * 0.1);
+        pr.rotation.x = m.sy * 0.15 - p * 0.3;
+        hd.position.y = reduce ? 0 : Math.sin(t * 1.2) * 0.06;
 
-        eyes.forEach((e, i) => {
-          e.position.x = (i ? 0.52 : -0.52) + m.sx * 0.26;
-          e.position.y = 0.5 - m.sy * 0.14;
+        eyes.forEach((q, n) => {
+          q.position.x = (n ? 0.52 : -0.52) + m.sx * 0.26;
+          q.position.y = 0.5 - m.sy * 0.14;
           const ph = t % 4.2;
-          const blink = ph > 4 ? Math.abs(Math.cos(((ph - 4) / 0.2) * (Math.PI / 2))) : 1;
-          e.scale.y = 1.15 * Math.max(0.06, blink);
+          const bl = !reduce && ph > 4 ? Math.abs(Math.cos(((ph - 4) / 0.2) * (Math.PI / 2))) : 1;
+          q.scale.y = 1.15 * Math.max(0.06, bl);
         });
 
-        /* The printer shrinks and lifts away as the hero scrolls out. */
-        const kk = Math.max(0, Math.min(1, 1 - sm * 1.8));
-        pr.visible = kk > 0.01;
-        pr.scale.setScalar(printerScale * kk);
-        pr.position.y = printerY + (1 - kk) * 1.5;
-
         const cy = (t % 6) / 6;
-        const fd = cy < 0.25 ? Math.sin((cy / 0.25) * Math.PI) : 0;
-        paper.position.z = 1.55 + fd * 0.35 + sm * 0.22;
-        paper.position.y = -1.05 - fd * 0.12 - sm * 0.05;
+        const fd = !reduce && cy < 0.25 ? Math.sin((cy / 0.25) * Math.PI) : 0;
+        paper.position.z = 1.55 + fd * 0.35;
+        paper.position.y = -1.05 - fd * 0.12;
+
+        if (copy && !reduce) {
+          copy.style.opacity = String(Math.max(0, 1 - p * 1.2));
+          copy.style.transform = `translateY(${-p * 30}px)`;
+        }
 
         renderer.render(scene, cam);
       };
@@ -421,9 +312,11 @@ export default function ParticleScene({ className = "" }: { className?: string }
         resizeObserver.disconnect();
         io.disconnect();
         window.removeEventListener("pointermove", onMove);
+        if (copy) {
+          copy.style.opacity = "";
+          copy.style.transform = "";
+        }
 
-        geo.dispose();
-        mat.dispose();
         scene.traverse((obj) => {
           const mesh = obj as THREE.Mesh;
           if (!mesh.isMesh) return;
