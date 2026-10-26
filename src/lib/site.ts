@@ -20,9 +20,7 @@ export const site = {
 } as const;
 
 /* ── Uredi ─────────────────────────────────────────────────────────────
-   Dvije lokacije, potvrdio klijent. Zagrebačka adresa stigla je bez
-   poštanskog broja, pa ga ovdje nema — radije nepotpuno nego izmišljeno.
-   TODO: poštanski broj za Gustava Krkleca 38a.                          */
+   Dvije lokacije, potvrdio klijent. Poštanski broj Zagreba: 10000.       */
 
 export type Ured = {
   id: string;
@@ -50,8 +48,8 @@ export const uredi: readonly Ured[] = [
     label: "Zagreb",
     city: "Zagreb",
     street: "Gustava Krkleca 38a",
-    postal: "",
-    cityLine: "Zagreb",
+    postal: "10000",
+    cityLine: "10000 Zagreb",
     hq: false,
   },
 ] as const;
@@ -164,7 +162,10 @@ export const canon = {
    Klijent je u napomeni ostavio otvorenim da je kasnije zamijeni s
    „Najtraženiji paket" — tada se mijenja samo `badge` ispod.
 
-   TODO: potvrditi prikazuju li se cijene s PDV-om ili bez njega.          */
+   Cijene su BEZ PDV-a (potvrdio klijent) i vrijede za ugovorno razdoblje
+   od 24 mjeseca. Svaki paket ima dvije cijene: standardnu i onu za korisnike
+   A1-a — pa `cijena` i `cijenaA1`. Ušteda se uvijek izračunava iz njih, nikad
+   ne upisuje rukom.                                                       */
 
 export type Paket = {
   id: string;
@@ -172,7 +173,10 @@ export type Paket = {
   /** Oznaka iznad naziva; samo istaknuti paket je ima. */
   badge?: string;
   blurb: string;
+  /** Standardna mjesečna cijena, bez PDV-a. */
   cijena: string;
+  /** Mjesečna cijena za korisnike A1-a, bez PDV-a. */
+  cijenaA1: string;
   uredaj: string;
   ispisi: string;
   skeniranja: string;
@@ -183,6 +187,16 @@ export type Paket = {
   featured?: boolean;
 };
 
+/** Ugovorno razdoblje na koje vrijede mjesečne cijene paketa. */
+// Tekst koristi oblik „24 mjeseca"; kod druge brojke provjeriti padež.
+export const paketiMjeseci = 24;
+
+/** Svi iznosi na stranici bez PDV-a; PDV se obračunava dodatno. */
+export const paketiPdv = "Sve cijene su bez PDV-a.";
+
+/** "55 €" -> 55. Cijene su zapisane kao tekst, pa ih računi čitaju ovdje. */
+export const iznos = (cijena: string) => parseInt(cijena.replace(/\D/g, ""), 10);
+
 export const paketiUvod =
   "Primjer unaprijed definiranih paketa za uredski ispis. Uključene količine odnose se na jedan mjesec.";
 
@@ -191,7 +205,8 @@ export const paketi: readonly Paket[] = [
     id: "low",
     name: "Low",
     blurb: "Za urede s povremenim ispisom.",
-    cijena: "19 €",
+    cijena: "25 €",
+    cijenaA1: "19 €",
     uredaj: "Canon i-SENSYS X 1440i",
     ispisi: "500",
     skeniranja: "100",
@@ -204,7 +219,8 @@ export const paketi: readonly Paket[] = [
     id: "basic",
     name: "Basic",
     blurb: "Za urede u kojima ispis ide svaki dan.",
-    cijena: "29 €",
+    cijena: "35 €",
+    cijenaA1: "29 €",
     uredaj: "Canon i-SENSYS X 1440i",
     ispisi: "1.500",
     skeniranja: "500",
@@ -218,7 +234,8 @@ export const paketi: readonly Paket[] = [
     name: "Mid",
     badge: "Preporučeni izbor",
     blurb: "Veći volumen, više skeniranja i brža servisna podrška.",
-    cijena: "45 €",
+    cijena: "55 €",
+    cijenaA1: "45 €",
     uredaj: "Canon imageRUNNER 1643i II",
     ispisi: "2.500",
     skeniranja: "1.250",
@@ -232,7 +249,8 @@ export const paketi: readonly Paket[] = [
     id: "large",
     name: "Large",
     blurb: "Za poslovanja u kojima ispis ne smije stati.",
-    cijena: "65 €",
+    cijena: "75 €",
+    cijenaA1: "65 €",
     uredaj: "Canon imageRUNNER 1643i II",
     ispisi: "5.000",
     skeniranja: "Neograničeno",
@@ -362,7 +380,7 @@ export const tim: readonly ClanTima[] = [
 
 export const images = {
   office: "/images/office-interior.jpg",
-  telecom: "/images/telecom-support.jpg",
+  telecom: "/images/telecom-fiber.jpg",
   documents: "/images/documents-workflow.jpg",
   teamWorking: "/images/team-working.jpg",
 } as const;

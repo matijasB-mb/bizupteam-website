@@ -1,7 +1,15 @@
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { paketi, paketRedci, paketiUvod, type Paket } from "@/lib/site";
+import {
+  iznos,
+  paketi,
+  paketRedci,
+  paketiMjeseci,
+  paketiPdv,
+  paketiUvod,
+  type Paket,
+} from "@/lib/site";
 
 /**
  * Paketi najma — jedna komponenta za oba mjesta na kojima se prikazuju
@@ -34,7 +42,7 @@ function Cijena({ value, dark = false }: { value: string; dark?: boolean }) {
       <span
         className={`mt-2 block text-[0.8125rem] ${dark ? "text-white/45" : "text-[var(--muted)]"}`}
       >
-        mjesečno
+        mjesečno + PDV
       </span>
     </>
   );
@@ -111,18 +119,40 @@ function Tablica({ ctaHref }: { ctaHref: string }) {
         ))}
 
         <tr>
-          <th scope="row" className="py-7 pr-6 align-top font-normal">
+          <th scope="row" className="py-6 pr-6 align-top font-normal">
             <span className="t-label text-[var(--muted)]">Mjesečna cijena</span>
           </th>
           {paketi.map((p) => (
             <td
               key={p.id}
-              className={`px-6 py-7 align-top ${p.featured ? "bg-[var(--red-wash)]" : ""}`}
+              className={`px-6 py-6 align-top ${p.featured ? "bg-[var(--red-wash)]" : ""}`}
             >
               <Cijena value={p.cijena} />
+            </td>
+          ))}
+        </tr>
+
+        <tr>
+          <th scope="row" className="border-t border-[var(--line)] py-6 pr-6 align-top font-normal">
+            <span className="t-label text-[var(--red-on-light)]">A1 korisnici</span>
+          </th>
+          {paketi.map((p) => (
+            <td
+              key={p.id}
+              className={`border-t border-[var(--line)] px-6 py-6 align-top ${p.featured ? "bg-[var(--red-wash)]" : ""}`}
+            >
+              <Cijena value={p.cijenaA1} />
+            </td>
+          ))}
+        </tr>
+
+        <tr>
+          <td className="pt-2" />
+          {paketi.map((p) => (
+            <td key={p.id} className={`px-6 pb-7 pt-2 align-top ${p.featured ? "bg-[var(--red-wash)]" : ""}`}>
               <Link
                 href={ctaHref}
-                className="mt-6 inline-flex items-center gap-2 border-b border-[var(--line-strong)] pb-1 text-[0.875rem] font-medium transition-colors duration-300 hover:border-[var(--red)] hover:text-[var(--red-on-light)]"
+                className="inline-flex items-center gap-2 border-b border-[var(--line-strong)] pb-1 text-[0.875rem] font-medium transition-colors duration-300 hover:border-[var(--red)] hover:text-[var(--red-on-light)]"
               >
                 Zatražite ponudu
                 <span aria-hidden="true">→</span>
@@ -164,6 +194,12 @@ function Kartica({ p, ctaHref, index }: { p: Paket; ctaHref: string; index: numb
 
         <div className="mt-7">
           <Cijena value={p.cijena} dark={dark} />
+          <p className={`mt-4 text-[0.9375rem] ${dark ? "text-white/70" : "text-[var(--text-2)]"}`}>
+            <span className={`t-label mr-2 ${dark ? "text-[var(--red-on-dark)]" : "text-[var(--red-on-light)]"}`}>
+              A1 korisnici
+            </span>
+            <span className="tabular-nums font-medium">{p.cijenaA1}</span>
+          </p>
         </div>
 
         <dl
@@ -200,6 +236,54 @@ function Kartica({ p, ctaHref, index }: { p: Paket; ctaHref: string; index: numb
         </Link>
       </article>
     </Reveal>
+  );
+}
+
+/* ── Uvjeti ugovora ────────────────────────────────────────────────────── */
+
+/** Ušteda se računa iz cijena u site.ts, ne upisuje rukom: ako se cijena
+    promijeni, ovaj iznos se promijeni s njom i ne može se razići s tablicom. */
+function Uvjeti() {
+  const istaknut = paketi.find((p) => p.featured) ?? paketi[0];
+  const mjesecnaUsteda = iznos(istaknut.cijena) - iznos(istaknut.cijenaA1);
+  const ukupnaUsteda = mjesecnaUsteda * paketiMjeseci;
+
+  const redci: { k: string; v: string; d?: string; accent?: boolean }[] = [
+    {
+      k: "Ugovorno razdoblje",
+      v: `${paketiMjeseci} mjeseca`,
+      d: `Mjesečne cijene vrijede za ugovoreno razdoblje od ${paketiMjeseci} mjeseca.`,
+    },
+    {
+      k: "Najtraženiji izbor",
+      v: `${istaknut.name} paket — ${istaknut.cijena}/mj. ili ${istaknut.cijenaA1}/mj. za A1 korisnike`,
+      accent: true,
+    },
+    {
+      k: "Ušteda za A1 korisnika",
+      v: `${ukupnaUsteda} € kroz ${paketiMjeseci} mjeseca u odnosu na standardnu cijenu`,
+    },
+  ];
+
+  return (
+    <dl className="mt-10 border-t-2 border-[var(--ink)]">
+      {redci.map((r) => (
+        <div
+          key={r.k}
+          className="grid gap-x-8 gap-y-1 border-b border-[var(--line)] py-5 sm:grid-cols-12 sm:items-baseline"
+        >
+          <dt
+            className={`t-label sm:col-span-4 ${r.accent ? "text-[var(--red-on-light)]" : "text-[var(--muted)]"}`}
+          >
+            {r.k}
+          </dt>
+          <dd className="sm:col-span-8">
+            <span className="block text-[1.0625rem] font-medium leading-snug text-[var(--ink)]">{r.v}</span>
+            {r.d && <span className="mt-1 block text-[0.875rem] text-[var(--muted)]">{r.d}</span>}
+          </dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -240,11 +324,14 @@ export default function Paketi({
         ))}
       </div>
 
+      <Reveal delay={60}>
+        <Uvjeti />
+      </Reveal>
+
       <Reveal delay={100}>
-        <p className="mt-10 max-w-[62ch] text-[0.875rem] leading-relaxed text-[var(--muted)]">
-          Konačna cijena ovisi o broju uređaja, opsegu ispisa i trajanju
-          suradnje, pa je potvrđujemo nakon kratke analize vaših potreba.
-          Nudimo i najam bez dugoročne obveze te kupnju uz servisni ugovor.
+        <p className="mt-8 max-w-[62ch] text-[0.875rem] leading-relaxed text-[var(--muted)]">
+          {paketiPdv} Konačna cijena ovisi o broju uređaja i opsegu ispisa te se
+          potvrđuje u pisanoj ponudi. Uz najam nudimo i kupnju uz servisni ugovor.
         </p>
       </Reveal>
     </div>

@@ -16,8 +16,12 @@ Objava na MyDataKnox: vidi **DEPLOY.md** (`npm run build:static` → `bizupteam-
   nije testirana** (lokalno nema SMTP-a) — prvi test je poslati upit nakon objave.
 - Slike: Canon snimke su WebP, stock JPEG ≤1600 px (6,1 MB → 0,9 MB). Originali
   nisu u repozitoriju.
-- Preostalo za klijenta: poštanski broj za Zagreb, pravni pregled privatnosti i
-  uvjeta, Google Search Console + Business Profile nakon lansiranja.
+- Zagreb: poštanski broj 10000. Cijene paketa su **bez PDV-a**, ugovorno razdoblje
+  24 mjeseca, svaki paket ima standardnu cijenu i cijenu za A1 korisnike (ušteda
+  se računa iz njih).
+- Preostalo za klijenta: potvrditi glavni telefon 091 636 7770, naziv "1643i II"
+  (klijent piše "1643 II"), A1 odobrenje teksta o A1 cijenama, pravni pregled
+  privatnosti i uvjeta, Google Search Console + Business Profile nakon lansiranja.
 
 ---
 

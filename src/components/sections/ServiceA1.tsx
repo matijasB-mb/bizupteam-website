@@ -54,7 +54,7 @@ export default function ServiceA1() {
           >
             <Image
               src={images.telecom}
-              alt="Djelatnica u uredu razgovara telefonom za radnim stolom"
+              alt="Snop optičkih vlakana u tami, svjetlo putuje kroz svako vlakno"
               fill
               sizes="(min-width: 1344px) 1216px, 100vw"
               loading="lazy"

@@ -93,6 +93,10 @@ const tocke: Tocka[] = [
           ispisa i trajanju suradnje te se potvrđuje u pisanoj ponudi.
         </p>
         <p className="t-body mt-4">
+          Sve navedene cijene su <strong>bez PDV-a</strong>; PDV se obračunava
+          dodatno. Cijene paketa vrijede za ugovorno razdoblje od 24 mjeseca.
+        </p>
+        <p className="t-body mt-4">
           Tehničke specifikacije uređaja preuzete su iz službene dokumentacije
           proizvođača. Proizvođač ih može promijeniti bez prethodne najave, pa
           prije narudžbe uvijek vrijedi podatak iz naše pisane ponude. Dostupnost

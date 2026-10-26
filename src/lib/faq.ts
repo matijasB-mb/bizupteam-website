@@ -7,7 +7,7 @@
  * traži da se oznaka podudara s onim što posjetitelj vidi.
  */
 
-import { paketi, uredi } from "@/lib/site";
+import { paketi, paketiMjeseci, uredi } from "@/lib/site";
 import { uredaji } from "@/lib/usluge";
 
 const nazivi = Object.values(uredaji)
@@ -27,7 +27,7 @@ export const faq: readonly { q: string; a: string }[] = [
   },
   {
     q: "Koliko košta najam printera?",
-    a: `Primjeri unaprijed definiranih paketa kreću od ${low.cijena} mjesečno (${low.name}) do ${large.cijena} mjesečno (${large.name}). Konačna cijena ovisi o broju uređaja, opsegu ispisa i trajanju suradnje te se potvrđuje u pisanoj ponudi.`,
+    a: `Primjeri unaprijed definiranih paketa kreću od ${low.cijena} mjesečno (${low.name}) do ${large.cijena} mjesečno (${large.name}), a za korisnike A1-a od ${low.cijenaA1} do ${large.cijenaA1}. Cijene su bez PDV-a i vrijede za ugovorno razdoblje od ${paketiMjeseci} mjeseca. Konačna cijena ovisi o broju uređaja i opsegu ispisa te se potvrđuje u pisanoj ponudi.`,
   },
   {
     q: "Što ako ispišem više od uključene količine?",
