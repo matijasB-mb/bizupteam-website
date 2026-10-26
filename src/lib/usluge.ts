@@ -199,9 +199,9 @@ export const uredaji: Record<
       opis:
         "A3 multifunkcijski uređaj u boji iz serije C3900. Građen oko rada s oblakom i dijeljenja dokumenata unutar tima — ispisuje, kopira, skenira i šalje iz istog kućišta.",
       slike: [
-        "/images/canon/irdx-c3926i-1.png",
-        "/images/canon/irdx-c3926i-2.png",
-        "/images/canon/irdx-c3926i-3.png",
+        "/images/canon/irdx-c3926i-1.webp",
+        "/images/canon/irdx-c3926i-2.webp",
+        "/images/canon/irdx-c3926i-3.webp",
       ],
       istaknuto: [
         "26 ppm ispis u boji i crno-bijelo (A4)",
@@ -222,7 +222,7 @@ export const uredaji: Record<
         { k: "Vrijeme do prve kopije", v: "Pribl. 6,1 s ili manje" },
       ],
       canonUrl: CANON + "/colour/imagerunner-advance-dx-c3900-series/specifications/imagerunner-advance-dx-c3926i.html",
-      image: "/images/canon/irdx-c3926i-1.png",
+      image: "/images/canon/irdx-c3926i-1.webp",
     },
   ],
 
@@ -234,9 +234,9 @@ export const uredaji: Record<
       opis:
         "A3 crno-bijeli multifunkcijski uređaj iz serije 2900. Rađen za urede u kojima ispis ide svaki dan i u kojima zastoj košta više od uređaja.",
       slike: [
-        "/images/canon/ir-2930i-1.png",
-        "/images/canon/ir-2930i-2.png",
-        "/images/canon/ir-2930i-3.png",
+        "/images/canon/ir-2930i-1.webp",
+        "/images/canon/ir-2930i-2.webp",
+        "/images/canon/ir-2930i-3.webp",
       ],
       istaknuto: [
         "30 ppm crno-bijeli ispis (A4)",
@@ -256,7 +256,7 @@ export const uredaji: Record<
         { k: "Povezivanje", v: "1000Base-T / 100Base-TX / 10Base-T, bežični LAN, izravna Wi-Fi veza" },
       ],
       canonUrl: CANON + "/black-and-white/imagerunner-2900-series/specifications/imagerunner-2930i.html",
-      image: "/images/canon/ir-2930i-1.png",
+      image: "/images/canon/ir-2930i-1.webp",
     },
   ],
 
@@ -270,9 +270,9 @@ export const uredaji: Record<
       // Canon objavljuje snimke serije C1530 pod zajedničkom oznakom
       // C1538iF / C1533iF — isto kućište, razlika je u brzini.
       slike: [
-        "/images/canon/ir-c1533if-1.png",
-        "/images/canon/ir-c1533if-2.png",
-        "/images/canon/ir-c1533if-3.png",
+        "/images/canon/ir-c1533if-1.webp",
+        "/images/canon/ir-c1533if-2.webp",
+        "/images/canon/ir-c1533if-3.webp",
       ],
       istaknuto: [
         "33 ppm u boji i crno-bijelo",
@@ -292,7 +292,7 @@ export const uredaji: Record<
         { k: "Povezivanje", v: "1000Base-T / 100Base-TX / 10Base-T, bežični LAN" },
       ],
       canonUrl: CANON + "/colour/imagerunner-c1530-series/specifications/",
-      image: "/images/canon/ir-c1533if-1.png",
+      image: "/images/canon/ir-c1533if-1.webp",
     },
   ],
 
@@ -304,9 +304,9 @@ export const uredaji: Record<
       opis:
         "Uređaj koji nudimo u svim paketima najma. Brz, provjeren u radu i jednostavan za održavanje — radna konjica za svakodnevni uredski ispis.",
       slike: [
-        "/images/canon/ir-1643i-1.png",
-        "/images/canon/ir-1643i-2.png",
-        "/images/canon/ir-1643i-3.png",
+        "/images/canon/ir-1643i-1.webp",
+        "/images/canon/ir-1643i-2.webp",
+        "/images/canon/ir-1643i-3.webp",
       ],
       istaknuto: [
         "43 ppm jednostrano (A4)",
@@ -326,7 +326,7 @@ export const uredaji: Record<
         { k: "Povezivanje", v: "1000Base-T / 100Base-TX / 10Base-T, bežični LAN, izravna Wi-Fi veza" },
       ],
       canonUrl: CANON + "/black-and-white/imagerunner-1643-ii-series/specifications/imagerunner-1643i-ii.html",
-      image: "/images/canon/ir-1643i-1.png",
+      image: "/images/canon/ir-1643i-1.webp",
     },
     {
       id: "isensys-1440i",
@@ -335,9 +335,9 @@ export const uredaji: Record<
       opis:
         "Kompaktniji A4 crno-bijeli multifunkcijski uređaj za radna mjesta i manje urede kojima ne treba puni volumen većeg modela.",
       slike: [
-        "/images/canon/isensys-1440i-1.png",
-        "/images/canon/isensys-1440i-2.png",
-        "/images/canon/isensys-1440i-3.png",
+        "/images/canon/isensys-1440i-1.webp",
+        "/images/canon/isensys-1440i-2.webp",
+        "/images/canon/isensys-1440i-3.webp",
       ],
       istaknuto: [
         "40 ppm jednostrano (A4)",
@@ -353,7 +353,7 @@ export const uredaji: Record<
         { k: "Upravljačka ploča", v: "LCD dodirni zaslon u boji dijagonale 12,7 cm" },
       ],
       canonUrl: CANON + "/black-and-white/i-sensys-x-1440i-series/specifications/i-sensys-x-1440i.html",
-      image: "/images/canon/isensys-1440i-1.png",
+      image: "/images/canon/isensys-1440i-1.webp",
     },
   ],
 };

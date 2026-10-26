@@ -11,6 +11,9 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
+import LdJson from "@/components/ui/LdJson";
+import { serviceGraph } from "@/lib/jsonld";
 
 const usluga = uslugaBySlug("a3-kolor")!;
 const [device] = uredaji["a3-kolor"];
@@ -18,7 +21,7 @@ const [device] = uredaji["a3-kolor"];
 export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
-  alternates: { canonical: "/usluge/a3-kolor" },
+  alternates: { canonical: withSlash("/usluge/a3-kolor") },
   openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
@@ -53,6 +56,7 @@ const razlozi = [
 export default function A3KolorPage() {
   return (
     <>
+      <LdJson data={serviceGraph(usluga)} />
       <PageHero
         crumbs={[{ label: "Usluge", href: "/usluge" }, { label: usluga.breadcrumb }]}
         eyebrow={`${usluga.format} · ${usluga.boja}`}

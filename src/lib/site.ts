@@ -9,6 +9,7 @@
 export const site = {
   name: "Biz Up Team",
   legalName: "Biz Up Team d.o.o.",
+  oib: "68154006666",
   url: "https://bizupteam.hr",
   city: "Osijek",
   /* Obje lokacije, redoslijed: sjedište pa Zagreb. Koristi se u copyju. */
@@ -72,8 +73,8 @@ export const contact = {
   cityLine: "31000 Osijek",
   phone: "091 636 7770",
   phoneHref: "tel:+385916367770",
-  email: "webshop@bizupteam.hr",
-  emailHref: "mailto:webshop@bizupteam.hr",
+  email: "info@bizupteam.hr",
+  emailHref: "mailto:info@bizupteam.hr",
 } as const;
 
 /* Navigation points at real routes. The homepage keeps its own in-page

@@ -1,6 +1,6 @@
 import SectionLabel from "@/components/ui/SectionLabel";
 import ContactForm from "@/components/ui/ContactForm";
-import { adresaLinije, contact, uredi } from "@/lib/site";
+import { adresaLinije, contact, site, uredi } from "@/lib/site";
 
 /**
  * Homepage contact section. The form itself now lives in ui/ContactForm so the
@@ -59,6 +59,10 @@ export default function Contact() {
                 </dd>
               </div>
             </dl>
+
+            <p className="mt-8 text-sm tabular-nums text-white/55">
+              {site.legalName} · OIB {site.oib}
+            </p>
           </div>
 
           <div className="lg:col-span-6 lg:col-start-7">

@@ -6,12 +6,13 @@ import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { adresaRedak, contact, uredi } from "@/lib/site";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
 
 export const metadata: Metadata = {
   title: "Tim",
   description:
     "Ljudi iza Biz Up Teama — kontakti za telekomunikacijske usluge, Canon opremu i tehničku podršku. Uredi u Osijeku i Zagrebu.",
-  alternates: { canonical: "/tim" },
+  alternates: { canonical: withSlash("/tim") },
   openGraph: og({
     title: "Tim",
     description: "Tehnologija je važna. Ljudi koji stoje iza nje još su važniji.",

@@ -11,6 +11,9 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
+import LdJson from "@/components/ui/LdJson";
+import { serviceGraph } from "@/lib/jsonld";
 
 const usluga = uslugaBySlug("a4-monokromatski")!;
 const devices = uredaji["a4-monokromatski"];
@@ -18,7 +21,7 @@ const devices = uredaji["a4-monokromatski"];
 export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
-  alternates: { canonical: "/usluge/a4-monokromatski" },
+  alternates: { canonical: withSlash("/usluge/a4-monokromatski") },
   openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
@@ -33,6 +36,7 @@ export default function A4MonoPage() {
 
   return (
     <>
+      <LdJson data={serviceGraph(usluga)} />
       <PageHero
         crumbs={[{ label: "Usluge", href: "/usluge" }, { label: usluga.breadcrumb }]}
         eyebrow={`${usluga.format} · ${usluga.boja}`}

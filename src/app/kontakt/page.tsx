@@ -5,12 +5,13 @@ import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { adresaLinije, contact, site, uredi } from "@/lib/site";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
 
 export const metadata: Metadata = {
   title: "Kontakt",
   description:
-    "Javite se Biz Up Teamu — uredi u Osijeku i Zagrebu. Telekomunikacijske usluge i uredska tehnologija. Telefon 091 636 7770, webshop@bizupteam.hr.",
-  alternates: { canonical: "/kontakt" },
+    "Javite se Biz Up Teamu — uredi u Osijeku i Zagrebu. Telekomunikacijske usluge i uredska tehnologija. Telefon 091 636 7770, info@bizupteam.hr.",
+  alternates: { canonical: withSlash("/kontakt") },
   openGraph: og({
     title: "Kontakt",
     description: "Recite nam što vam je potrebno i pomoći ćemo vam pronaći odgovarajuće rješenje.",
@@ -72,7 +73,10 @@ export default function KontaktPage() {
                 </div>
                 <div className="py-6">
                   <dt className="t-label text-white/55">Tvrtka</dt>
-                  <dd className="mt-3 text-[1.0625rem] text-white/85">{site.legalName}</dd>
+                  <dd className="mt-3 text-[1.0625rem] text-white/85">
+                    {site.legalName}
+                    <span className="mt-1 block text-[0.9375rem] tabular-nums text-white/60">OIB {site.oib}</span>
+                  </dd>
                 </div>
               </dl>
 

@@ -55,6 +55,7 @@ const nextConfig: NextConfig = staticExport
   ? {
       poweredByHeader: false,
       reactStrictMode: true,
+      trailingSlash: true,
       output: "export",
       // Apache nema Next optimizator slika, pa datoteke idu kakve jesu.
       images: { unoptimized: true },
@@ -63,8 +64,18 @@ const nextConfig: NextConfig = staticExport
   : {
       poweredByHeader: false,
       reactStrictMode: true,
+      trailingSlash: true,
       async headers() {
-        return [{ source: "/:path*", headers: securityHeaders }];
+        return [
+          { source: "/:path*", headers: securityHeaders },
+          /* Probna adresa na Vercelu ne smije konkurirati bizupteam.hr:
+             canonical već pokazuje na pravu domenu, a ovo je dodatno jamstvo. */
+          {
+            source: "/:path*",
+            has: [{ type: "host", value: "(?<host>.*)\\.vercel\\.app" }],
+            headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+          },
+        ];
       },
     };
 

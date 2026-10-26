@@ -4,7 +4,7 @@ Korporativna web stranica za **Biz Up Team d.o.o.**, Osijek.
 
 **Produkcija:** [bizupteam.hr](https://bizupteam.hr)
 **Klijent:** Biz Up Team d.o.o., ul. Ljudevita Posavskog 7, 31000 Osijek
-**Kontakt:** webshop@bizupteam.hr · 091 636 7770
+**Kontakt:** info@bizupteam.hr · 091 636 7770
 
 ---
 

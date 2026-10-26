@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import PravniTekst, { type Tocka } from "@/components/ui/PravniTekst";
-import Dopuniti from "@/components/ui/Dopuniti";
 import { contact, site, uredi } from "@/lib/site";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
 
 export const metadata: Metadata = {
   title: "Izjava o privatnosti",
   description:
     "Kako Biz Up Team d.o.o. postupa s osobnim podacima poslanima putem ove stranice — što se prikuplja, zašto, koliko se čuva i koja su vaša prava.",
-  alternates: { canonical: "/privatnost" },
+  alternates: { canonical: withSlash("/privatnost") },
   robots: { index: true, follow: true },
   openGraph: og({
     title: "Izjava o privatnosti",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   }),
 };
 
-const AZURIRANO = "21. listopada 2026.";
+const AZURIRANO = "26. listopada 2026.";
 
 const A =
   "underline underline-offset-4 transition-colors duration-300 hover:text-[var(--red-on-light)]";
@@ -53,7 +53,7 @@ const tocke: Tocka[] = [
       <>
         <p className="t-body mt-5">
           Voditelj obrade je <strong>{site.legalName}</strong>, {sjediste.street},{" "}
-          {sjediste.cityLine}, OIB <Dopuniti>upisati OIB</Dopuniti>. Uz sjedište u
+          {sjediste.cityLine}, OIB {site.oib}. Uz sjedište u
           Osijeku poslujemo i iz ureda u Zagrebu; podaci se u oba slučaja obrađuju
           na isti način i na istim poslužiteljima.
         </p>
@@ -145,7 +145,7 @@ const tocke: Tocka[] = [
     sadrzaj: (
       <>
         <p className="t-body mt-5">
-          Upite čuvamo <Dopuniti>potvrditi rok — prijedlog: 2 godine</Dopuniti> od
+          Upite čuvamo <strong>2 godine</strong> od
           zadnje komunikacije, nakon čega ih brišemo. Ako iz upita nastane poslovni
           odnos, podaci prelaze u dokumentaciju o toj suradnji i čuvaju se prema
           rokovima koje propisuju računovodstveni i porezni propisi.
@@ -162,26 +162,8 @@ const tocke: Tocka[] = [
       <>
         <p className="t-body mt-5">
           Vaše podatke ne prodajemo i ne ustupamo trećim stranama u marketinške
-          svrhe. U tehničkoj isporuci sudjeluje jedan izvršitelj obrade — davatelj
-          hostinga na čijem poslužitelju stranica radi i s čijeg poslužitelja odlazi
-          e-mail s vašim upitom:
-        </p>
-        <dl className="mt-6 border-t border-[var(--line)]">
-          <div className="border-b border-[var(--line)] py-4">
-            <dt className="text-[0.9375rem] font-medium text-[var(--text)]">
-              <Dopuniti>upisati naziv i sjedište davatelja hostinga</Dopuniti>
-            </dt>
-            <dd className="mt-1.5 text-[0.9375rem] leading-relaxed text-[var(--muted)]">
-              Poslužuje stranicu, vodi tehničke zapise poslužitelja i dostavlja
-              poruku iz obrasca na našu e-mail adresu.
-            </dd>
-          </div>
-        </dl>
-        <p className="t-body mt-6">
-          Ako davatelj hostinga ili njegov podizvođač obrađuje podatke izvan
-          Europskog gospodarskog prostora, prijenos se odvija na temelju standardnih
-          ugovornih klauzula Europske komisije odnosno druge odgovarajuće zaštitne
-          mjere iz poglavlja V. Opće uredbe.
+          svrhe. Poruka iz obrasca stiže na našu e-mail adresu i vide je samo
+          zaposlenici Biz Up Teama kojima je upit namijenjen.
         </p>
         <p className="t-body mt-4">
           Podatke možemo otkriti i nadležnim tijelima ako to od nas zatraže na

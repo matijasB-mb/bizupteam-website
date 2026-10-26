@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import PravniTekst, { type Tocka } from "@/components/ui/PravniTekst";
-import Dopuniti from "@/components/ui/Dopuniti";
 import { contact, site, uredi } from "@/lib/site";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
 
 export const metadata: Metadata = {
   title: "Uvjeti korištenja",
   description:
     "Uvjeti korištenja web stranice Biz Up Team d.o.o. — što sadržaj stranice jest, a što nije, kako se koriste cijene i podaci o uređajima te na koga se obratiti.",
-  alternates: { canonical: "/uvjeti-koristenja" },
+  alternates: { canonical: withSlash("/uvjeti-koristenja") },
   openGraph: og({
     title: "Uvjeti korištenja",
     description: "Uvjeti korištenja web stranice Biz Up Team d.o.o.",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   }),
 };
 
-const AZURIRANO = "21. listopada 2026.";
+const AZURIRANO = "26. listopada 2026.";
 
 const A =
   "underline underline-offset-4 transition-colors duration-300 hover:text-[var(--red-on-light)]";
@@ -39,7 +39,7 @@ const tocke: Tocka[] = [
       <>
         <p className="t-body mt-5">
           Ovom stranicom upravlja <strong>{site.legalName}</strong>, {sjediste.street},{" "}
-          {sjediste.cityLine}, OIB <Dopuniti>upisati OIB</Dopuniti>.
+          {sjediste.cityLine}, OIB {site.oib}.
         </p>
         <p className="t-body mt-4">
           Korištenjem stranice prihvaćate ove uvjete. Ako se s njima ne slažete,
@@ -91,9 +91,6 @@ const tocke: Tocka[] = [
           <strong>primjer unaprijed definiranih paketa</strong> i služe za
           usporedbu. Konačna cijena ovisi o broju uređaja, stvarnom opsegu
           ispisa i trajanju suradnje te se potvrđuje u pisanoj ponudi.
-        </p>
-        <p className="t-body mt-4">
-          Navedene cijene su <Dopuniti>potvrditi: s PDV-om ili bez PDV-a</Dopuniti>.
         </p>
         <p className="t-body mt-4">
           Tehničke specifikacije uređaja preuzete su iz službene dokumentacije

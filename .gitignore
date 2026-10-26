@@ -40,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# paket za hosting (generira npm run build:static)
+/bizupteam-hosting.zip
+.api.parked/

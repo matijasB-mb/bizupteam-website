@@ -8,12 +8,13 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import { grupe, uslugeUGrupi } from "@/lib/usluge";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
 
 export const metadata: Metadata = {
   title: "Usluge",
   description:
     "Dva područja na jednom mjestu: telekomunikacije kao ugovorni partner A1-a i Canon uredska tehnologija — A3 i A4, u boji i crno-bijelo, kupnja ili najam.",
-  alternates: { canonical: "/usluge" },
+  alternates: { canonical: withSlash("/usluge") },
   openGraph: og({
     title: "Usluge",
     description: "Telekomunikacije kao ugovorni partner A1-a i Canon uredska tehnologija za urede.",

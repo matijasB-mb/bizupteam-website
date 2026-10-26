@@ -11,6 +11,7 @@
  */
 
 import { contact, site, uredi, type Ured } from "@/lib/site";
+import { withSlash } from "@/lib/url";
 
 const ORG = `${site.url}/#organization`;
 const WEBSITE = `${site.url}/#website`;
@@ -47,6 +48,7 @@ export const siteGraph = {
       "@id": ORG,
       name: site.legalName,
       alternateName: site.name,
+      taxID: site.oib,
       url: site.url,
       logo: `${site.url}/brand/logo-biz-up.png`,
       description: site.description,
@@ -55,6 +57,16 @@ export const siteGraph = {
       address: postalAddress(uredi.find((u) => u.hq)!),
       location: uredi.map((u) => ({ "@id": `${site.url}/#ured-${u.id}` })),
       areaServed: "HR",
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          telephone: contact.phoneHref.replace("tel:", ""),
+          email: contact.email,
+          areaServed: "HR",
+          availableLanguage: "hr",
+        },
+      ],
       knowsAbout: [
         "Najam printera",
         "Canon multifunkcijski uređaji",
@@ -88,7 +100,34 @@ export function breadcrumbGraph(crumbs: { label: string; href?: string }[]) {
       "@type": "ListItem",
       position: i + 1,
       name: c.label,
-      ...(c.href ? { item: `${site.url}${c.href === "/" ? "" : c.href}` } : {}),
+      ...(c.href ? { item: `${site.url}${withSlash(c.href)}` } : {}),
     })),
+  };
+}
+
+/**
+ * Service za stranicu usluge. Pružatelj je organizacija iz grafa u layoutu
+ * (@id), pa se ne ponavlja adresa i telefon. Opis je isti kao meta opis —
+ * jedan izvor, ne dva teksta koja se mogu razići.
+ */
+export function serviceGraph(u: {
+  slug: string;
+  title: string;
+  metaDescription: string;
+  grupa: "telekom" | "canon";
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: u.title,
+    description: u.metaDescription,
+    url: `${site.url}${withSlash(`/usluge/${u.slug}`)}`,
+    serviceType:
+      u.grupa === "telekom"
+        ? "Savjetovanje o poslovnim telekomunikacijama (ugovorni partner A1-a)"
+        : "Najam i prodaja uredskih uređaja (partner Canona)",
+    provider: { "@id": ORG },
+    areaServed: { "@type": "Country", name: "Hrvatska" },
+    audience: { "@type": "BusinessAudience", name: "Poslovni korisnici" },
   };
 }

@@ -7,12 +7,13 @@ import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { images } from "@/lib/site";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
 
 export const metadata: Metadata = {
   title: "Zašto Biz Up",
   description:
     "Jedan partner za telekomunikacije i uredsku tehnologiju, podrška iz Osijeka i Zagreba, servis s dogovorenim rokom odziva i predvidivi mjesečni troškovi.",
-  alternates: { canonical: "/zasto-biz-up" },
+  alternates: { canonical: withSlash("/zasto-biz-up") },
   openGraph: og({
     title: "Zašto Biz Up",
     description: "Jedan partner za telekomunikacije i uredsku tehnologiju, s podrškom iz Osijeka i Zagreba.",

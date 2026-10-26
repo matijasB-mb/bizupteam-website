@@ -1,4 +1,5 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { withSlash } from "@/lib/url";
 
 type Variant = "solid" | "outline" | "ghost";
 type Tone = "ink" | "paper";
@@ -67,7 +68,7 @@ export function ButtonLink({
 
   return (
     <a
-      href={href}
+      href={href && !external ? withSlash(href) : href}
       className={`${shared} ${styles(variant, tone)} ${className}`}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       {...rest}

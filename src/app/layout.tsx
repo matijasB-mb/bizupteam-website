@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import LdJson from "@/components/ui/LdJson";
 import { siteGraph } from "@/lib/jsonld";
-import { ogImage } from "@/lib/seo";
+import { indexable, ogImage } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -56,12 +56,21 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${site.name} — Telekomunikacije i uredska tehnologija`,
     description: site.description,
+    images: [ogImage.url],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
+  robots: indexable
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+      }
+    : { index: false, follow: false },
 };
 
 export const viewport: Viewport = {

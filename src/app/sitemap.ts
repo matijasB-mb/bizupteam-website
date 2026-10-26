@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { usluge } from "@/lib/usluge";
+import { withSlash } from "@/lib/url";
 
 /* Statički izvoz traži da ruta bude eksplicitno statična; na Vercelu je
    ionako nema smisla generirati po zahtjevu. */
@@ -22,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return pages.map(({ path, priority }) => ({
-    url: `${site.url}${path}`,
+    url: `${site.url}${withSlash(path || "/")}`,
     lastModified: now,
     changeFrequency: "monthly",
     priority,

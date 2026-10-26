@@ -8,13 +8,16 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import { a1, images } from "@/lib/site";
 import { uslugaBySlug } from "@/lib/usluge";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
+import LdJson from "@/components/ui/LdJson";
+import { serviceGraph } from "@/lib/jsonld";
 
 const usluga = uslugaBySlug("a1-telekomunikacije")!;
 
 export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
-  alternates: { canonical: "/usluge/a1-telekomunikacije" },
+  alternates: { canonical: withSlash("/usluge/a1-telekomunikacije") },
   openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
@@ -33,6 +36,7 @@ export const metadata: Metadata = {
 export default function A1Page() {
   return (
     <>
+      <LdJson data={serviceGraph(usluga)} />
       <PageHero
         crumbs={[{ label: "Usluge", href: "/usluge" }, { label: usluga.breadcrumb }]}
         eyebrow="Ugovorni partner — A1"

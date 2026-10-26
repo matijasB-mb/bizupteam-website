@@ -1,4 +1,5 @@
 import { site } from "@/lib/site";
+import { withSlash } from "@/lib/url";
 
 /**
  * Open Graph po stranici.
@@ -31,7 +32,18 @@ export function og({
     siteName: site.name,
     title,
     description,
-    url,
+    url: withSlash(url),
     images: [ogImage],
   };
 }
+
+/**
+ * Stranica se uvijek predstavlja kao bizupteam.hr: canonical, sitemap, robots,
+ * Open Graph i strukturirani podaci svi koriste site.url, bez obzira na to
+ * gdje je build objavljen. Probna Vercel adresa (*.vercel.app) pritom dobiva
+ * X-Robots-Tag: noindex u next.config.ts, pa se ne natječe s pravom domenom.
+ *
+ * SITE_INDEXABLE=false isključuje indeksiranje cijelog builda (npr. za
+ * privremenu verziju prije lansiranja).
+ */
+export const indexable = process.env.SITE_INDEXABLE !== "false";

@@ -1,0 +1,73 @@
+# Biz Up Team — Apache konfiguracija za bizupteam.hr (MyDataKnox).
+#
+# Stranica je statički izvoz: svaka ruta je mapa s index.html (/o-nama/index.html),
+# pa Apache ne treba nikakvo rewrite pravilo za stranice. Ova datoteka radi
+# samo ono što hosting ne radi sam: HTTPS, jedna adresa, zaglavlja, predmemorija.
+#
+# Ne postavlja se na Vercelu — ondje zaglavlja dolaze iz next.config.ts.
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+# ── Jedna adresa: https://bizupteam.hr ───────────────────────────────────
+# HTTP i www vode na isti URL jednim preusmjeravanjem. Dva ili tri skoka
+# usporavaju prvi posjet, a tražilica dvije adrese istog sadržaja broji kao
+# duplikat.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # www.bizupteam.hr (HTTP ili HTTPS) -> https://bizupteam.hr
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://bizupteam.hr%{REQUEST_URI} [R=301,L]
+
+  # http://bizupteam.hr -> https://bizupteam.hr (i iza proxyja koji nosi HTTPS)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://bizupteam.hr%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# ── Sigurnosna zaglavlja ─────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  # Bez includeSubDomains: mail., webmail. i slični poddomeni na hostingu ne moraju imati HTTPS.
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header unset X-Powered-By
+</IfModule>
+
+# ── Predmemorija ─────────────────────────────────────────────────────────
+# Datoteke u /_next/static imaju hash u imenu pa smiju stajati godinu dana.
+# HTML ne smije — inače izmjena teksta ne stigne do posjetitelja.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2|png|jpe?g|webp|avif|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html|txt|xml|json|webmanifest)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  # Obrazac: odgovor se nikad ne smije predmemorirati
+  <FilesMatch "^upiti\.php$">
+    Header set Cache-Control "no-store"
+  </FilesMatch>
+</IfModule>
+
+# ── Kompresija ───────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
+
+# ── Tipovi ───────────────────────────────────────────────────────────────
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddDefaultCharset UTF-8
+</IfModule>
+
+# ── Skriveno ─────────────────────────────────────────────────────────────
+# Nitko izvana ne treba čitati točka-datoteke (.htaccess, .git, .env).
+<FilesMatch "^\.(?!well-known)">
+  Require all denied
+</FilesMatch>

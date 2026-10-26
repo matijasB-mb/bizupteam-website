@@ -1,6 +1,23 @@
 # Status
 
-**Zadnje ažurirano:** 24.08.2026. (unutarnje stranice)
+**Zadnje ažurirano:** 26.10.2026. — priprema za produkciju (bizupteam.hr)
+
+## Produkcija
+
+Objava na MyDataKnox: vidi **DEPLOY.md** (`npm run build:static` → `bizupteam-hosting.zip`).
+
+- Svi URL-ovi, canonical, sitemap, robots i JSON-LD koriste `https://bizupteam.hr`
+  sa završnom kosom crtom (`/o-nama/`). `*.vercel.app` dobiva `noindex` header.
+- E-mail: **info@bizupteam.hr** (primatelj i pošiljatelj u `deploy/upiti.php`).
+  Sandučić mora postojati; na hostingu namjestiti SPF + DKIM.
+- OIB 68154006666 (podnožje, kontakt, privatnost, uvjeti, JSON-LD, mail potvrda).
+- Obrazac testiran s kraja na kraj na izvozu (PHP): 200, 403 za tuđi Origin,
+  422 za neispravan unos, 413 za preveliko tijelo. **Stvarna isporuka e-maila
+  nije testirana** (lokalno nema SMTP-a) — prvi test je poslati upit nakon objave.
+- Slike: Canon snimke su WebP, stock JPEG ≤1600 px (6,1 MB → 0,9 MB). Originali
+  nisu u repozitoriju.
+- Preostalo za klijenta: poštanski broj za Zagreb, pravni pregled privatnosti i
+  uvjeta, Google Search Console + Business Profile nakon lansiranja.
 
 ---
 

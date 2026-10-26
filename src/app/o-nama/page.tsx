@@ -6,12 +6,13 @@ import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { adresaLinije, images, site, uredi } from "@/lib/site";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
 
 export const metadata: Metadata = {
   title: "O nama",
   description:
     "Biz Up Team je osječka tvrtka s uredima u Osijeku i Zagrebu — ugovorni partner A1-a za telekomunikacije i partner Canona za uredsku tehnologiju.",
-  alternates: { canonical: "/o-nama" },
+  alternates: { canonical: withSlash("/o-nama") },
   openGraph: og({
     title: "O nama",
     description: "Osječka tvrtka s uredima u Osijeku i Zagrebu — telekomunikacije i uredska tehnologija za poslovne korisnike.",

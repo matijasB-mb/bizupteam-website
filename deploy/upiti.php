@@ -16,14 +16,14 @@
  */
 
 /** Adresa na koju stižu upiti. Može ih biti više, odvojene zarezom. */
-const PRIMATELJ = 'webshop@bizupteam.hr';
+const PRIMATELJ = 'info@bizupteam.hr';
 
 /**
  * Adresa s koje mail odlazi. MORA biti na domeni ovog hostinga
- * (bizupteam.hr), inače ga primateljev poslužitelj odbacuje ili šalje u spam.
+ * (bizupteam.hr) i najbolje postojeći sandučić, inače ga primateljev poslužitelj odbacuje ili šalje u spam.
  * Ne stavljati ovdje Gmail ni adresu pošiljatelja upita.
  */
-const POSILJATELJ = 'web@bizupteam.hr';
+const POSILJATELJ = 'info@bizupteam.hr';
 
 /** Ime koje se vidi u pretincu. */
 const POSILJATELJ_IME = 'Biz Up Team — web obrazac';
@@ -36,6 +36,7 @@ const AUTOODGOVOR = true;
 const MARKA       = 'Biz Up Team';
 const WEB         = 'https://bizupteam.hr';
 const TELEFON     = '091 636 7770';
+const OIB         = '68154006666';
 const CRVENA      = '#E31E24';
 const TINTA       = '#0B0B0C';
 
@@ -44,6 +45,18 @@ const TINTA       = '#0B0B0C';
    udara u obrazac, a ništa se trajno ne pohranjuje. */
 const LIMIT_BROJ   = 5;
 const LIMIT_SEKUNDI = 600;
+
+/* mbstring nije na svakom hostingu. Bez njega skripta ne smije pasti — prima se
+   mala točnost u brojanju znakova s dijakriticima, ali upit stiže. */
+if (!function_exists('mb_strlen')) {
+    function mb_strlen($t) { return strlen(utf8_decode($t)); }
+}
+if (!function_exists('mb_substr')) {
+    function mb_substr($t, $od, $duljina = null) {
+        $d = utf8_decode($t);
+        return utf8_encode($duljina === null ? substr($d, $od) : substr($d, $od, $duljina));
+    }
+}
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -59,6 +72,22 @@ function odgovor($status, array $tijelo)
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Allow: POST');
     odgovor(405, ['ok' => false, 'message' => 'Dopuštena je samo POST metoda.']);
+}
+
+/* ── Zaštita od slanja s tuđih stranica ───────────────────────────────── */
+
+/* Obrazac šalje fetch s iste adrese. Ako preglednik navede Origin, njegov host
+   mora biti isti kao host na koji je zahtjev stigao — tako skripta radi na
+   bizupteam.hr, na www i na probnoj adresi bez ikakvog popisa domena, a upit
+   poslan s tuđe stranice se odbija. (Bez Origin zaglavlja zahtjev prolazi:
+   neki alati i privatni načini rada ga ne šalju, a rate limit i dalje vrijedi.) */
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if ($origin !== '') {
+    $hostOrigin = strtolower((string) parse_url($origin, PHP_URL_HOST));
+    $hostZahtjeva = strtolower(preg_replace('/:\d+$/', '', (string) ($_SERVER['HTTP_HOST'] ?? '')));
+    if ($hostOrigin === '' || $hostOrigin !== $hostZahtjeva) {
+        odgovor(403, ['ok' => false, 'message' => 'Zahtjev nije dopušten.']);
+    }
 }
 
 /* ── Rate limit ───────────────────────────────────────────────────────── */
@@ -104,7 +133,11 @@ if (ogranicen($ip)) {
 
 /* ── Ulaz ─────────────────────────────────────────────────────────────── */
 
-$sirovo = file_get_contents('php://input');
+/* Poruka je najviše 4000 znakova; sve preko 64 kB nije obrazac. */
+$sirovo = file_get_contents('php://input', false, null, 0, 65537);
+if ($sirovo !== false && strlen($sirovo) > 65536) {
+    odgovor(413, ['ok' => false, 'message' => 'Zahtjev je prevelik.']);
+}
 
 /* Obrazac šalje JSON, ali datoteka prihvaća i običan POST — tako radi i ako
    se jednog dana obrazac pošalje bez JavaScripta. */
@@ -194,6 +227,7 @@ $tinta          = TINTA;
 $crvena         = CRVENA;
 $web            = WEB;
 $telefon        = TELEFON;
+$oib            = OIB;
 $ipPrikaz       = e($ip);
 $naslovIme      = e($podaci['ime']);
 $emailZaOdgovor = e($podaci['email']);
@@ -381,7 +415,7 @@ if (AUTOODGOVOR) {
     </td></tr>
     <tr><td style="padding:36px 32px;">
       <div style="border-top:1px solid #E8E6E3;padding-top:20px;font:400 13px/1.7 Arial,Helvetica,sans-serif;color:#8A8A90;">
-        Biz Up Team d.o.o. · <a href="{$web}" style="color:#8A8A90;">bizupteam.hr</a><br>
+        Biz Up Team d.o.o. · OIB {$oib} · <a href="{$web}" style="color:#8A8A90;">bizupteam.hr</a><br>
         Ovo je automatska potvrda — na nju nije potrebno odgovarati.
       </div>
     </td></tr>
@@ -405,7 +439,7 @@ HTML;
         $podaci['poruka'],
         '',
         '--',
-        'Biz Up Team d.o.o. · ' . WEB,
+        'Biz Up Team d.o.o. · OIB ' . OIB . ' · ' . WEB,
         'Ovo je automatska potvrda — na nju nije potrebno odgovarati.',
     ]);
 

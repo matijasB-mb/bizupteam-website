@@ -9,6 +9,10 @@ import Paketi from "@/components/ui/Paketi";
 import CustomSolutions from "@/components/ui/CustomSolutions";
 import { uredaji, uslugaBySlug } from "@/lib/usluge";
 import { og } from "@/lib/seo";
+import { withSlash } from "@/lib/url";
+import Faq from "@/components/ui/Faq";
+import LdJson from "@/components/ui/LdJson";
+import { serviceGraph } from "@/lib/jsonld";
 
 const usluga = uslugaBySlug("najam-printera")!;
 
@@ -25,7 +29,7 @@ const uNajmu = [
 export const metadata: Metadata = {
   title: usluga.metaTitle,
   description: usluga.metaDescription,
-  alternates: { canonical: "/usluge/najam-printera" },
+  alternates: { canonical: withSlash("/usluge/najam-printera") },
   openGraph: og({
     title: usluga.metaTitle,
     description: usluga.metaDescription,
@@ -61,6 +65,7 @@ const kategorije = [
 export default function NajamPage() {
   return (
     <>
+      <LdJson data={serviceGraph(usluga)} />
       <PageHero
         crumbs={[{ label: "Usluge", href: "/usluge" }, { label: usluga.breadcrumb }]}
         eyebrow="Usluga najma"
@@ -222,6 +227,8 @@ export default function NajamPage() {
       </section>
 
       <CustomSolutions />
+
+      <Faq />
 
       <CTABand
         title="Ne kupujte printer prije nego što provjerite opciju najma."
